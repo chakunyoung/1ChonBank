@@ -1,10 +1,13 @@
 package com.woowahanbank.backend.domain.user.domain;
 
-import javax.persistence.*;
-
 import com.sun.istack.NotNull;
+import com.woowahanbank.backend.domain.family.domain.Family;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import lombok.*;
+import javax.persistence.*;
 
 @Entity(name = "user")
 @NoArgsConstructor
@@ -13,33 +16,36 @@ import lombok.*;
 @Getter
 public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	// @ManyToOne
-	// @JoinColumn(name = "family_id")
-	// private Family family;
+    @ManyToOne
+    @JoinColumn(name = "family_id")
+    private Family family;
 
-	@NotNull
-	private String email;
+    @NotNull
+    private String email;
 
-	@NotNull
-	private String password;
+    @NotNull
+    private String password;
 
-	@Column(name = "money", nullable = false, columnDefinition = "bigint default 0")
-	private Long money;
+    @Column(name = "money", nullable = false, columnDefinition = "bigint default 0")
+    private Long money;
 
-	@NotNull
-	private String name;
+    @NotNull
+    private String name;
 
-	private Long age;
+    private Long age;
 
-	@NotNull
-	private String type;
+    @NotNull
+    private String type;
 
-	private Long quiz;
+    private Long quiz;
 
-	private Long score;
+    private Long score;
 
+    public void setFamily(Family family) {
+        this.family = family;
+    }
 }
