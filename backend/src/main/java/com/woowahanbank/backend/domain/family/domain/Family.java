@@ -20,7 +20,7 @@ public class Family {
 
     private String familyName;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "family")
+    @OneToMany(mappedBy = "family")
     private List<User> users = new ArrayList<>();
 
     public void addUser(User user) {
@@ -29,7 +29,11 @@ public class Family {
     }
 
     public void removeUser(User user) {
-        this.users.add(user);
-        user.setFamily(this);
+        this.users.remove(user);
+        user.setFamily(null);
+    }
+
+    public void updateFamilyName(String familyName) {
+        this.familyName = familyName;
     }
 }
