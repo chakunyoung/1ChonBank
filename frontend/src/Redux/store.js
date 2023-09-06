@@ -1,24 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import authReducer from "redux/Auth"; 
 
-// import boardListSlice from "./boardListSlice";
-const  reducers = combineReducers({
-    // 예시
-    // boardList: boardListSlice,
-
+const reducers = combineReducers({
+    auth: authReducer,
+    // 여기에 다른 리듀서들을 추가할 수 있습니다. 예: boardList: boardListSlice,
 });
 
-// const persistConfig = {
-//   key: "root",
-//   storage,
-//   whitelist: ["login"]
-// };
-
-
-// const persistedReducer = persistReducer(persistConfig, reducers);
-
 const store = configureStore({
-  // 리듀서 등록
-//   reducer: persistedReducer,
+  reducer: reducers,
   // getDefaultMiddleware로 기본 미들웨어를 포함하고 로거 추가
 });
 
