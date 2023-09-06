@@ -39,7 +39,8 @@ public class User {
     private Long age;
 
     @NotNull
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private UserType type;
 
     private Long quiz;
 
