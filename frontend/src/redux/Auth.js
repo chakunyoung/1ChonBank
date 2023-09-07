@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const initialState = {
@@ -14,7 +15,6 @@ export const login = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const res = await axios.post("/api/users/login", data, {
-        withCredentials: true,
       });
       return res.data;
     } catch (error) {
@@ -29,7 +29,6 @@ export const getUserInfo = createAsyncThunk(
     try {
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
       const res = await axios.get("/api/mypage", {
-        withCredentials: true,
       });
       return res.data;
     } catch (error) {
@@ -44,7 +43,6 @@ export const kakaoLogin = createAsyncThunk(
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
     try {
       const res = await axios.post("/api/users/login/kakao", {
-        withCredentials: true,
       });
       return res.data;
     } catch (error) {
