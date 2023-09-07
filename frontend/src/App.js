@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router} from "react-router-dom";
 import RoutePath from 'routes/RoutePath'; // 라우트 컴포넌트를 가져옵니다.
 
 function App() {

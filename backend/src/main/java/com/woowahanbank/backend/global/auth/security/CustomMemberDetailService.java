@@ -1,7 +1,6 @@
 package com.woowahanbank.backend.global.auth.security;
 
 import java.util.Collections;
-import java.util.Optional;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,13 +24,9 @@ public class CustomMemberDetailService implements UserDetailsService {
 	private final UserServiceImpl userService;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<User> optionalMember = userService.findByUserId(username);
-		if (optionalMember.isPresent()) {
-			CustomMemberDetails userDetails = new CustomMemberDetails(optionalMember.get());
-			return userDetails;
-		}
-		return null;
+	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+		return userService.findByUserId(userId).map(this::createUserDetails)
+			.orElseThrow(() -> new UsernameNotFoundException(userId + "는 데이터베이스에 없는 데이터입니다."));
 	}
 
 	private UserDetails createUserDetails(User user) {
