@@ -4,22 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import store from 'redux/store';
-
-// import store form './Redux/store';
-// import store from './redux/store';
-// import { PersistGate } from 'redux-persist/integration/react';
-// import { persistStore } from 'redux-persist';
-// import './Fonts/font.css';
-// export const persistor = persistStore(store);
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from 'redux/store'; // 수정된 import 문
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 root.render(
-    // <React.StrictMode> // 필요없어서 제거함
-      <Provider store={store}> {/* Provider를 사용하여 store를 연결합니다 */}
+  <Provider store={store}> {/* Provider를 사용하여 store를 연결합니다 */}
+    <PersistGate loading={null} persistor={persistor}> {/* local storage persist */}
       <App />
-    </Provider>
-    // </React.StrictMode>
+    </PersistGate>
+  </Provider>
 );
 reportWebVitals();
