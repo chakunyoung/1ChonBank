@@ -39,27 +39,26 @@ public class User {
 	@JoinColumn(name = "family_id")
 	private Family family;
 
-	@NotNull
 	private String email;
 
 	@NotNull
+	private String nickname;
+
 	private String password;
 
 	@Column(name = "money", nullable = false, columnDefinition = "bigint default 0")
 	private Long money;
 
-	@NotNull
-	private String name;
-
 	private Long age;
 
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	private UserType type;
 
 	private Long quiz;
 
 	private Long score;
+
+	private String userId;
 
 	private String roles;
 
