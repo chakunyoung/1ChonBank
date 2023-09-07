@@ -35,9 +35,8 @@ public class CustomMemberDetails implements UserDetails {
 		return this.user;
 	}
 
-	@Override
 	public String getPassword() {
-		return this.user.getPassword();
+		return "";
 	}
 
 	@Override
