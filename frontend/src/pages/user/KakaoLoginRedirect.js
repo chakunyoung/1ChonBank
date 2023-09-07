@@ -14,11 +14,12 @@ const KakaoLoginRedirect = () => {
     const bodyData = {
       grant_type: "authorization_code",
       client_id: process.env.REACT_APP_KAKAO_REST_API_KEY,
-      REDIRECT_URI: process.env.REACT_APP_REDIRECT_URI,
+      redirect_uri: process.env.REACT_APP_REDIRECT_URI,
+      client_secret : process.env.REACT_APP_KAKAO_SECRET_KEY,
       code: search.substring(6),
     };
 
-    console.log(bodyData);
+    
 
     const queryStringBody = Object.keys(bodyData)
       .map((k) => encodeURIComponent(k) + "=" + encodeURI(bodyData[k]))
@@ -31,6 +32,8 @@ const KakaoLoginRedirect = () => {
       body: queryStringBody,
     })
       .then((res) => {
+        console.log(bodyData);
+        console.log(res);
         return res.json()
       })
       .then((data) => {
