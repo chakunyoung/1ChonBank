@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,7 +16,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Configuration
-//@PropertySource("classpath:application-redis.yml")
 public class RedisConfig {
 
 	@Value("${redis.host}")
@@ -26,8 +24,8 @@ public class RedisConfig {
 	@Value("${redis.port}")
 	private int port;
 
-	@Value("${redis.password}")
-	private String password;
+	// @Value("${redis.password}")
+	// private String password;
 
 	@Bean
 	public ObjectMapper objectMapper() {
@@ -43,7 +41,7 @@ public class RedisConfig {
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 		redisStandaloneConfiguration.setHostName(host);
 		redisStandaloneConfiguration.setPort(port);
-		redisStandaloneConfiguration.setPassword(password);
+		//redisStandaloneConfiguration.setPassword(password);
 		return new LettuceConnectionFactory(redisStandaloneConfiguration);
 	}
 

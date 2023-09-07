@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.woowahanbank.backend.domain.user.domain.User;
-import com.woowahanbank.backend.domain.user.service.UserService;
+import com.woowahanbank.backend.domain.user.service.UserServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomMemberDetailService implements UserDetailsService {
 
-	private final UserService userService;
+	private final UserServiceImpl userService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

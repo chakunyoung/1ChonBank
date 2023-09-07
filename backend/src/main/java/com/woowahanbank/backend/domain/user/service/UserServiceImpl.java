@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.JoinDto;
+import com.woowahanbank.backend.domain.user.respository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,15 +14,15 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl {
 
-	@Override
+	private final UserRepository userRepository;
+
 	public Optional<User> findByUserId(String userId) {
-		return Optional.empty();
+		return userRepository.findByUserId(userId);
 	}
 
-	@Override
-	public void save(JoinDto user) {
-
+	public void save(JoinDto joinDto) {
+		userRepository.save(joinDto.toEntity(joinDto));
 	}
 }

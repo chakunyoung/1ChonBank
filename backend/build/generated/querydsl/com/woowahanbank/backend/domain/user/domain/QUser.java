@@ -32,7 +32,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final NumberPath<Long> money = createNumber("money", Long.class);
 
-    public final StringPath name = createString("name");
+    public final StringPath nickname = createString("nickname");
 
     public final StringPath password = createString("password");
 
@@ -43,6 +43,8 @@ public class QUser extends EntityPathBase<User> {
     public final NumberPath<Long> score = createNumber("score", Long.class);
 
     public final EnumPath<UserType> type = createEnum("type", UserType.class);
+
+    public final StringPath userId = createString("userId");
 
     public QUser(String variable) {
         this(User.class, forVariable(variable), INITS);
