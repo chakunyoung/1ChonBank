@@ -1,7 +1,6 @@
 package com.woowahanbank.backend.domain.user.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -35,37 +34,29 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String userId;
+
 	@ManyToOne
 	@JoinColumn(name = "family_id")
 	private Family family;
 
-	private String email;
-
 	@NotNull
 	private String nickname;
-
-	private String password;
 
 	@Column(name = "money", nullable = false, columnDefinition = "bigint default 0")
 	private Long money;
 
-	private Long age;
-
 	@Enumerated(EnumType.STRING)
-	private UserType type;
+	private Role type;
 
 	private Long quiz;
 
 	private Long score;
 
-	private String userId;
-
-	private String roles;
+	@Enumerated(EnumType.STRING)
+	private Role roles;
 
 	public List<String> getRoleList() {
-		if (this.roles.length() > 0) {
-			return Arrays.asList(this.roles.split(","));
-		}
 		return new ArrayList<>();
 	}
 

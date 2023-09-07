@@ -22,10 +22,6 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final NumberPath<Long> age = createNumber("age", Long.class);
-
-    public final StringPath email = createString("email");
-
     public final com.woowahanbank.backend.domain.family.domain.QFamily family;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -34,15 +30,13 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath nickname = createString("nickname");
 
-    public final StringPath password = createString("password");
-
     public final NumberPath<Long> quiz = createNumber("quiz", Long.class);
 
-    public final StringPath roles = createString("roles");
+    public final EnumPath<Role> roles = createEnum("roles", Role.class);
 
     public final NumberPath<Long> score = createNumber("score", Long.class);
 
-    public final EnumPath<UserType> type = createEnum("type", UserType.class);
+    public final EnumPath<Role> type = createEnum("type", Role.class);
 
     public final StringPath userId = createString("userId");
 

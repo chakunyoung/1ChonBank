@@ -1,7 +1,10 @@
 package com.woowahanbank.backend.global.auth.security;
 
+import java.util.Collections;
 import java.util.Optional;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,5 +32,17 @@ public class CustomMemberDetailService implements UserDetailsService {
 			return userDetails;
 		}
 		return null;
+	}
+
+	private UserDetails createUserDetails(User user) {
+
+		String role = user.getRoles().value();
+		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role);
+
+		return new org.springframework.security.core.userdetails.User(
+			String.valueOf(user.getId()),
+			null,
+			Collections.singleton(grantedAuthority)
+		);
 	}
 }

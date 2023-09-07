@@ -21,7 +21,6 @@ public class JoinDto {
 	public User toEntity(JoinDto joinDto) {
 		return User.builder()
 			.userId(userId)
-			.email(email)
 			.nickname(nickname)
 			.money(money)
 			.build();
