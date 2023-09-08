@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.JoinDto;
-import com.woowahanbank.backend.domain.user.service.UserServiceImpl;
+import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.auth.jwt.JwtPayloadDto;
 import com.woowahanbank.backend.global.auth.oauth.oidc.publickey.KakaoPublicKeyService;
 import com.woowahanbank.backend.global.auth.oauth.oidc.publickey.PublicKeyRepository;
@@ -36,7 +36,7 @@ public class KakaoOidcController {
 	private final KakaoPublicKeyService kakaoPublicKeyService;
 	private final PublicKeyRepository publicKeyRepository;
 	private final OidcUtil oidcUtil;
-	private final UserServiceImpl userService;
+	private final UserService userService;
 	private final PasswordEncoder passwordEncoder;
 	private final RedisTemplate<String, String> template;
 

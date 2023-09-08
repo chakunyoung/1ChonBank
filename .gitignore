@@ -5,6 +5,7 @@
 application-secret.yml
 application-redis.yml
 backend/out
+backend/build
 
 
 # frontend ignore files

@@ -20,7 +20,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.woowahanbank.backend.domain.user.domain.User;
-import com.woowahanbank.backend.domain.user.service.UserServiceImpl;
+import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.auth.security.CustomMemberDetails;
 import com.woowahanbank.backend.global.util.JwtTokenUtil;
 
@@ -28,10 +28,10 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-	private final UserServiceImpl userService;
+	private final UserService userService;
 	private final RedisTemplate<String, String> template;
 
-	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, UserServiceImpl userService,
+	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, UserService userService,
 		RedisTemplate<String, String> template) {
 		// super(authenticationManager);
 		this.userService = userService;

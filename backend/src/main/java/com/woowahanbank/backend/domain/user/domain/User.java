@@ -64,4 +64,8 @@ public class User {
 		this.family = family;
 	}
 
+	public void moneyTransfer(long money) {
+		this.money += money;
+	}
+
 }
