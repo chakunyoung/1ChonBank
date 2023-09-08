@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.woowahanbank.backend.domain.user.service.UserServiceImpl;
+import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.response.BaseResponse;
 import com.woowahanbank.backend.global.util.JwtTokenUtil;
 import com.woowahanbank.backend.global.util.OidcUtil;
@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthController {
 
 	private final PasswordEncoder passwordEncoder;
-	private final UserServiceImpl userService;
+	private final UserService userService;
 	private final RedisTemplate<String, String> template;
 	private final OidcUtil oidcUtil;
 
