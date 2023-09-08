@@ -10,12 +10,11 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Getter
-@Setter
 public class Quiz {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "quiz_id")
 	private Long quizId;
 
 	@NotNull
