@@ -16,6 +16,7 @@ import com.woowahanbank.backend.domain.customer.dto.SavingserDto;
 import com.woowahanbank.backend.domain.customer.repository.SavingserRepository;
 import com.woowahanbank.backend.domain.financialproducts.domain.FinancialProduct;
 import com.woowahanbank.backend.domain.financialproducts.repository.FinancialProductRepository;
+import com.woowahanbank.backend.domain.point.service.PointServiceImpl;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.UserDto;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
@@ -29,6 +30,7 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 	private final SavingserRepository savingserRepository;
 	private final FinancialProductRepository financialProductRepository;
 	private final UserRepository userRepository;
+	private final PointServiceImpl pointService;
 
 	@Override
 	public void apply(SavingserDto savingserDto, UserDto userDto) {
@@ -39,7 +41,7 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 			.user(user)
 			.financialProduct(financialProduct)
 			.allowProduct(false)
-			.money(savingserDto.getMoney())
+			.money(0)
 			.regularMoney(savingserDto.getRegularMoney())
 			.build();
 		savingserRepository.save(savingser);
@@ -68,9 +70,14 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 		tpts.initialize();
 		endS.initialize();
 		String dayDate = savingser.getDate().format(DateTimeFormatter.ofPattern("d")).toString();
+		User admin = userRepository.findById(1L).get(); // 가상의 admin 유저
+		User parent = userRepository.findById(financialProduct.getParent().getId()).get();
+		User child = userRepository.findById(savingser.getUser().getId()).get();
 		tpts.schedule(() -> {
 			int regMoney = savingser.getRegularMoney();
-			//사용자 돈 빼가기()
+			child.moneyTransfer(-regMoney);
+			userRepository.save(child);
+			pointService.makePoint(child, admin, "정기 적금", regMoney);
 			savingser.depositMoney(regMoney);
 		}, new CronTrigger("0 0 0 " + dayDate + " ?"));
 		String endDate = savingser.getDate()
@@ -78,11 +85,15 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 			.format(DateTimeFormatter.ofPattern("d M e yyyy"))
 			.toString();
 		endS.schedule(() -> {
-			//이자 계산
-			//부모 돈 변경()
-			//거래내역
-			// 자식 금액 변경() - 모든 금액 반환
-			// savingser 객체 삭제
+			int money = savingser.getMoney();
+			money = money + money * financialProduct.getRate() / 100;
+			parent.moneyTransfer(-money);
+			userRepository.save(parent);
+			pointService.makePoint(parent, admin, "자녀의 만기 적금", money);
+			child.moneyTransfer(money);
+			userRepository.save(child);
+			pointService.makePoint(admin, child, "적금 만기 금액", money);
+			savingserRepository.delete(savingser);
 			tpts.shutdown();
 			endS.shutdown();
 		}, new CronTrigger("0 0 0 " + endDate));
