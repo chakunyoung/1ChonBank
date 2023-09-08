@@ -1,32 +1,34 @@
 package com.woowahanbank.backend.domain.quiz.service;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.woowahanbank.backend.domain.quiz.domain.Quiz;
-import com.woowahanbank.backend.domain.quiz.repository.QuizRepository;
-import lombok.RequiredArgsConstructor;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.web.client.RestTemplate;
-import com.woowahanbank.backend.global.util.JwtTokenUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
-import com.woowahanbank.backend.domain.quiz.dto.QuizDto;
-import com.woowahanbank.backend.domain.quiz.dto.GptMessage;
-import com.woowahanbank.backend.domain.quiz.dto.GptResponseDto;
-import com.woowahanbank.backend.domain.quiz.dto.GptRequestDto;
-
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.woowahanbank.backend.domain.quiz.domain.Quiz;
+import com.woowahanbank.backend.domain.quiz.dto.GptMessage;
+import com.woowahanbank.backend.domain.quiz.dto.GptRequestDto;
+import com.woowahanbank.backend.domain.quiz.dto.GptResponseDto;
+import com.woowahanbank.backend.domain.quiz.dto.QuizDto;
+import com.woowahanbank.backend.domain.quiz.repository.QuizRepository;
+import com.woowahanbank.backend.global.util.JwtTokenUtil;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -36,8 +38,8 @@ public class QuizService {
 	public class MyScheduler {
 		@Scheduled(cron = "0 0 12 * * ?") // 매일 12시에 실행
 		public void scheduledTask() {
-			deleteQuiz();
-			chatGpt();
+			// deleteQuiz();
+			// chatGpt();
 		}
 	}
 
@@ -53,6 +55,7 @@ public class QuizService {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set(JwtTokenUtil.HEADER_STRING, JwtTokenUtil.TOKEN_PREFIX + key);
 	}
+
 	public ResponseEntity<String> createQuestionsBasedOnIntro(Map<String, String> body) {
 		log.info("AI 질문 Generate!");
 		try {
@@ -68,7 +71,6 @@ public class QuizService {
 				+ "4번 (선지).\n"
 				+ "5번 (선지).\n"
 			);
-
 
 			GptRequestDto gptRequestDto = GptRequestDto.builder()
 				.model("gpt-3.5-turbo")
@@ -93,7 +95,6 @@ public class QuizService {
 				entity,
 				String.class);
 
-
 			if (response.getStatusCode() == HttpStatus.OK) {
 				log.info("GPT Response 200");
 				GptResponseDto gptResponseDto = objectMapper.readValue(response.getBody(), GptResponseDto.class);
@@ -104,7 +105,6 @@ public class QuizService {
 				QuizDto quizDto = new QuizDto();
 				quizDto.setQuizDetail(generatedQuestion);
 				quizDto.setQuizAnswer("generatedQuestion"); // 여기에 답변을 설정해야 합니다.
-
 
 				return new ResponseEntity<>(generatedQuestion, HttpStatus.OK);
 			} else {
@@ -117,7 +117,6 @@ public class QuizService {
 		}
 	}
 
-
 	public Optional<Quiz> showQuiz(Long quizId) {
 		return quizRepository.findById(quizId);
 	}
@@ -127,8 +126,6 @@ public class QuizService {
 
 		if (!quizList.isEmpty()) {
 			Quiz todayQuiz = quizList.get(0);
-
-
 
 			return Optional.of(todayQuiz);
 		} else {
