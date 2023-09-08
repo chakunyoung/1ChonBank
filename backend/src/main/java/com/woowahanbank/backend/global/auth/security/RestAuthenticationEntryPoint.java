@@ -39,7 +39,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 			body.put("message", authException.getMessage());
 			body.put("detail", ((TokenExpiredException)expiredException).getMessage());
 			body.put("path", request.getServletPath());
-			body.put("redirectUrl", "http://localhost:8080/api/users/refresh");
+			body.put("redirectUrl", "http://localhost:8000/api/users/refresh");
 		} else {
 			// 응답 객체 초기화
 			body.put("status", HttpServletResponse.SC_UNAUTHORIZED);

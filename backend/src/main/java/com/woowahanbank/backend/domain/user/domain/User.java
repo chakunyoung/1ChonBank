@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.sun.istack.NotNull;
 import com.woowahanbank.backend.domain.family.domain.Family;
 
 import lombok.AllArgsConstructor;
@@ -34,20 +33,18 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	// 우리 서비스 닉네임
+	private String nickname;
+
+	// OAuth sub identity value
 	private String userId;
 
 	@ManyToOne
 	@JoinColumn(name = "family_id")
 	private Family family;
 
-	@NotNull
-	private String nickname;
-
 	@Column(name = "money", nullable = false, columnDefinition = "bigint default 0")
 	private Long money;
-
-	@Enumerated(EnumType.STRING)
-	private Role type;
 
 	private Long quiz;
 

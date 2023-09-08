@@ -34,14 +34,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class QuizService {
 
-	@Component
-	public class MyScheduler {
-		@Scheduled(cron = "0 0 12 * * ?") // 매일 12시에 실행
-		public void scheduledTask() {
-			// deleteQuiz();
-			// chatGpt();
-		}
-	}
+	// @Component
+	// public class MyScheduler {
+	// 	@Scheduled(cron = "0 0 12 * * ?") // 매일 12시에 실행
+	// 	public void scheduledTask() {
+	// 		deleteQuiz();
+	// 		chatGpt();
+	// 	}
+	// }
 
 	private static final String GPT_URL = "https://api.openai.com/v1/chat/completions";
 	private RestTemplate restTemplate;

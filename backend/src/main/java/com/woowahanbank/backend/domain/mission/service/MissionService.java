@@ -21,6 +21,9 @@ public class MissionService {
 		return missionRepository.save(mission);
 	}
 
+	public List<Mission> getMissionAll(){
+		return missionRepository.findAll();
+	}
 	public Optional<Mission> getMissionsById(Long missionId) {
 		return missionRepository.findById(missionId);
 	}
@@ -30,11 +33,11 @@ public class MissionService {
 	}
 
 	public List<Optional<Mission>> getMissionsByFamilyId(Long MissionFamilyId) {
-		return missionRepository.findByFamily(MissionFamilyId);
+		return missionRepository.findByMissionFamilyId(MissionFamilyId);
 	}
 
 	public List<Optional<Mission>> getMissionsByChildId(Long missionChildId) {
-		return missionRepository.findByChild(missionChildId);
+		return missionRepository.findByMissionChildId(missionChildId);
 	}
 
 	public List<Optional<Mission>> getMissionsByStatus(String missionStatus) {
