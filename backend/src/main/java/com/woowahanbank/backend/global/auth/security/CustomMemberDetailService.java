@@ -25,8 +25,7 @@ public class CustomMemberDetailService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-		return userService.findByUserId(userId).map(this::createUserDetails)
-			.orElseThrow(() -> new UsernameNotFoundException(userId + "는 데이터베이스에 없는 데이터입니다."));
+		return createUserDetails(userService.findByUserId(userId));
 	}
 
 	private UserDetails createUserDetails(User user) {

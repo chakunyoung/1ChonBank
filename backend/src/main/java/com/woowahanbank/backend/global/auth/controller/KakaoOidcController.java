@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.JoinDto;
+import com.woowahanbank.backend.domain.user.repository.UserRepository;
 import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.auth.jwt.JwtPayloadDto;
 import com.woowahanbank.backend.global.auth.oauth.oidc.publickey.KakaoPublicKeyService;
@@ -39,6 +40,7 @@ public class KakaoOidcController {
 	private final UserService userService;
 	private final PasswordEncoder passwordEncoder;
 	private final RedisTemplate<String, String> template;
+	private final UserRepository userRepository;
 
 	@PostMapping
 	public ResponseEntity<?> oidcLogin(@RequestHeader("Authorization") String idToken) {
@@ -50,23 +52,21 @@ public class KakaoOidcController {
 		}
 		log.info("kakao login data = {}", memberData);
 		log.info("kakao picture = {}", memberData.getPicture());
-		Optional<User> optionalMember = userService.findByUserId(memberData.getSub());
+		Optional<User> user = userRepository.findByUserId(memberData.getSub());
 		JoinDto newMember;
-		if (optionalMember.isEmpty()) {
+		if (user.isEmpty()) {
 			newMember = JoinDto.builder()
 				.userId(memberData.getSub())
-				.nickname(memberData.getNickname())
 				// .photo(memberData.getPicture())
-				.email(memberData.getEmail())
 				.money(0)
 				.build();
 			userService.save(newMember);
-			optionalMember = userService.findByUserId(memberData.getSub());
+			user = userRepository.findByUserId(memberData.getSub());
 		}
 		// if (optionalMember.get().getDelete()) {
 		// 	return BaseResponse.fail("login fail", 400);
 		// }
-		String userId = optionalMember.get().getUserId();
+		String userId = user.get().getUserId();
 
 		// 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
 		Map<String, String> tokens = new LinkedHashMap<>();

@@ -1,7 +1,5 @@
 package com.woowahanbank.backend.domain.user.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import com.woowahanbank.backend.domain.user.domain.User;
@@ -18,8 +16,12 @@ public class UserService {
 
 	private final UserRepository userRepository;
 
-	public Optional<User> findByUserId(String userId) {
-		return userRepository.findByUserId(userId);
+	public User findByUserId(String userId) {
+		return userRepository.findByUserId(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+	}
+
+	public User findByNickname(String nickname) {
+		return userRepository.findByUserId(nickname).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 	}
 
 	public void save(JoinDto joinDto) {

@@ -14,6 +14,7 @@ public class MissionDto {
 	private String missionName;
 	private Long missionFamilyId;
 	private Long missionChildId;
+	private Long missionParentId;
 	private String missionDescription;
 	private String missionStatus;
 	private Integer missionPoint;

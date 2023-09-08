@@ -14,14 +14,11 @@ import lombok.NoArgsConstructor;
 public class JoinDto {
 
 	private String userId;
-	private String email;
-	private String nickname;
 	private long money;
 
 	public User toEntity(JoinDto joinDto) {
 		return User.builder()
 			.userId(userId)
-			.nickname(nickname)
 			.money(money)
 			.build();
 	}

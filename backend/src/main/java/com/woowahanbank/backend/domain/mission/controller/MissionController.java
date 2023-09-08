@@ -22,6 +22,11 @@ public class MissionController {
 		return missionService.createMission(mission);
 	}
 
+	@GetMapping("/family")
+	public List<Mission> getMissionsByFamilyId() {
+		return missionService.getMissionAll();
+	}
+
 	@GetMapping("/family/{familyId}")
 	public List<Optional<Mission>> getMissionsByFamilyId(@PathVariable Long missionfamilyId) {
 		return missionService.getMissionsByFamilyId(missionfamilyId);

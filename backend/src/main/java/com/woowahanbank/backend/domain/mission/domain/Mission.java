@@ -2,14 +2,7 @@ package com.woowahanbank.backend.domain.mission.domain;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
+import javax.persistence.*;
 import com.sun.istack.NotNull;
 import com.woowahanbank.backend.domain.family.domain.Family;
 import com.woowahanbank.backend.domain.user.domain.User;
@@ -37,16 +30,16 @@ public class Mission {
 	private String missionName;
 
 	@ManyToOne
-	//@Column(name="mission_family_id")
-	private Family family;
+	@JoinColumn(name="mission_family_id")
+	private Family missionFamilyId;
 
 	@ManyToOne
-	//@Column(name="mission_child_id")
-	private User child;
+	@JoinColumn(name="mission_child_id")
+	private User missionChildId;
 
 	@ManyToOne
-	//@Column(name="mission_parent_id")
-	private User parent;
+	@JoinColumn(name="mission_parent_id")
+	private User missionParentId;
 
 	@NotNull
 	@Column(name = "mission_description")
