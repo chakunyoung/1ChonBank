@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.woowahanbank.backend.domain.customer.domain.Depositor;
 import com.woowahanbank.backend.domain.customer.repository.DepositorRepository;
 import com.woowahanbank.backend.domain.user.domain.User;
-import com.woowahanbank.backend.domain.user.respository.UserRepository;
+import com.woowahanbank.backend.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

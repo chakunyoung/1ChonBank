@@ -1,4 +1,4 @@
-package com.woowahanbank.backend.domain.user.respository;
+package com.woowahanbank.backend.domain.user.repository;
 
 import java.util.Optional;
 

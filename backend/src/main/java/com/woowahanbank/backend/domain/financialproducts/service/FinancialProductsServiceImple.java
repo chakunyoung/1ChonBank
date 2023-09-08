@@ -8,13 +8,13 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.woowahanbank.backend.domain.family.domain.Family;
+import com.woowahanbank.backend.domain.family.repository.FamilyRepository;
 import com.woowahanbank.backend.domain.financialproducts.domain.FinancialProduct;
 import com.woowahanbank.backend.domain.financialproducts.domain.ProductType;
 import com.woowahanbank.backend.domain.financialproducts.dto.FinancialProductsDto;
 import com.woowahanbank.backend.domain.financialproducts.repository.FinancialProductRepository;
 import com.woowahanbank.backend.domain.user.domain.User;
-import com.woowahanbank.backend.domain.family.repository.FamilyRepository;
-import com.woowahanbank.backend.domain.user.respository.UserRepository;
+import com.woowahanbank.backend.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

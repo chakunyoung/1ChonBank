@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.JoinDto;
-import com.woowahanbank.backend.domain.user.respository.UserRepository;
+import com.woowahanbank.backend.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

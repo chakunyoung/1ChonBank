@@ -18,7 +18,7 @@ import com.woowahanbank.backend.domain.financialproducts.domain.FinancialProduct
 import com.woowahanbank.backend.domain.financialproducts.repository.FinancialProductRepository;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.UserDto;
-import com.woowahanbank.backend.domain.user.respository.UserRepository;
+import com.woowahanbank.backend.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
