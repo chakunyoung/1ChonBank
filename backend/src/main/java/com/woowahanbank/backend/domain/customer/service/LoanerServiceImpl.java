@@ -16,6 +16,7 @@ import com.woowahanbank.backend.domain.customer.dto.LoanerDto;
 import com.woowahanbank.backend.domain.customer.repository.LoanerRepository;
 import com.woowahanbank.backend.domain.financialproducts.domain.FinancialProduct;
 import com.woowahanbank.backend.domain.financialproducts.repository.FinancialProductRepository;
+import com.woowahanbank.backend.domain.point.service.PointServiceImpl;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.UserDto;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
@@ -29,6 +30,7 @@ public class LoanerServiceImpl implements CustomerService<LoanerDto> {
 	private final LoanerRepository loanerRepository;
 	private final FinancialProductRepository financialProductRepository;
 	private final UserRepository userRepository;
+	private final PointServiceImpl pointService;
 
 	@Override
 	public void apply(LoanerDto loanerDto, UserDto userDto) {
@@ -67,20 +69,31 @@ public class LoanerServiceImpl implements CustomerService<LoanerDto> {
 		tpts.initialize();
 		endS.initialize();
 		String dayDate = loaner.getDate().format(DateTimeFormatter.ofPattern("d")).toString();
+		User admin = userRepository.findById(1L).get(); // 가상의 admin 유저
+		User parent = userRepository.findById(financialProduct.getParent().getId()).get();
+		User child = userRepository.findById(loaner.getUser().getId()).get();
 		tpts.schedule(() -> {
 			int money = loaner.getMoney() * financialProduct.getRate() / 100; // 대출이자
-			// 아이 돈 변경() - 대출이자 빼기
-			// 부모 돈 변경() - 대출이자 넣기
-			// 거래내역()
+			child.moneyTransfer(-money);
+			userRepository.save(child);
+			pointService.makePoint(child, admin, "대출 이자 납부", money);
+			parent.moneyTransfer(money);
+			userRepository.save(parent);
+			pointService.makePoint(admin, parent, "대출 이자", money);
 		}, new CronTrigger("0 0 0 " + dayDate + " ?"));
 		String endDate = loaner.getDate()
 			.plus(financialProduct.getPeriod() + 1, ChronoUnit.DAYS)
 			.format(DateTimeFormatter.ofPattern("d M e yyyy"))
 			.toString();
 		endS.schedule(() -> {
-			// 아이 돈 변경() - 대출금액 전부 빼기
-			// 부모 돈 변경() - 대출금액 전부 넣기
-			// 해당 loaner 삭제
+			int money = loaner.getMoney();
+			child.moneyTransfer(-money);
+			userRepository.save(child);
+			pointService.makePoint(child, admin, "대출금 납부", money);
+			parent.moneyTransfer(money);
+			userRepository.save(parent);
+			pointService.makePoint(admin, parent, "대출금 상환", money);
+			loanerRepository.delete(loaner);
 			tpts.shutdown();
 			endS.shutdown();
 		}, new CronTrigger("0 0 0 " + endDate));
