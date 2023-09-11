@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -98,6 +99,11 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 	@Override
 	public void refuse(Long id) {
 		depositorRepository.deleteById(id);
+	}
+
+	public List<DepositorDto> getDepositorList(User user) {
+		return depositorRepository.findByUser(user).stream().map(this::changeToDto)
+			.collect(Collectors.toList());
 	}
 
 	private DepositorDto changeToDto(Depositor depositor) {

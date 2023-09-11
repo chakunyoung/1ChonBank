@@ -54,6 +54,12 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role roles;
 
+	// user.authorizeRole(Role.ROLE_PARENT);
+	// user.authorizeRole(Role.ROLE_CHILD);
+	public void authorizeRole(Role role) {
+		this.roles = role;
+	}
+
 	public List<String> getRoleList() {
 		return new ArrayList<>();
 	}
@@ -65,10 +71,13 @@ public class User {
 	public void moneyTransfer(long money) {
 		this.money += money;
 	}
+<<<<<<< Updated upstream
 
 	public void setUser(SignupDto signupDto) {
 		this.nickname = signupDto.getNickname();
 		this.roles = signupDto.getRoles();
 	}
 
+=======
+>>>>>>> Stashed changes
 }
