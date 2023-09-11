@@ -83,7 +83,7 @@ public class FamilyService {
 		invitationRepository.delete(invitation);
 	}
 
-	public void removeUserFromFamily(String parentNickname, String targetNickname) {
+	public void deleteUserFromFamily(String parentNickname, String targetNickname) {
 		User parentUser = findUserOrElseThrow(parentNickname);
 		User targetUser = findUserOrElseThrow(targetNickname);
 

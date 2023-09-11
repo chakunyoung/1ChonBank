@@ -20,7 +20,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.service.UserService;
-import com.woowahanbank.backend.global.auth.security.CustomMemberDetails;
+import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 import com.woowahanbank.backend.global.util.JwtTokenUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -83,7 +83,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				// jwt 토큰에 포함된 계정 정보(userId) 통해 실제 디비에 해당 정보의 계정이 있는지 조회.
 				User user = userService.findByNickname(userId);
 				// 식별된 정상 유저인 경우, 요청 context 내에서 참조 가능한 인증 정보(jwtAuthentication) 생성.
-				CustomMemberDetails userDetails = new CustomMemberDetails(user);
+				CustomUserDetails userDetails = new CustomUserDetails(user);
 				UsernamePasswordAuthenticationToken jwtAuthentication = new UsernamePasswordAuthenticationToken(
 					userDetails,
 					null, userDetails.getAuthorities());

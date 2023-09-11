@@ -22,7 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.auth.jwt.JwtAuthenticationFilter;
-import com.woowahanbank.backend.global.auth.security.CustomMemberDetailService;
+import com.woowahanbank.backend.global.auth.security.CustomUserDetailService;
 import com.woowahanbank.backend.global.auth.security.RestAccessDeniedHandler;
 import com.woowahanbank.backend.global.auth.security.RestAuthenticationEntryPoint;
 
@@ -36,7 +36,7 @@ public class SecurityConfig {
 	private final UserService userService;
 	private final PasswordEncoder passwordEncoder;
 	private final RedisTemplate<String, String> template;
-	private final CustomMemberDetailService customMemberDetailService;
+	private final CustomUserDetailService customUserDetailService;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -77,7 +77,7 @@ public class SecurityConfig {
 	DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-		daoAuthenticationProvider.setUserDetailsService(this.customMemberDetailService);
+		daoAuthenticationProvider.setUserDetailsService(this.customUserDetailService);
 		return daoAuthenticationProvider;
 	}
 

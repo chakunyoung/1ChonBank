@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Component
 @RequiredArgsConstructor
-public class CustomMemberDetailService implements UserDetailsService {
+public class CustomUserDetailService implements UserDetailsService {
 
 	private final UserService userService;
 
