@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -103,6 +104,11 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 	@Override
 	public void refuse(Long id) {
 		savingserRepository.deleteById(id);
+	}
+
+	public List<SavingserDto> getSavingList(User user) {
+		return savingserRepository.findByUser(user).stream().map(this::changeToDto)
+			.collect(Collectors.toList());
 	}
 
 	private SavingserDto changeToDto(Savingser savingser) {
