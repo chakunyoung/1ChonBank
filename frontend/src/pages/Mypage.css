@@ -1,0 +1,73 @@
+.MypageContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+    justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+    min-height: 100vh; /* 화면 높이와 같은 최소 높이 설정 */
+}
+.button-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  width: 150px;
+  height: 135px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+
+}
+
+.button a {
+  color: inherit;
+  text-decoration: none;
+  padding: 10px;
+}
+
+/* Individual button background colors */
+.button.account {
+    background-color: #F6A8A8; /* 계좌정보 - Red */
+  }
+  
+  .button.family {
+    background-color: #E4C9F9; /* 가족 - Purple */
+  }
+  
+  .button.financial {
+    background-color: #AAF1CB; /* 금융상품 - Green */
+  }
+  
+  .button.mission {
+    background-color: #FFE99D; /* 미션 - Yellow */
+  }
+  .button.quiz {
+    background-color: #E6E7EA;
+  }
+  .logo{
+    font-size: 50px;
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+  

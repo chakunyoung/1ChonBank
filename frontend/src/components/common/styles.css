@@ -1,0 +1,19 @@
+/* styles.css */
+
+.page {
+  position: relative;
+  transition: opacity 300ms ease-in-out;
+  opacity: 0;
+}
+
+.page-entering,
+.page-exiting {
+  opacity: 0;
+}
+
+.page-entered,
+.page-exited {
+  opacity: 1;
+}
+
+/* 다른 애니메이션 스타일을 여기에 추가할 수 있습니다. */
