@@ -3,12 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 import Home from 'pages/Home';
 import Login from 'pages/user/Login';
 import KakaoLoginRedirect from 'pages/user/KakaoLoginRedirect';
+import Signup from 'pages/user/Signup';
 
 const RoutePath = () => {
   return (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route
           path="/login/kakao/code"
           element={<KakaoLoginRedirect />}

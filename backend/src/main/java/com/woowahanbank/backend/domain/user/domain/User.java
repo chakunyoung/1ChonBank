@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.woowahanbank.backend.domain.family.domain.Family;
+import com.woowahanbank.backend.domain.user.dto.SignupDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -63,6 +64,11 @@ public class User {
 
 	public void moneyTransfer(long money) {
 		this.money += money;
+	}
+
+	public void setUser(SignupDto signupDto) {
+		this.nickname = signupDto.getNickname();
+		this.roles = signupDto.getRoles();
 	}
 
 }
