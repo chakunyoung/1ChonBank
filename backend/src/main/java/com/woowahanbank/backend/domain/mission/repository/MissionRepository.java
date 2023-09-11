@@ -12,24 +12,14 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
 
 	List<Optional<Mission>> findByMissionName(String missionName);
 
-<<<<<<< Updated upstream
 	List<Optional<Mission>> findByMissionFamilyId(Long missionFamilyId);
 
 	List<Optional<Mission>> findByMissionChildId(Long missionChildId);
-=======
-	List<Optional<Mission>> findByMissionFamilyId(long missionFamilyId);
-
-	List<Optional<Mission>> findByMissionChildId(long missionChildId);
->>>>>>> Stashed changes
 
 	List<Optional<Mission>> findByMissionStatus(String missionStatus);
 
 	void deleteByMissionId(Long missionId);
 
-<<<<<<< Updated upstream
 	void deleteByMissionTerminateDate(Date missionTermivateDate);
-=======
-	void deleteByMissionTerminateDate(Date missionTerminateDate);
->>>>>>> Stashed changes
 
 }

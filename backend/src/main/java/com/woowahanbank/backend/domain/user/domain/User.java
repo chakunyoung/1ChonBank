@@ -71,13 +71,9 @@ public class User {
 	public void moneyTransfer(long money) {
 		this.money += money;
 	}
-<<<<<<< Updated upstream
 
 	public void setUser(SignupDto signupDto) {
 		this.nickname = signupDto.getNickname();
 		this.roles = signupDto.getRoles();
 	}
-
-=======
->>>>>>> Stashed changes
 }
