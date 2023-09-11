@@ -1,3 +1,5 @@
+import Signup from "./user/Signup";
+
 const Home = () => {
   return (
     <>

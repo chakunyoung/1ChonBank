@@ -21,9 +21,10 @@ public class MissionService {
 		return missionRepository.save(mission);
 	}
 
-	public List<Mission> getMissionAll(){
+	public List<Mission> getMissionAll() {
 		return missionRepository.findAll();
 	}
+
 	public Optional<Mission> getMissionsById(Long missionId) {
 		return missionRepository.findById(missionId);
 	}

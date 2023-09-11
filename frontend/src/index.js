@@ -11,7 +11,8 @@ const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <Provider store={store}> {/* Provider를 사용하여 store를 연결합니다 */}
-    <PersistGate loading={null} persistor={persistor}> {/* local storage persist */}
+    <PersistGate loading={null} persistor={persistor}> 
+    {/* local storage persist */}
       <App />
     </PersistGate>
   </Provider>

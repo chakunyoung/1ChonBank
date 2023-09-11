@@ -1,16 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const initialState = {
-  accessToken: "",
-  refreshToken: "",
-  user: null,
+  refreshToken: '',
+  userId: '',
+  isLogin: false,
+  type : '',
+  accessToken: '',
+  roles : '',
+  nickname:'',
+  serverNickname:'',
 };
 
 export const login = createAsyncThunk(
+  
   "auth/login",
   async (data, { rejectWithValue }) => {
     try {
@@ -44,6 +51,7 @@ export const kakaoLogin = createAsyncThunk(
     try {
       const res = await axios.post("/api/users/login/kakao", {
       });
+      console.log(res.data['access-token']);
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -55,16 +63,47 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    loginSuccess: (state, action) => {
-      state.user = action.payload;
+    setAccessToken(state, action) {
+      state.accessToken = action.payload;
     },
-    loginFailure: (state, action) => {
-      state.user = null;
+
+    setRoles(state, action) {
+      state.roles = action.payload;
     },
+
+    setType(state, action) {
+      state.type = action.payload;
+    },
+
+    setUserId(state, action) {
+      state.userId = action.payload;
+    },
+
+    setIsLogin: (state, action) => {
+      state.isLogin = action.payload;
+    },
+
+    setRefreshToken: (state, action) => {
+      state.refreshToken = action.payload;
+    },
+
+    setNickname:(state, action)=>{
+      state.nickname = action.payload;
+    },
+
+    setServerNickname: (state, action) => {
+      state.serverNickname = action.payload;
+    },
+    
     logout: (state, action) => {
-      state.user = null;
-      state.accessToken = null;
-      state.refreshToken = null;
+      state.refreshToken = '';
+      state.userId = '';
+      state.isLogin = false;
+      state.type = '';
+      state.accessToken = '';
+      state.roles = '';
+      state.nickname = '';
+      state.serverNickname = '';
     },
   },
   extraReducers: (builder) => {
@@ -83,6 +122,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { loginSuccess, loginFailure, logout } = authSlice.actions;
+export const { setAccessToken, setRoles, setType, setUserId, setIsLogin,setRefreshToken,setNickname,setServerNickname, logout} = authSlice.actions;
 
 export default authSlice.reducer;
