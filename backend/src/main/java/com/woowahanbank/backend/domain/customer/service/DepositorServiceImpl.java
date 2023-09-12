@@ -70,7 +70,7 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 		tpts.initialize();
 		endS.initialize();
 		String dayDate = depositor.getDate().format(DateTimeFormatter.ofPattern("d")).toString();
-		User admin = userRepository.findById(1L).get(); // 가상의 admin 유저
+		User admin = userRepository.findById(1).get(); // 가상의 admin 유저
 		User parent = userRepository.findById(financialProduct.getParent().getId()).get();
 		User child = userRepository.findById(depositor.getUser().getId()).get();
 		tpts.schedule(() -> {

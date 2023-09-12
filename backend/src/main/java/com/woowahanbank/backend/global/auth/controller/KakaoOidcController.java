@@ -52,9 +52,10 @@ public class KakaoOidcController {
 			newMember = JoinDto.builder()
 				.userId(memberData.getSub())
 				// .photo(memberData.getPicture())
+				.score(500)
 				.money(0)
 				.build();
-			userService.save(newMember);
+			userService.userRegister(newMember);
 			user = userRepository.findByUserId(memberData.getSub());
 		}
 		// if (optionalMember.get().getDelete()) {

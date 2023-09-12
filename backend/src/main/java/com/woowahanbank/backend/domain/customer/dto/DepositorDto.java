@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DepositorDto {
 	private Long id;
-	private Long userId;
+	private Integer userId;
 	private Long financialProductId;
 	private String ProductName;
 	private Boolean grant;

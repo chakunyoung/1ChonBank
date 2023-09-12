@@ -1,13 +1,14 @@
 package com.woowahanbank.backend.domain.banking.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.woowahanbank.backend.domain.banking.domain.AccountTransaction;
-import com.woowahanbank.backend.domain.banking.repository.BankingRepository;
+import com.woowahanbank.backend.domain.banking.domain.PinMoney;
+import com.woowahanbank.backend.domain.banking.repository.PinMoneyRepository;
 import com.woowahanbank.backend.domain.customer.dto.DepositorDto;
 import com.woowahanbank.backend.domain.customer.dto.LoanerDto;
 import com.woowahanbank.backend.domain.customer.dto.SavingserDto;
@@ -27,16 +28,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BankingService {
 
-	private final BankingRepository bankingRepository;
 	private final UserRepository userRepository;
-
+	private final PinMoneyRepository pinMoneyRepository;
 	private final DepositorServiceImpl depositorService;
 	private final LoanerServiceImpl loanerService;
 	private final SavingserServiceImpl savingserService;
-
-	public List<AccountTransaction> getAccountTransactions(User user) {
-		return bankingRepository.findBySenderOrReceiverOrderByCreatedAtAsc(user, user);
-	}
 
 	@Transactional
 	public void pointTransfer(User user, long amount, Role requiredRole) {
@@ -46,7 +42,7 @@ public class BankingService {
 		User userdb = userRepository.findByNickname(user.getNickname()).orElseThrow(IllegalArgumentException::new);
 		if (amount > userdb.getMoney())
 			throw new IllegalArgumentException("포인트가 부족합니다.");
-		
+
 		user.moneyTransfer(amount);
 		userRepository.save(user);
 	}
@@ -61,6 +57,15 @@ public class BankingService {
 
 	public List<SavingserDto> getSavingList(User user) {
 		return savingserService.getSavingList(user);
+	}
+
+	public void updatePinMoneyAndTransfer() {
+		List<PinMoney> pinMoneyList = pinMoneyRepository.findAllByReceiveTime(LocalDate.now());
+		pinMoneyList.forEach(pinMoney -> {
+			pinMoney.nextPinMoneyDay();
+			pinMoney.getUser().moneyTransfer(pinMoney.getPinMoney());
+			pinMoneyRepository.save(pinMoney);
+		});
 	}
 
 }

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FinancialProductsDto {
 	private Long id;
-	private Long parentId;
+	private Integer parentId;
 	private Long familyId;
 	private String name;
 	private int rate;

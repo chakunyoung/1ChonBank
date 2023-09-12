@@ -70,7 +70,7 @@ public class LoanerServiceImpl implements CustomerService<LoanerDto> {
 		tpts.initialize();
 		endS.initialize();
 		String dayDate = loaner.getDate().format(DateTimeFormatter.ofPattern("d")).toString();
-		User admin = userRepository.findById(1L).get(); // 가상의 admin 유저
+		User admin = userRepository.findById(1).get(); // 가상의 admin 유저
 		User parent = userRepository.findById(financialProduct.getParent().getId()).get();
 		User child = userRepository.findById(loaner.getUser().getId()).get();
 		tpts.schedule(() -> {

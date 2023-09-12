@@ -1,15 +1,13 @@
 package com.woowahanbank.backend.domain.banking.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-import org.springframework.data.annotation.CreatedDate;
+import javax.persistence.OneToOne;
 
 import com.woowahanbank.backend.domain.user.domain.User;
 
@@ -18,27 +16,25 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class AccountTransaction {
+@Entity
+public class PinMoney {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
-	private User sender;
+	@OneToOne(cascade = CascadeType.MERGE)
+	private User user;
 
-	@ManyToOne
-	private User receiver;
+	private int pinMoney;
 
-	private Long amount;
+	private LocalDate receiveTime;
 
-	@Column(columnDefinition = "varchar(1000) default ''")
-	private String memo;
-
-	@CreatedDate
-	private LocalDateTime createdAt;
+	public void nextPinMoneyDay() {
+		this.receiveTime = this.receiveTime.plusDays(7);
+	}
 }

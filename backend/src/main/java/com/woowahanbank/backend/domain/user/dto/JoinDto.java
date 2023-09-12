@@ -15,10 +15,12 @@ public class JoinDto {
 
 	private String userId;
 	private long money;
+	private int score;
 
 	public User toEntity(JoinDto joinDto) {
 		return User.builder()
 			.userId(userId)
+			.score(score)
 			.money(money)
 			.build();
 	}

@@ -21,7 +21,7 @@ public class DepositMoneyServiceImpl implements DepositMoneyService {
 	private final PointServiceImpl pointService;
 
 	@Override
-	public void depositMoney(int money, Long depositorId, Long userId) {
+	public void depositMoney(int money, Long depositorId, int userId) {
 		User depositUser = userRepository.findById(userId).get();
 		Depositor depositor = depositorRepository.findById(depositorId).get();
 		if (depositor.getMoney() + money < 0)
@@ -30,7 +30,7 @@ public class DepositMoneyServiceImpl implements DepositMoneyService {
 		User child = userRepository.findById(userId).get();
 		child.moneyTransfer(money);
 		userRepository.save(child);
-		User admin = userRepository.findById(1L).get(); // 가상의 admin 유저
+		User admin = userRepository.findById(1).get(); // 가상의 admin 유저
 		if (money > 0)
 			pointService.makePoint(child, admin, "예금", money);
 		if (money < 0)

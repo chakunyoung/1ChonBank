@@ -32,7 +32,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 
 	// 우리 서비스 닉네임
 	private String nickname;
@@ -49,13 +49,11 @@ public class User {
 
 	private Long quiz;
 
-	private Long score;
+	private Integer score;
 
 	@Enumerated(EnumType.STRING)
 	private Role roles;
 
-	// user.authorizeRole(Role.ROLE_PARENT);
-	// user.authorizeRole(Role.ROLE_CHILD);
 	public void authorizeRole(Role role) {
 		this.roles = role;
 	}
