@@ -8,6 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.woowahanbank.backend.domain.banking.domain.PinMoney;
+import com.woowahanbank.backend.domain.banking.dto.ChildPinMoney;
+import com.woowahanbank.backend.domain.banking.repository.PinMoneyRepository;
+import com.woowahanbank.backend.domain.banking.domain.PinMoney;
 import com.woowahanbank.backend.domain.banking.repository.PinMoneyRepository;
 import com.woowahanbank.backend.domain.customer.dto.DepositorDto;
 import com.woowahanbank.backend.domain.customer.dto.LoanerDto;
@@ -45,6 +48,23 @@ public class BankingService {
 
 		user.moneyTransfer(amount);
 		userRepository.save(user);
+	}
+
+	@Transactional
+	public void assignNewPinMoney(ChildPinMoney childPinMoneyDto) {
+		User childUser = userRepository.findByNickname(childPinMoneyDto.getChildNickname())
+			.orElseThrow(() -> new IllegalArgumentException("어린이에 해당되는 유저가 없습니다."));
+
+		pinMoneyRepository.findByUser(childUser)
+			.ifPresent(pinMoney -> pinMoneyRepository.deleteById(pinMoney.getId()));
+
+		PinMoney newPinMoney = PinMoney.builder()
+			.user(childUser)
+			.pinMoney(childPinMoneyDto.getPinMoney())
+			.receiveTime(childPinMoneyDto.getReceiveTime())
+			.build();
+
+		pinMoneyRepository.save(newPinMoney);
 	}
 
 	public List<DepositorDto> getDepositorList(User user) {
