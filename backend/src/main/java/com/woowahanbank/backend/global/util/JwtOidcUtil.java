@@ -51,7 +51,6 @@ public class JwtOidcUtil {
 		JwtPayloadDto jwtPayloadDto = objectMapper.readValue(payloadJson, JwtPayloadDto.class);
 
 		//라이브러리에 토큰 검증시에 만료시간 검증이 없어서 미리하기
-
 		if (jwtPayloadDto.getExp() < System.currentTimeMillis() / 1000) {
 			throw new JWTVerificationException("토큰이 만료되었습니다.");
 		}

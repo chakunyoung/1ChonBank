@@ -32,7 +32,6 @@ public class RedisConfig {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		mapper.registerModule(new JavaTimeModule());
-
 		return mapper;
 	}
 
@@ -41,31 +40,8 @@ public class RedisConfig {
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 		redisStandaloneConfiguration.setHostName(host);
 		redisStandaloneConfiguration.setPort(port);
-		//redisStandaloneConfiguration.setPassword(password);
 		return new LettuceConnectionFactory(redisStandaloneConfiguration);
 	}
-
-	// @Bean
-	// public RedisTemplate<String, ChatMessage> redisTemplate() {
-	// 	RedisTemplate<String, ChatMessage> template = new RedisTemplate<>();
-	// 	template.setConnectionFactory(redisConnectionFactory());
-	//
-	// 	// Create and configure ObjectMapper for JSR310 java.time
-	// 	ObjectMapper objectMapper = new ObjectMapper();
-	// 	objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-	// 	objectMapper.registerModule(new JavaTimeModule());
-	//
-	// 	GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
-	//
-	// 	template.setKeySerializer(new StringRedisSerializer());
-	// 	template.setValueSerializer(serializer);
-	// 	template.setHashKeySerializer(new StringRedisSerializer());
-	// 	template.setHashValueSerializer(serializer);
-	//
-	// 	template.afterPropertiesSet();
-	//
-	// 	return template;
-	// }
 
 	@Bean
 	public RedisTemplate<String, List<String>> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
@@ -78,18 +54,4 @@ public class RedisConfig {
 
 		return redisTemplate;
 	}
-
-	// @Bean
-	// public RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory, RedisKeyExpirationListener listenerAdapter) {
-	// 	RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-	// 	container.setConnectionFactory(connectionFactory);
-	// 	container.addMessageListener(listenerAdapter, new PatternTopic("__keyevent@*:expired"));
-	// 	return container;
-	// }
-
-	// @Bean
-	// public RedisKeyExpirationListener listenerAdapter(RedisKeyExpirationListener listener) {
-	// 	return listener;
-	// }
-
 }

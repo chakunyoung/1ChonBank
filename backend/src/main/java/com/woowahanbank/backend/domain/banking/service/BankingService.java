@@ -2,6 +2,8 @@ package com.woowahanbank.backend.domain.banking.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.woowahanbank.backend.domain.banking.domain.AccountTransaction;
@@ -18,9 +20,11 @@ import com.woowahanbank.backend.domain.user.repository.UserRepository;
 import com.woowahanbank.backend.global.exception.custom.ForbiddenException;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BankingService {
 
 	private final BankingRepository bankingRepository;
@@ -34,10 +38,15 @@ public class BankingService {
 		return bankingRepository.findBySenderOrReceiverOrderByCreatedAtAsc(user, user);
 	}
 
+	@Transactional
 	public void pointTransfer(User user, long amount, Role requiredRole) {
-		if (user.getRoles() != requiredRole) {
+		if (user.getRoles() != requiredRole)
 			throw new ForbiddenException("접근이 거부되었습니다: 권한이 없습니다.");
-		}
+
+		User userdb = userRepository.findByNickname(user.getNickname()).orElseThrow(IllegalArgumentException::new);
+		if (amount > userdb.getMoney())
+			throw new IllegalArgumentException("포인트가 부족합니다.");
+		
 		user.moneyTransfer(amount);
 		userRepository.save(user);
 	}

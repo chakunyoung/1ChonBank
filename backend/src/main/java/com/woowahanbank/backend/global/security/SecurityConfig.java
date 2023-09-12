@@ -70,9 +70,8 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	//
-	// // DAO 기반으로 Authentication Provider를 생성
-	// // BCrypt Password Encoder와 UserDetailService 구현체를 설정
+	// DAO 기반으로 Authentication Provider를 생성
+	// BCrypt Password Encoder와 UserDetailService 구현체를 설정
 	@Bean
 	DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -81,9 +80,8 @@ public class SecurityConfig {
 		return daoAuthenticationProvider;
 	}
 
-	//
-	// //web.ignore 방식은 보안상 권장되지 않고 내가 만든 커스텀 필터에 대해서 동작하지 않음
-	// //아래 구현된 방법을 이용하도록 함
+	//web.ignore 방식은 보안상 권장되지 않고 내가 만든 커스텀 필터에 대해서 동작하지 않음
+	//아래 구현된 방법을 이용하도록 함
 	@Bean
 	@Order(0)
 	public SecurityFilterChain resources(HttpSecurity http) throws Exception {
