@@ -8,58 +8,64 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/family")
+@RequestMapping("/api/families")
 public class FamilyController {
     private final FamilyService familyService;
     private final UserService userService;
 
-    public ResponseEntity<?> registerFamily(@AuthenticationPrincipal CustomUserDetails customUser, String familyName) {
+    @PostMapping("{familyName}")
+    public ResponseEntity<?> registerFamily(@AuthenticationPrincipal CustomUserDetails customUser, @PathVariable String familyName) {
         familyService.createFamily(customUser.getNickname(), familyName);
 
         return BaseResponse.ok(HttpStatus.OK, "가족 생성 성공");
     }
 
-    public ResponseEntity<?> modifyFamily(@AuthenticationPrincipal CustomUserDetails customUser, String familyName) {
+
+    @PatchMapping("{familyName}")
+    public ResponseEntity<?> modifyFamily(@AuthenticationPrincipal CustomUserDetails customUser, @PathVariable String familyName) {
         familyService.updateFamily(customUser.getNickname(), familyName);
 
         return BaseResponse.ok(HttpStatus.OK, "가족 이름 수정 성공");
     }
 
+    @DeleteMapping
     public ResponseEntity<?> removeFamily(@AuthenticationPrincipal CustomUserDetails customUser) {
         familyService.deleteFamily(customUser.getNickname());
 
         return BaseResponse.ok(HttpStatus.OK, "가족 그룹 삭제 성공");
     }
 
-    public ResponseEntity<?> sendFamilyInvitation(@AuthenticationPrincipal CustomUserDetails customUser, Map<String, String> toUserMap) {
-        String toNickname = toUserMap.get("nickname");
-        familyService.inviteToFamily(customUser.getNickname(), toNickname);
+
+    @PostMapping("/invitation/{nickname}")
+    public ResponseEntity<?> sendFamilyInvitation(@AuthenticationPrincipal CustomUserDetails customUser, @PathVariable String nickname) {
+        familyService.inviteToFamily(customUser.getNickname(), nickname);
 
         return BaseResponse.ok(HttpStatus.OK, "초대 전송 성공");
     }
 
+    @DeleteMapping("/invitation/deny")
     public ResponseEntity<?> denyFamilyInvite(@AuthenticationPrincipal CustomUserDetails customUser) {
         familyService.rejectInvitation(customUser.getNickname());
 
         return BaseResponse.ok(HttpStatus.OK, "초대 거절 성공");
     }
 
+    @PostMapping("/invitation/confirm")
     public ResponseEntity<?> confirmInvitation(@AuthenticationPrincipal CustomUserDetails customUser) {
         familyService.acceptInvitation(customUser.getNickname());
 
         return BaseResponse.ok(HttpStatus.OK, "초대 수락 성공");
     }
 
-    public ResponseEntity<?> removeUserFromFamily(@AuthenticationPrincipal CustomUserDetails customUser, Map<String, String> targetUserMap) {
-        String targetNickname = targetUserMap.get("nickname");
-        familyService.deleteUserFromFamily(customUser.getNickname(), targetNickname);
+    @DeleteMapping("{nickname}")
+    public ResponseEntity<?> removeUserFromFamily(@AuthenticationPrincipal CustomUserDetails customUser, @PathVariable String nickname) {
+        familyService.deleteUserFromFamily(customUser.getNickname(), nickname);
 
         return BaseResponse.ok(HttpStatus.OK, "유저 추방 성공");
     }
