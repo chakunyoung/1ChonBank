@@ -25,6 +25,7 @@ public class FinancialProductsController {
 
 	@PostMapping
 	public ResponseEntity<?> registerFinancialProducts(@RequestBody FinancialProductsDto dto) {
+		System.out.println(dto);
 		try {
 			financialProductsService.registerFinancialProducts(dto);
 			return BaseResponse.ok(HttpStatus.OK, "금융상품 등록 성공");
