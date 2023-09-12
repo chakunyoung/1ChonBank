@@ -34,12 +34,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class QuizService {
 
+	@Value("${gpt.key}")
+	private String gptKey;
+
 	// @Component
 	// public class MyScheduler {
 	// 	@Scheduled(cron = "0 0 12 * * ?") // 매일 12시에 실행
 	// 	public void scheduledTask() {
 	// 		deleteQuiz();
-	// 		chatGpt();
 	// 	}
 	// }
 
@@ -49,7 +51,7 @@ public class QuizService {
 
 	private final QuizRepository quizRepository;
 
-	public void chatGpt(@Value("${gpt.key}") String key) {
+	public void chatGpt(String key) {
 		this.restTemplate = new RestTemplate();
 		this.headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -60,30 +62,25 @@ public class QuizService {
 		log.info("AI 질문 Generate!");
 		try {
 
-			Map<String, String> gptMessage = new LinkedHashMap<>();
-			gptMessage.put("role", "system");
-			gptMessage.put("content", "너는 똑똑한 경제 선생님이야, 쉬운 문제 중심으로 금융 문제 1개를 5지 선다로 내어줘"
-				+ " 항상 아래와 같은 형식을 맞추어서 대답해줘 "
-				+ "문제. (문제)?\n"
-				+ "1번 (선지).\n"
-				+ "2번 (선지).\n"
-				+ "3번 (선지).\n"
-				+ "4번 (선지).\n"
-				+ "5번 (선지).\n"
-			);
+
 
 			GptRequestDto gptRequestDto = GptRequestDto.builder()
 				.model("gpt-3.5-turbo")
+				// .model("gpt-4")
 				.messages(List.of(new GptMessage("system", "너는 똑똑한 경제 선생님이야, 쉬운 문제 중심으로 금융 문제 1개를 5지 선다로 내어줘"
-					+ " 항상 아래와 같은 형식을 맞추어서 대답해줘 "
-					+ "문제. (문제)?\n"
-					+ "1번 (선지).\n"
-					+ "2번 (선지).\n"
-					+ "3번 (선지).\n"
-					+ "4번 (선지).\n"
-					+ "5번 (선지).\n"
-					+ "정답 (정답)\n")))
+					+ " 항상 아래와 같은 형식을 맞추어서 대답해줘 그리고 각 형식은 한 줄로 만 답 해줘"
+					+ "공백 : (공백)\n"
+					+ "문제 : (문제)\n"
+					+ "1번 선지 : (1번 선지)\n"
+					+ "2번 선지 : (2번 선지)\n"
+					+ "3번 선지 : (3번 선지)\n"
+					+ "4번 선지 : (4번 선지)\n"
+					+ "5번 선지 : (5번 선지)\n"
+					+ "정답 : (정답 선지 숫자만)\n"
+					+ "해설 : (해설)\n")))
 				.build();
+
+
 
 			ObjectMapper objectMapper = new ObjectMapper();
 			String requestBody = objectMapper.writeValueAsString(gptRequestDto);
@@ -97,14 +94,85 @@ public class QuizService {
 
 			if (response.getStatusCode() == HttpStatus.OK) {
 				log.info("GPT Response 200");
+
 				GptResponseDto gptResponseDto = objectMapper.readValue(response.getBody(), GptResponseDto.class);
-				String generatedQuestion = gptResponseDto.getContent();
+				// GptResponseDto gptResponseDto = objectMapper.readValue(jsonResponse, GptResponseDto.class);
+				System.out.println(gptResponseDto);
+				String generatedQuestion = gptResponseDto.getChoices().get(0).getMessage().getContent();
+				String choicesDetails = "";
+
+				for (GptResponseDto.Choice choice : gptResponseDto.getChoices()) {
+					choicesDetails += "Choice { index=" + choice.getIndex()
+						+ ", message { role=" + choice.getMessage().getRole()
+						+ ", content=" + choice.getMessage().getContent()
+						+ " } } ";
+				}
+
+				String logMessage = "GptResponseDto(id=" + gptResponseDto.getId()
+					+ ", object=" + gptResponseDto.getObject()
+					+ ", created=" + gptResponseDto.getCreated()
+					+ ", model=" + gptResponseDto.getModel()
+					+ ", choices=[" + choicesDetails + "])";
+
+				log.info(logMessage);
 				log.info("{}", generatedQuestion);
 
+				String choice1 = "";
+				String choice2 = "";
+				String choice3 = "";
+				String choice4 = "";
+				String choice5 = "";
+				String answer = "";
+				String commentary = "";
+				String question = "";
+
+				String[] parts = choicesDetails.split("\n");
+				for (String part : parts) {
+					 if (part.startsWith("문제")){
+						question = part.substring("문제 : ".length()).trim();
+						System.out.println(question);
+					} else if (part.startsWith("1번 선지")) {
+						choice1 = part.substring("1번 선지 : ".length()).trim();
+						System.out.println(choice1);
+					} else if (part.startsWith("2번 선지")) {
+						choice2 = part.substring("2번 선지 : ".length()).trim();
+						System.out.println(choice2);
+					} else if (part.startsWith("3번 선지")) {
+						choice3 = part.substring("3번 선지 : ".length()).trim();
+						System.out.println(choice3);
+					} else if (part.startsWith("4번 선지")) {
+						choice4 = part.substring("4번 선지 : ".length()).trim();
+						System.out.println(choice4);
+					} else if (part.startsWith("5번 선지")) {
+						choice5 = part.substring("5번 선지 : ".length()).trim();
+						System.out.println(choice5);
+					} else if (part.startsWith("정답")) {
+						answer = part.substring("정답 : ".length()).trim();
+						System.out.println(answer);
+					} else if (part.startsWith("해설")) {
+						commentary = part.substring("해설 : ".length()).trim();
+						System.out.println(commentary);
+					}
+				}
+
 				// 생성된 질문과 답변을 QuizDto에 담아서 저장
-				QuizDto quizDto = new QuizDto();
-				quizDto.setQuizDetail(generatedQuestion);
-				quizDto.setQuizAnswer("generatedQuestion"); // 여기에 답변을 설정해야 합니다.
+				// QuizDto quizDto = new QuizDto();
+				// quizDto.setQuizDetail(generatedQuestion);
+				// quizDto.setQuizAnswer("generatedQuestion"); // 여기에 답변을 설정해야 합니다.
+
+				Quiz build = Quiz.builder()
+					.quizChoice1(choice1)
+					.quizChoice2(choice2)
+					.quizChoice3(choice3)
+					.quizChoice4(choice4)
+					.quizChoice5(choice5)
+					.quizAnswer(answer)
+					.quizCommentary(commentary)
+					.quizQuestion(question)
+					.build();
+
+				quizRepository.save(build);
+
 
 				return new ResponseEntity<>(generatedQuestion, HttpStatus.OK);
 			} else {
@@ -133,13 +201,15 @@ public class QuizService {
 		}
 	}
 
-	public void deleteQuiz(Long quizId) {
-		// ID를 사용하여 퀴즈 삭제
-		Optional<Quiz> existingQuiz = quizRepository.findById(quizId);
-		if (existingQuiz.isPresent()) {
-			quizRepository.delete(existingQuiz.get());
-		} else {
-			// 해당 ID의 퀴즈가 없을 경우 처리
-		}
+	public void makeQuiz() {
+		chatGpt(gptKey);
+		createQuestionsBasedOnIntro(null);
+
 	}
+
+
+	public void deleteQuiz() {
+		quizRepository.deleteAll();
+	}
+
 }

@@ -27,4 +27,10 @@ public class QuizController {
 		return quizService.findTodayQuiz();
 	}
 
+	@PostMapping("/make")
+	public ResponseEntity<String> makeQuiz() {
+		quizService.makeQuiz();
+		return ResponseEntity.ok("Quiz 생성 요청이 수행되었습니다.");
+	}
+
 }
