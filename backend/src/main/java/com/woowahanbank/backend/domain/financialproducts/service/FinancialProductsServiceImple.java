@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.woowahanbank.backend.domain.family.domain.Family;
 import com.woowahanbank.backend.domain.family.repository.FamilyRepository;
 import com.woowahanbank.backend.domain.financialproducts.domain.FinancialProduct;
-import com.woowahanbank.backend.domain.financialproducts.domain.ProductType;
 import com.woowahanbank.backend.domain.financialproducts.dto.FinancialProductsDto;
 import com.woowahanbank.backend.domain.financialproducts.repository.FinancialProductRepository;
 import com.woowahanbank.backend.domain.user.domain.User;
@@ -44,7 +43,7 @@ public class FinancialProductsServiceImple implements FinancialProductsService {
 	@Override
 	public List<FinancialProductsDto> getFinancialSubProductDtoList(Long familyId, String productType) {
 		List<FinancialProduct> entityList = financialProductRepository.findAllByFamily_IdAndProductTypeOrderByIdDesc(
-			familyId, ProductType.valueOf(productType));
+			familyId, productType);
 		List<FinancialProductsDto> dtoList = new ArrayList<>();
 		for (int i = 0; i < entityList.size(); i++) {
 			dtoList.add(changeToDto(entityList.get(i)));
