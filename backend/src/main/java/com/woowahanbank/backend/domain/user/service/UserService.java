@@ -1,11 +1,13 @@
 package com.woowahanbank.backend.domain.user.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.JoinDto;
@@ -32,7 +34,7 @@ public class UserService {
 	}
 
 	public User findByNickname(String nickname) {
-		return userRepository.findByUserId(nickname).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+		return userRepository.findByNickname(nickname).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 	}
 
 	public void save(JoinDto joinDto) {
@@ -68,6 +70,11 @@ public class UserService {
 		}
 		return false;
 
+	}
+
+	public List<User> findFamily(String keyword){
+		List<User> users = userRepository.findByNicknameContaining(keyword);
+		return users;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.woowahanbank.backend.domain.user.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.SignupDto;
 import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.response.BaseResponse;
@@ -45,4 +48,15 @@ public class UserController {
 		return BaseResponse.ok(HttpStatus.OK, "회원 가입 성공");
 	}
 
+	@GetMapping("findFamily/{keyword}")
+	public ResponseEntity<?> findFamilyName(@PathVariable String keyword) {
+		List<User> users = userService.findFamily(keyword);
+		return BaseResponse.okWithData(HttpStatus.OK, "회원 리스트를 성공적으로 불러왔습니다.", users);
+	}
+
+	@GetMapping("selectFamily/{nickname}")
+	public ResponseEntity<?> selectFamily(@PathVariable String nickname) {
+		User user = userService.findByNickname(nickname);
+		return BaseResponse.okWithData(HttpStatus.OK, "자식 선택 완료", user);
+	}
 }
