@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -36,14 +37,6 @@ public class QuizService {
 
 	@Value("${gpt.key}")
 	private String gptKey;
-
-	// @Component
-	// public class MyScheduler {
-	// 	@Scheduled(cron = "0 0 12 * * ?") // 매일 12시에 실행
-	// 	public void scheduledTask() {
-	// 		deleteQuiz();
-	// 	}
-	// }
 
 	private static final String GPT_URL = "https://api.openai.com/v1/chat/completions";
 	private RestTemplate restTemplate;
@@ -155,10 +148,6 @@ public class QuizService {
 					}
 				}
 
-				// 생성된 질문과 답변을 QuizDto에 담아서 저장
-				// QuizDto quizDto = new QuizDto();
-				// quizDto.setQuizDetail(generatedQuestion);
-				// quizDto.setQuizAnswer("generatedQuestion"); // 여기에 답변을 설정해야 합니다.
 
 				Quiz build = Quiz.builder()
 					.quizChoice1(choice1)
@@ -185,6 +174,12 @@ public class QuizService {
 		}
 	}
 
+	@Scheduled(cron = "0 0 12 * * ?") // 매일 정오 12시에 실행
+	public void scheduleCreateQuestionsBasedOnIntro() {
+		deleteQuiz();
+		chatGpt(gptKey);
+		createQuestionsBasedOnIntro(null);
+	}
 	public Optional<Quiz> showQuiz(Long quizId) {
 		return quizRepository.findById(quizId);
 	}
