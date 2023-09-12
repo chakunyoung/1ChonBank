@@ -23,10 +23,11 @@ public class QuizController {
 	}
 
 	@GetMapping("/todayQuiz")
-	public Optional<Quiz> getQuiz() {
-		return quizService.findTodayQuiz();
+	public ResponseEntity<Quiz> getQuiz() {
+		Optional<Quiz> todayQuiz = quizService.findTodayQuiz();
+		return todayQuiz.map(quiz -> ResponseEntity.ok().body(quiz))
+			.orElseGet(() -> ResponseEntity.notFound().build());
 	}
-
 	@PostMapping("/make")
 	public ResponseEntity<String> makeQuiz() {
 		quizService.makeQuiz();
