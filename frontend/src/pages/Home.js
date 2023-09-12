@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'; // Link 컴포넌트 import
 import './Home.css';
 import char1 from 'assets/char1x4.png';
 import Kakaoicon from 'assets/kakao.svg';
+import Footer from 'components/common/Footer';
 
 const Home = () => {
   const handleKakaoLoginClick = () => {
