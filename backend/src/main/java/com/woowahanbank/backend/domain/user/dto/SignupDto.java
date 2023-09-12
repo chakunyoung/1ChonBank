@@ -16,7 +16,6 @@ import lombok.ToString;
 @Builder
 @Getter
 public class SignupDto {
-	private Long id;
 
 	private String userId;
 
