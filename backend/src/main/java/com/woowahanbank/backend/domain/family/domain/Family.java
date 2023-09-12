@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@ToString
 public class Family {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
