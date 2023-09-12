@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.woowahanbank.backend.domain.banking.dto.Amount;
+import com.woowahanbank.backend.domain.banking.dto.ChildPinMoney;
 import com.woowahanbank.backend.domain.banking.service.BankingService;
 import com.woowahanbank.backend.domain.user.domain.Role;
 import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
@@ -54,6 +55,13 @@ public class BankingController {
 		Amount amount) {
 		bankingService.pointTransfer(customUserDetails.getUser(), -amount.getAmount(), Role.ROLE_CHILD);
 		return BaseResponse.ok(HttpStatus.OK, "포인트 출금을 신청했습니다.");
+	}
+
+	@PostMapping("/pinmoney")
+	public ResponseEntity<?> pinMoney(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+		ChildPinMoney childPinMoney) {
+		bankingService.assignNewPinMoney(childPinMoney);
+		return BaseResponse.ok(HttpStatus.OK, "용돈을 받았습니다.");
 	}
 
 }
