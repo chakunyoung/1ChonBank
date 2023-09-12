@@ -69,10 +69,10 @@ const KakaoLoginRedirect = () => {
                 // type 값에 따라 navigate 처리
                 if (userData.roles === null) {
                   // type이 null인 경우 /sign/up으로 navigate
-                  navigate('/signup');
+                  navigate('/register');
                 } else {
                   // type이 null이 아닌 경우 /로 navigate
-                  navigate('/');
+                  navigate('/mypage');
                 }
               })
               .catch((error) => {

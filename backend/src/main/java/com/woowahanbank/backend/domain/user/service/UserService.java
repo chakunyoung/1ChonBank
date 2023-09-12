@@ -49,7 +49,6 @@ public class UserService {
 	public SignupDto signup(String userId) {
 		User user = userRepository.findByUserId(userId).orElse(null);
 		return SignupDto.builder()
-			.id(user.getId())
 			.userId(user.getUserId())
 			.nickname(user.getNickname())
 			.roles(user.getRoles())
