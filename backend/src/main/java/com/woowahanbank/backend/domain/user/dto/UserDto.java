@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 @Builder
 public class UserDto {
-	private Long id;
+	private Integer id;
 	private Long familyId;
 }
 

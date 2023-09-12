@@ -23,12 +23,6 @@ public class BankingController {
 
 	private final BankingService bankingService;
 
-	@GetMapping("/transactions")
-	public ResponseEntity<?> getTransactions(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-		return BaseResponse.okWithData(HttpStatus.OK, "거래 내역을 조회했습니다.",
-			bankingService.getAccountTransactions(customUserDetails.getUser()));
-	}
-
 	@GetMapping("/depositor")
 	public ResponseEntity<?> getDepositors(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
 		return BaseResponse.okWithData(HttpStatus.OK, "예금 목록을 조회했습니다.",
