@@ -10,16 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.response.BaseResponse;
 import com.woowahanbank.backend.global.util.JwtTokenUtil;
-import com.woowahanbank.backend.global.util.OidcUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,41 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AuthController {
 
-	private final PasswordEncoder passwordEncoder;
-	private final UserService userService;
 	private final RedisTemplate<String, String> template;
-	private final OidcUtil oidcUtil;
-
-	// @PostMapping("/api/users/login")
-	// public ResponseEntity<?> logIn(@RequestBody LoginDto loginDto) {
-	// 	String userId = loginDto.getUserId();
-	// 	String password = loginDto.getPassword();
-	// 	log.info("login start with id = {}, pw = {}", userId, password);
-	//
-	// 	Optional<User> optionalMember = userService.findByUserId(userId);
-	// 	User user = null;
-	// 	// if (optionalMember.isPresent() && !optionalMember.get().getDelete()) {
-	// 	// 	user = optionalMember.get();
-	// 	// } else {
-	// 	// 	return BaseResponse.fail("login fail", 401);
-	// 	// }
-	//
-	// 	// 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
-	// 	if (passwordEncoder.matches(password, user.getPassword())) {
-	// 		log.info("login ok!");
-	// 		// 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
-	// 		Map<String, String> tokens = new LinkedHashMap<>();
-	// 		tokens.put("access-token", JwtTokenUtil.getAccessToken(userId));
-	// 		tokens.put("refresh-token", JwtTokenUtil.getRefreshToken(userId));
-	//
-	// 		//Redis에 20일 동안 저장
-	// 		template.opsForValue().set("refresh " + userId, tokens.get("refresh-token"), Duration.ofDays(20));
-	//
-	// 		return BaseResponse.okWithData(HttpStatus.OK, "login Success", tokens);
-	// 	}
-	// 	// 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
-	// 	return BaseResponse.fail("login fail", 401);
-	// }
 
 	@PostMapping("/api/users/reissue")
 	public ResponseEntity<?> reissueAccessToken(@RequestHeader("Authorization") String token) {

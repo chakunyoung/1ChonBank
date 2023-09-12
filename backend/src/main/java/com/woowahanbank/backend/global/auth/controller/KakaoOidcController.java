@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +19,6 @@ import com.woowahanbank.backend.domain.user.dto.JoinDto;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
 import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.auth.jwt.JwtPayloadDto;
-import com.woowahanbank.backend.global.auth.oauth.oidc.publickey.KakaoPublicKeyService;
-import com.woowahanbank.backend.global.auth.oauth.oidc.publickey.PublicKeyRepository;
 import com.woowahanbank.backend.global.response.BaseResponse;
 import com.woowahanbank.backend.global.util.JwtTokenUtil;
 import com.woowahanbank.backend.global.util.OidcUtil;
@@ -34,11 +31,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/api/users/login/kakao")
 public class KakaoOidcController {
-	private final KakaoPublicKeyService kakaoPublicKeyService;
-	private final PublicKeyRepository publicKeyRepository;
 	private final OidcUtil oidcUtil;
 	private final UserService userService;
-	private final PasswordEncoder passwordEncoder;
 	private final RedisTemplate<String, String> template;
 	private final UserRepository userRepository;
 

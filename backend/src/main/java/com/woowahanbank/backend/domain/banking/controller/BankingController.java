@@ -58,7 +58,7 @@ public class BankingController {
 	@PostMapping("/withdraw/money")
 	public ResponseEntity<?> withdrawPoint(@AuthenticationPrincipal CustomUserDetails customUserDetails,
 		Amount amount) {
-		bankingService.pointTransfer(customUserDetails.getUser(), amount.getAmount(), Role.ROLE_CHILD);
+		bankingService.pointTransfer(customUserDetails.getUser(), -amount.getAmount(), Role.ROLE_CHILD);
 		return BaseResponse.ok(HttpStatus.OK, "포인트 출금을 신청했습니다.");
 	}
 
