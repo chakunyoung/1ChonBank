@@ -5,6 +5,11 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.woowahanbank.backend.domain.banking.dto.PaymentResponseDto;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
 import com.woowahanbank.backend.domain.banking.domain.PinMoney;
@@ -23,22 +28,74 @@ import com.woowahanbank.backend.global.exception.custom.ForbiddenException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class BankingService {
 
+	@Value("${payment.key}")
+	private String appKey;
 	private final UserRepository userRepository;
 	private final PinMoneyRepository pinMoneyRepository;
 	private final DepositorServiceImpl depositorService;
 	private final LoanerServiceImpl loanerService;
 	private final SavingserServiceImpl savingserService;
 
+	public PaymentResponseDto makePayment(Long amount) {
+		RestTemplate rt = new RestTemplate();
+
+		// Set headers
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", appKey);
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		// Set body
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+		body.add("cid", "TC0ONETIME");
+		body.add("partner_order_id", "19293819293928");
+		body.add("partner_user_id", "1234");
+		body.add("item_name", "우아한 뱅크");
+		body.add("quantity", "0");
+		body.add("total_amount", String.valueOf(amount));
+		body.add("tax_free_amount", String.valueOf(amount));
+		body.add("approval_url", "http://localhost:8080/ok");
+		body.add("cancel_url", "http://localhost:8080/cancel");
+		body.add("fail_url", "http://localhost:8080/fail");
+
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+
+		// Send POST request
+		ResponseEntity<String> response = rt.exchange(
+				"https://kapi.kakao.com/v1/payment/ready",
+				HttpMethod.POST,
+				request,
+				String.class
+		);
+
+		// Handle response
+		if (response.getStatusCodeValue() == 200) {
+			// Successfully received response
+			String responseBody = response.getBody();
+
+			ObjectMapper objectMapper = new ObjectMapper();
+			PaymentResponseDto paymentResponseDto = null;
+			try {
+				paymentResponseDto = objectMapper.readValue(responseBody, PaymentResponseDto.class);
+			} catch (JsonProcessingException e) {
+				throw new IllegalArgumentException(e);
+			}
+			return paymentResponseDto;
+		} else {
+			throw new IllegalArgumentException("API 요청이 실패했습니다");
+		}
+	}
+
 	@Transactional
-	public void pointTransfer(User user, long amount, Role requiredRole) {
-		if (user.getRoles() != requiredRole)
-			throw new ForbiddenException("접근이 거부되었습니다: 권한이 없습니다.");
+	public void pointTransfer(User user, long amount) {
 
 		User userdb = userRepository.findByNickname(user.getNickname()).orElseThrow(IllegalArgumentException::new);
 
@@ -46,7 +103,7 @@ public class BankingService {
 			throw new IllegalArgumentException("포인트가 부족합니다.");
 		}
 
-		user.moneyTransfer(amount);
+		user.moneyTransfer(-amount);
 		userRepository.save(user);
 	}
 

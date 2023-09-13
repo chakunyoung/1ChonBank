@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Amount {
+public class PaymentRequestDto {
 	private long moneyAmount;
+	private String parentNickname;
 }
 
