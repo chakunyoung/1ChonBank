@@ -5,8 +5,9 @@ import Register from 'pages/Register';
 import Mypage from 'pages/Mypage';
 import Mission from 'pages/Mission';
 import KakaoLoginRedirect from 'pages/user/KakaoLoginRedirect';
-import SelectFinance from 'pages/SelectFinance';
-import MakeFinance from 'pages/MakeFinance';
+import SelectFinance from 'pages/Finance/SelectFinance';
+import MakeFinance from 'pages/Finance/MakeFinance';
+import FinanceList from 'pages/Finance/FinanceList';
 
 const RoutePath = () => {
   return (
@@ -17,6 +18,7 @@ const RoutePath = () => {
         <Route path="/mission" element={<Mission />} />
         <Route path="/selectFinance" element={<SelectFinance />} />
         <Route path="/makeFinance" element={<MakeFinance />} />
+        <Route path="/financelist" element={<FinanceList />} />
         <Route
           path="/login/kakao/code"
           element={<KakaoLoginRedirect />}
