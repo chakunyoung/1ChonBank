@@ -101,13 +101,13 @@ public class QuizService {
 						+ " } } ";
 				}
 
-				String logMessage = "GptResponseDto(id=" + gptResponseDto.getId()
-					+ ", object=" + gptResponseDto.getObject()
-					+ ", created=" + gptResponseDto.getCreated()
-					+ ", model=" + gptResponseDto.getModel()
-					+ ", choices=[" + choicesDetails + "])";
-
-				log.info(logMessage);
+				// String logMessage = "GptResponseDto(id=" + gptResponseDto.getId()
+				// 	+ ", object=" + gptResponseDto.getObject()
+				// 	+ ", created=" + gptResponseDto.getCreated()
+				// 	+ ", model=" + gptResponseDto.getModel()
+				// 	+ ", choices=[" + choicesDetails + "])";
+				//
+				// log.info(logMessage);
 				log.info("{}", generatedQuestion);
 
 				String choice1 = "";
