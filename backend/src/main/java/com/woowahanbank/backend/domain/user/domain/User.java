@@ -14,7 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.woowahanbank.backend.domain.family.domain.Family;
+import com.woowahanbank.backend.domain.family.dto.FamilyUserDto;
 import com.woowahanbank.backend.domain.user.dto.SignupDto;
 
 import lombok.AllArgsConstructor;
@@ -73,5 +75,13 @@ public class User {
 	public void setUser(SignupDto signupDto) {
 		this.nickname = signupDto.getNickname();
 		this.roles = signupDto.getRoles();
+	}
+
+	public FamilyUserDto toFamilyUserDto() {
+		return FamilyUserDto.builder()
+				.nickname(this.nickname)
+				.role(this.roles)
+				.money(this.money)
+				.build();
 	}
 }

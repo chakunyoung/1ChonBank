@@ -3,18 +3,18 @@ package com.woowahanbank.backend.global.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.ParameterBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
+import org.springframework.web.bind.annotation.RequestMethod;
+import springfox.documentation.builders.*;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Parameter;
+import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration  // Spring Boot Configuration 클래스임을 나타냄
@@ -45,9 +45,14 @@ public class SwaggerConfig {
                 .globalOperationParameters(globalParameters) // 전역 파라미터 설정
                 .apiInfo(apiInfo())  // API 정보 설정
                 .select()  // API 문서에 표시될 API를 선택하기 위한 ApiSelectorBuilder 반환
-                .apis(RequestHandlerSelectors.basePackage("com.woowahanbank.banking")) // 문서에 표시될 API를 해당 패키지 내에서 선택
+                .apis(RequestHandlerSelectors.basePackage("com.woowahanbank.backend")) // 문서에 표시될 API를 해당 패키지 내에서 선택
                 .paths(PathSelectors.any())  // 모든 URL 경로를 문서에 표시
-                .build();  // 설정 적용
+                .build()
+                .useDefaultResponseMessages(false)
+                .globalResponseMessage(RequestMethod.GET, globalResponseMessageList()) // GET 요청에 대한 글로벌 응답 메시지 설정
+                .globalResponseMessage(RequestMethod.POST, globalResponseMessageList()) // POST 요청에 대한 글로벌 응답 메시지 설정
+                .globalResponseMessage(RequestMethod.PUT, globalResponseMessageList())  // PUT 요청에 대한 글로벌 응답 메시지 설정
+                .globalResponseMessage(RequestMethod.DELETE, globalResponseMessageList());  // DELETE 요청에 대한 글로벌 응답 메시지 설정;  // 설정 적용
     }
 
     // API 정보 반환. 이 정보는 Swagger UI 페이지의 상단에 표시됨
@@ -57,5 +62,30 @@ public class SwaggerConfig {
                 .version(API_VERSION)
                 .description(API_DESCRIPTION)
                 .build();
+    }
+
+    private List<ResponseMessage> globalResponseMessageList() {
+        return Arrays.asList(
+                new ResponseMessageBuilder()
+                        .code(400)
+                        .message("Bad Request")
+                        .build(),
+                new ResponseMessageBuilder()
+                        .code(401)
+                        .message("Unauthorized")
+                        .build(),
+                new ResponseMessageBuilder()
+                        .code(403)
+                        .message("Forbidden")
+                        .build(),
+                new ResponseMessageBuilder()
+                        .code(404)
+                        .message("Not Found")
+                        .build(),
+                new ResponseMessageBuilder()
+                        .code(500)
+                        .message("Wrong Input or Server Error")
+                        .build()
+        );
     }
 }
