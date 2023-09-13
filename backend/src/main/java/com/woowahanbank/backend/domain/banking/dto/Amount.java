@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Amount {
-	long amount;
+	private long moneyAmount;
 }
+
