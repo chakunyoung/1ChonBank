@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,8 +45,8 @@ public class BankingController {
 
 	@PostMapping("/charge/money")
 	public ResponseEntity<?> chargePoint(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-		Amount amount) {
-		bankingService.pointTransfer(customUserDetails.getUser(), amount.getAmount(), Role.ROLE_PARENT);
+		@RequestBody Amount amount) {
+		bankingService.pointTransfer(customUserDetails.getUser(), amount.getMoneyAmount(), Role.ROLE_PARENT);
 		return BaseResponse.ok(HttpStatus.OK, "포인트가 충전되었습니다.");
 	}
 
@@ -53,15 +54,14 @@ public class BankingController {
 	@PostMapping("/withdraw/money")
 	public ResponseEntity<?> withdrawPoint(@AuthenticationPrincipal CustomUserDetails customUserDetails,
 		Amount amount) {
-		bankingService.pointTransfer(customUserDetails.getUser(), -amount.getAmount(), Role.ROLE_CHILD);
+		bankingService.pointTransfer(customUserDetails.getUser(), -amount.getMoneyAmount(), Role.ROLE_CHILD);
 		return BaseResponse.ok(HttpStatus.OK, "포인트 출금을 신청했습니다.");
 	}
 
 	@PostMapping("/pinmoney")
 	public ResponseEntity<?> pinMoney(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-		ChildPinMoney childPinMoney) {
+		@RequestBody ChildPinMoney childPinMoney) {
 		bankingService.assignNewPinMoney(childPinMoney);
-		return BaseResponse.ok(HttpStatus.OK, "용돈을 받았습니다.");
+		return BaseResponse.ok(HttpStatus.OK, "어린이에게 새로운 용돈 지급날을 결정했습니다.");
 	}
-
 }

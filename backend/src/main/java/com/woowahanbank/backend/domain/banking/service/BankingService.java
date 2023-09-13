@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import com.woowahanbank.backend.domain.banking.domain.PinMoney;
 import com.woowahanbank.backend.domain.banking.dto.ChildPinMoney;
 import com.woowahanbank.backend.domain.banking.repository.PinMoneyRepository;
-import com.woowahanbank.backend.domain.banking.domain.PinMoney;
-import com.woowahanbank.backend.domain.banking.repository.PinMoneyRepository;
 import com.woowahanbank.backend.domain.customer.dto.DepositorDto;
 import com.woowahanbank.backend.domain.customer.dto.LoanerDto;
 import com.woowahanbank.backend.domain.customer.dto.SavingserDto;
@@ -43,8 +41,10 @@ public class BankingService {
 			throw new ForbiddenException("접근이 거부되었습니다: 권한이 없습니다.");
 
 		User userdb = userRepository.findByNickname(user.getNickname()).orElseThrow(IllegalArgumentException::new);
-		if (amount > userdb.getMoney())
+
+		if (amount > userdb.getMoney() && user.getRoles() == Role.ROLE_CHILD) {
 			throw new IllegalArgumentException("포인트가 부족합니다.");
+		}
 
 		user.moneyTransfer(amount);
 		userRepository.save(user);
