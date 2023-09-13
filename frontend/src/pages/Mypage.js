@@ -39,7 +39,6 @@ const Mypage = () => {
         </div>
         <div className="button quiz" style={{ width: 340, height: '70px' }}>
           <Link to="/quiz">퀴즈 <RiQuestionnaireFill className='logo'/></Link>
-
         </div>
       </div>
     </div>

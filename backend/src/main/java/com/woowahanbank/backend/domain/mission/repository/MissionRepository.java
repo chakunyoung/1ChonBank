@@ -18,6 +18,8 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
 
 	List<Optional<Mission>> findByMissionStatus(String missionStatus);
 
+
+
 	void deleteByMissionId(Long missionId);
 
 	void deleteByMissionTerminateDate(Date missionTermivateDate);
