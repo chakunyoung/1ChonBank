@@ -77,9 +77,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			DecodedJWT decodedJWT = verifier.verify(token.replace(JwtTokenUtil.TOKEN_PREFIX, ""));
 			String userId = decodedJWT.getSubject();
 
-			if (userId != null) {
+			if (userId != null) { //23023923
 				// jwt 토큰에 포함된 계정 정보(userId) 통해 실제 디비에 해당 정보의 계정이 있는지 조회.
-				User user = userService.findByNickname(userId);
+				User user = userService.findByUserId(userId);
 				// 식별된 정상 유저인 경우, 요청 context 내에서 참조 가능한 인증 정보(jwtAuthentication) 생성.
 				CustomUserDetails userDetails = new CustomUserDetails(user);
 				UsernamePasswordAuthenticationToken jwtAuthentication = new UsernamePasswordAuthenticationToken(

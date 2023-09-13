@@ -2,6 +2,7 @@ package com.woowahanbank.backend.domain.family.service;
 
 import com.woowahanbank.backend.domain.family.domain.Family;
 import com.woowahanbank.backend.domain.family.domain.Invitation;
+import com.woowahanbank.backend.domain.family.dto.FamilyUserDto;
 import com.woowahanbank.backend.domain.family.repository.FamilyRepository;
 import com.woowahanbank.backend.domain.family.repository.InvitationRepository;
 import com.woowahanbank.backend.domain.user.domain.Role;
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,6 +26,13 @@ public class FamilyService {
     private final FamilyRepository familyRepository;
     private final UserRepository userRepository;
     private final InvitationRepository invitationRepository;
+
+    public List<FamilyUserDto> findFamilyMembers(User user) {
+        List<User> users = userRepository.findByFamily(user.getFamily());
+        return users.stream()
+                .map(User::toFamilyUserDto)
+                .collect(Collectors.toList());
+    }
 
     public void createFamily(String nickname, String familyName) {
         User user = userRepository.findByNickname(nickname)
