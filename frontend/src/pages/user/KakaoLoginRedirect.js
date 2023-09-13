@@ -12,8 +12,6 @@ const KakaoLoginRedirect = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("trigger");
-
     const bodyData = {
       grant_type: "authorization_code",
       client_id: process.env.REACT_APP_KAKAO_REST_API_KEY,
@@ -21,8 +19,6 @@ const KakaoLoginRedirect = () => {
       client_secret: process.env.REACT_APP_KAKAO_SECRET_KEY,
       code: search.substring(6),
     };
-
-
 
     const queryStringBody = Object.keys(bodyData)
       .map((k) => encodeURIComponent(k) + "=" + encodeURI(bodyData[k]))

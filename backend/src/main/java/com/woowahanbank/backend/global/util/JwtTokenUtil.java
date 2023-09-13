@@ -29,105 +29,89 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class JwtTokenUtil {
-    public static final String TOKEN_PREFIX = "Bearer ";
-    public static final String HEADER_STRING = "Authorization";
-    public static final String ISSUER = "mirrorview.com";
+	public static final String TOKEN_PREFIX = "Bearer ";
+	public static final String HEADER_STRING = "Authorization";
+	public static final String ISSUER = "ilchonbank.com";
 
-    public static final long TWO_DAYS = 172_800;
-    private static String secretKey;
-    private static long accessExpirationTime;
-    private static long refreshExpirationTime;
+	public static final long TWO_DAYS = 172_800;
+	private static String secretKey;
+	private static long accessExpirationTime;
+	private static long refreshExpirationTime;
 
-    @Autowired
-    public JwtTokenUtil(@Value("${jwt.secret}") String secretKey,
-                        @Value("${jwt.access-expiration}") Integer accessExpirationTime,
-                        @Value("${jwt.refresh-expiration}") Integer refreshExpirationTime) {
-        JwtTokenUtil.secretKey = secretKey;
-        JwtTokenUtil.accessExpirationTime = accessExpirationTime;
-        JwtTokenUtil.refreshExpirationTime = refreshExpirationTime;
-    }
+	@Autowired
+	public JwtTokenUtil(@Value("${jwt.secret}") String secretKey,
+		@Value("${jwt.access-expiration}") Integer accessExpirationTime,
+		@Value("${jwt.refresh-expiration}") Integer refreshExpirationTime) {
+		JwtTokenUtil.secretKey = secretKey;
+		JwtTokenUtil.accessExpirationTime = accessExpirationTime;
+		JwtTokenUtil.refreshExpirationTime = refreshExpirationTime;
+	}
 
-    public static JWTVerifier getVerifier() {
-        return JWT
-                .require(Algorithm.HMAC512(secretKey.getBytes()))
-                .withIssuer(ISSUER)
-                .build();
-    }
+	public static JWTVerifier getVerifier() {
+		return JWT
+			.require(Algorithm.HMAC512(secretKey.getBytes()))
+			.withIssuer(ISSUER)
+			.build();
+	}
 
-    public static JWTVerifier getVerifier(String token) {
-        return JWT
-                .require(Algorithm.HMAC512(secretKey.getBytes()))
-                .withIssuer(ISSUER)
-                .build();
-    }
+	public static JWTVerifier getVerifier(String token) {
+		return JWT
+			.require(Algorithm.HMAC512(secretKey.getBytes()))
+			.withIssuer(ISSUER)
+			.build();
+	}
 
-    public static String getAccessToken(String userId) {
-        Date expires = JwtTokenUtil.getTokenExpiration(accessExpirationTime);
-        return JWT.create()
-                .withSubject(userId)
-                .withExpiresAt(expires)
-                .withIssuer(ISSUER)
-                .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
-                .sign(Algorithm.HMAC512(secretKey.getBytes()));
-    }
+	public static String getAccessToken(String userId) {
+		Date expires = JwtTokenUtil.getTokenExpiration(accessExpirationTime);
+		return JWT.create()
+			.withSubject(userId)
+			.withExpiresAt(expires)
+			.withIssuer(ISSUER)
+			.withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
+			.sign(Algorithm.HMAC512(secretKey.getBytes()));
+	}
 
-    public static boolean validateToken(String token) {
-        try {
-            JWTVerifier verifier = getVerifier(token);
-            verifier.verify(token);
-            return true;
-        } catch (JWTVerificationException ex) {
-            return false;
-        }
-    }
+	public static String getRefreshToken(String userId) {
+		Date expires = JwtTokenUtil.getTokenExpiration(refreshExpirationTime);
+		return JWT.create()
+			.withSubject(userId)
+			.withExpiresAt(expires)
+			.withIssuer(ISSUER)
+			.withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
+			.sign(Algorithm.HMAC512(secretKey.getBytes()));
+	}
 
-    public static String getUsernameFromToken(String token) {
-        DecodedJWT jwt = JWT.decode(token);
-        return jwt.getSubject();
-    }
+	public static Date getTokenExpiration(long expirationTime) {
+		Date now = new Date();
+		return new Date(now.getTime() + expirationTime);
+	}
 
+	public static DecodedJWT handleError(String token) {
+		JWTVerifier verifier = JWT
+			.require(Algorithm.HMAC512(secretKey.getBytes()))
+			.withIssuer(ISSUER)
+			.build();
 
-    public static String getRefreshToken(String userId) {
-        Date expires = JwtTokenUtil.getTokenExpiration(refreshExpirationTime);
-        return JWT.create()
-                .withSubject(userId)
-                .withExpiresAt(expires)
-                .withIssuer(ISSUER)
-                .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
-                .sign(Algorithm.HMAC512(secretKey.getBytes()));
-    }
-
-    public static Date getTokenExpiration(long expirationTime) {
-        Date now = new Date();
-        return new Date(now.getTime() + expirationTime);
-    }
-
-    public static DecodedJWT handleError(String token) {
-        JWTVerifier verifier = JWT
-                .require(Algorithm.HMAC512(secretKey.getBytes()))
-                .withIssuer(ISSUER)
-                .build();
-
-        try {
-            return verifier.verify(token.replace(TOKEN_PREFIX, ""));
-        } catch (AlgorithmMismatchException ex) {
-            throw ex;
-        } catch (InvalidClaimException ex) {
-            throw ex;
-        } catch (SignatureGenerationException ex) {
-            throw ex;
-        } catch (SignatureVerificationException ex) {
-            throw ex;
-        } catch (TokenExpiredException ex) {
-            throw ex;
-        } catch (JWTCreationException ex) {
-            throw ex;
-        } catch (JWTDecodeException ex) {
-            throw ex;
-        } catch (JWTVerificationException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            throw ex;
-        }
-    }
+		try {
+			return verifier.verify(token.replace(TOKEN_PREFIX, ""));
+		} catch (AlgorithmMismatchException ex) {
+			throw ex;
+		} catch (InvalidClaimException ex) {
+			throw ex;
+		} catch (SignatureGenerationException ex) {
+			throw ex;
+		} catch (SignatureVerificationException ex) {
+			throw ex;
+		} catch (TokenExpiredException ex) {
+			throw ex;
+		} catch (JWTCreationException ex) {
+			throw ex;
+		} catch (JWTDecodeException ex) {
+			throw ex;
+		} catch (JWTVerificationException ex) {
+			throw ex;
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
 }
