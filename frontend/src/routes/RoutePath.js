@@ -5,16 +5,15 @@ import Register from 'pages/Register';
 import Mypage from 'pages/Mypage';
 import Mission from 'pages/Mission';
 import KakaoLoginRedirect from 'pages/user/KakaoLoginRedirect';
-import SelectFinance from 'pages/Finance/SelectFinance';
-import MakeFinance from 'pages/Finance/MakeFinance';
-import FinanceList from 'pages/Finance/FinanceList';
-import DailyQuiz from 'pages/Quiz';
-import Quiz from 'pages/Quiz';
 import SelectFinance from 'pages/finance/SelectFinance';
 import MakeFinance from 'pages/finance/MakeFinance';
 import FinanceList from 'pages/finance/FinanceList';
+import DailyQuiz from 'pages/Quiz';
+import Quiz from 'pages/Quiz';
 import FinanceDetail from 'pages/finance/FinanceDetail';
 import QuizResult from 'pages/QuizResult';
+import Account from 'pages/account/Account';
+
 const RoutePath = () => {
   return (
       <Routes>
@@ -31,6 +30,7 @@ const RoutePath = () => {
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/quizResult" element={<QuizResult />} />
         <Route path="/financelist" element={<FinanceList />} />
+        <Route path="/account" element={<Account />} />
         <Route
           path="/login/kakao/code"
           element={<KakaoLoginRedirect />}
