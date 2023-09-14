@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Quiz.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setQuiz } from 'redux/Auth';
+import { setQuizInfo } from 'redux/QuizInfo';
+import { useNavigate } from 'react-router-dom';
+import Footer from 'components/common/Footer';
 
 const Quiz = () => {
-  const [quiz, setQuiz] = useState(null); 
+  // const [quizBack, setQuizBack] = useState(null); 
   const [selectedAnswer, setSelectedAnswer] = useState(null); 
   const [error, setError] = useState(null); 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const quizInfo = useSelector((state)=>state.quizInfo.quizInfo)
+  
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
         const response = await axios.get('/api/quiz/todayQuiz'); 
         const quizData = response.data; 
-
-        setQuiz(quizData);
+        dispatch(setQuizInfo(quizData));
+        console.log(quizData);
         setError(null); 
       } catch (error) {
         console.error('퀴즈 데이터를 가져오는 데 실패했습니다.', error);
@@ -29,15 +38,34 @@ const Quiz = () => {
     setSelectedAnswer(answer);
   };
 
-  // 퀴즈 제출 핸들러
   const handleSubmit = () => {
+    dispatch(setQuiz());
+
     if (selectedAnswer !== null) {
-      // 선택한 답변을 서버로 보내거나 다른 처리를 수행할 수 있습니다.
-      console.log('선택한 답변:', selectedAnswer);
+      if(selectedAnswer+1==quizInfo.quizAnswer){
+        alert("정답" );
+        navigate("/QuizResult",
+        {
+          state: {
+            ans : 1
+          }
+        }
+        );
+      }
+    else {
+      alert("오답")
+      navigate("/QuizResult",
+      {
+        state: {
+          ans : 0
+        }
+      }
+      );
+  }
     } else {
-      // 사용자가 답변을 선택하지 않은 경우에 대한 처리
-      console.log('답변을 선택하세요.');
+      alert("답변을 선택해주세요!");
     }
+    
   };
 
   return (
@@ -46,16 +74,16 @@ const Quiz = () => {
       <div>
         {error ? (
           <p>{error}</p>
-        ) : quiz ? (
+        ) : quizInfo ? (
           <div>
             <div className='quizarea'>
-              <p>{quiz.quizQuestion}</p>
+              <p>{quizInfo.quizQuestion}</p>
             </div>
             <div className='choiceContainer'>
-              {Object.values(quiz).slice(1, 6).map((choice, index) => (
-                <div className={`choicearea ${selectedAnswer === choice ? 'selectedBox' : ''}`} onClick={() => handleAnswerSelect(choice)} key={index}>
+              {Object.values(quizInfo).slice(1, 6).map((choice, index) => (
+                <div className={`choicearea ${selectedAnswer === index ? 'selectedBox' : ''}`} onClick={() => handleAnswerSelect(index)} key={index}>
                   {choice}
-                  <div className={`circle ${selectedAnswer === choice ? 'selected' : ''}`}></div>
+                  <div className={`circle ${selectedAnswer === index ? 'selected' : ''}`}></div>
                 </div>
               ))}
                 <button onClick={handleSubmit} className="custom-button">
@@ -67,6 +95,7 @@ const Quiz = () => {
           <p>퀴즈 데이터를 불러오는 중...</p>
         )}
       </div>
+      <Footer/>
     </div>
   );
 };
