@@ -8,13 +8,13 @@ import KakaoLoginRedirect from 'pages/user/KakaoLoginRedirect';
 import SelectFinance from 'pages/Finance/SelectFinance';
 import MakeFinance from 'pages/Finance/MakeFinance';
 import FinanceList from 'pages/Finance/FinanceList';
-<<<<<<< HEAD
 import DailyQuiz from 'pages/Quiz';
-=======
 import Quiz from 'pages/Quiz';
+import SelectFinance from 'pages/finance/SelectFinance';
+import MakeFinance from 'pages/finance/MakeFinance';
+import FinanceList from 'pages/finance/FinanceList';
+import FinanceDetail from 'pages/finance/FinanceDetail';
 import QuizResult from 'pages/QuizResult';
->>>>>>> 2e76c56 (feat: front-mypage-gpt)
-
 const RoutePath = () => {
   return (
       <Routes>
@@ -24,14 +24,13 @@ const RoutePath = () => {
         <Route path="/mission" element={<Mission />} />
         <Route path="/selectFinance" element={<SelectFinance />} />
         <Route path="/makeFinance" element={<MakeFinance />} />
-<<<<<<< HEAD
+        <Route path="/financial" element={<FinanceList />} />
+        <Route path="/financeDetail" element={<FinanceDetail />} />
         <Route path="/financelist" element={<FinanceList />} />
         <Route path="/quiz" element={<DailyQuiz />} />
-=======
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/quizResult" element={<QuizResult />} />
         <Route path="/financelist" element={<FinanceList />} />
->>>>>>> 2e76c56 (feat: front-mypage-gpt)
         <Route
           path="/login/kakao/code"
           element={<KakaoLoginRedirect />}

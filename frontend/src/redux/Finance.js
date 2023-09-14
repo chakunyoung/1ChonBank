@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 import axios from "services/api/apis";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
@@ -76,9 +75,29 @@ const financeSlice = createSlice({
             state.period = '';
             state.productType = '';
         },
+        setAll(state, action) {
+            const {
+                id,
+                parentId,
+                familyId,
+                name,
+                rate,
+                info,
+                period,
+                productType,
+              } = action.payload;
+            state.id = id;
+            state.parentId = parentId;
+            state.familyId = familyId;
+            state.name = name;
+            state.rate = rate;
+            state.info = info;
+            state.period = period;
+            state.productType = productType;
+        },
     },
 });
 
-export const { resetAll, setParentId, setFamilyId, setProductType, setName, setInfo, setPeriod, setRate } = financeSlice.actions;
+export const { setAll, resetAll, setParentId, setFamilyId, setProductType, setName, setInfo, setPeriod, setRate } = financeSlice.actions;
 
 export default financeSlice.reducer;

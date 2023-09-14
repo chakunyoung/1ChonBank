@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { setProductType } from "redux/Finance";
 import './SelectFinance.css';
 
 const SelectFinance = () => {
+  const [finance, setFinance] = useState('');
+  const [validationMessage, setValidationMessage] = useState('');
   const dispatch = useDispatch();
-  const [finance, setFinance] = useState(null);
+  const nav = useNavigate();
 
   const handleCheckboxChange = (selectedFinance) => {
     dispatch(setProductType(selectedFinance));
@@ -16,6 +18,13 @@ const SelectFinance = () => {
   const handleCardClick = (selectedFinance) => {
     dispatch(setProductType(selectedFinance));
     setFinance(selectedFinance);
+  };
+  const handleSelectProduct = () => {
+    if (finance == ''){
+      setValidationMessage('상품을 선택해 주세요.');
+      return;
+    }
+    nav("/makeFinance");
   };
 
   return (
@@ -53,12 +62,11 @@ const SelectFinance = () => {
           onChange={() => handleCheckboxChange("LOAN")}
         />
       </div>
+      <div className="validation-message">{validationMessage}</div>
       <div className="select-button-container">
-        <Link to="/makeFinance">
-          <button className="select-button">
+          <button className="select-button" onClick={handleSelectProduct}>
             계속
           </button>
-        </Link>
         <div className="background-box"></div>
       </div>
     </div>
