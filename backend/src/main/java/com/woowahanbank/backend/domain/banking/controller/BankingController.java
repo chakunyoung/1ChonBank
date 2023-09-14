@@ -46,7 +46,7 @@ public class BankingController {
 //		return BaseResponse.ok(HttpStatus.OK, "포인트가 충전되었습니다.");
 //	}
 
-    // todo: 확인필요 -> 포인트 출금을 부모가 허락해줘야함
+    // todo: 알람 기능 완성 시 추가 작업 필요함
     @PostMapping("/withdraw/money")
     public ResponseEntity<?> withdrawPoint(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                            @RequestBody PaymentRequestDto paymentRequestDto) {
