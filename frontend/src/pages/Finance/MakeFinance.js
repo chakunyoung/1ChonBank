@@ -28,11 +28,18 @@ const SelectFinance = () => {
         setProductDescription(event.target.value);
         dispatch(setInfo(event.target.value));
     };
-    let user = useSelector((state) => state.auth);
     let finance = useSelector((state) => state.finance);
     const handlemakeProduct = () => {
-        if (productTitle == '' || productPeriod == '' || productRate == '' || productDescription.length < 10){
+        if (productTitle === '' || productPeriod === '' || productRate === '' || productDescription === ''){
             setValidationMessage('입력 정보가 부족합니다.');
+            return;
+        }
+        if (productDescription.length < 20){
+            setValidationMessage('상품 설명이 부족합니다.');
+            return;
+        }
+        if (productPeriod > 1000 || productRate > 1000){
+            setValidationMessage(`기간이나 ${productRateName}을(를) 줄여 주세요.`);
             return;
         }
         dispatch(makeProduct(finance))
@@ -40,10 +47,12 @@ const SelectFinance = () => {
                 if (makeProduct.fulfilled.match(resultAction)) {
                     // 성공적으로 완료됐을 때
                     const product = resultAction.payload; // 액션의 payload에 결과 데이터가 있을 것입니다.
-                    nav("/");
+                    console.log(product);
+                    nav("/financial");
                 } else if (makeProduct.rejected.match(resultAction)) {
                     // 작업이 실패했을 때
                     const error = resultAction.payload; // 액션의 payload에 오류 데이터가 있을 것입니다.
+                    console.log(error);
                 }
             });
     }

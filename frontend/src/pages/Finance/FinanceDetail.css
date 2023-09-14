@@ -1,0 +1,21 @@
+.product-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 수직 가운데 정렬을 위해 추가 */
+    justify-content: center;
+    /* 수평 가운데 정렬을 위해 추가 */
+    min-height: 100vh;
+    /* 화면 높이와 같은 최소 높이 설정 */
+}
+
+.product-apply-button {
+    font-family: 'Pretendard-Regular';
+    text-align: center;
+    line-height: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 180px;
+    background: #52B69A;
+    width: 147px;
+}

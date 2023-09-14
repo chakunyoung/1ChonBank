@@ -15,7 +15,7 @@ public class DepositorDto {
 	private Long id;
 	private Integer userId;
 	private Long financialProductId;
-	private String ProductName;
+	private String productName;
 	private Boolean grant;
 	private int money;
 	private LocalDateTime date;

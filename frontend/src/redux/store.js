@@ -4,6 +4,9 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from "redux/Auth"; 
 import Finance from "./Finance";
 import QuizInfo from "./QuizInfo";
+import Depositor from "./Depositor";
+import Savingser from "./Savingser";
+import Loaner from "./Loaner";
 
 const persistConfig = {
   key: 'root',
@@ -13,6 +16,9 @@ const persistConfig = {
 const reducers = combineReducers({
   auth: authReducer,
   finance: Finance,
+  depositor: Depositor,
+  savingser: Savingser,
+  loaner: Loaner,
   quizInfo: QuizInfo, 
   
   // 여기에 다른 리듀서들을 추가할 수 있습니다. 예: boardList: boardListSlice,

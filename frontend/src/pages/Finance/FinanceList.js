@@ -19,12 +19,13 @@ const FinanceList = () => {
                 } else if (getProductList.rejected.match(resultAction)) {
                     // 작업이 실패했을 때
                     const error = resultAction.payload; // 액션의 payload에 오류 데이터가 있을 것입니다.
+                    console.log(error);
                 }
             });
     };
-    useEffect(getListAll, []);
+    useEffect(getListAll);
     const handleType = (data) => {
-        if (viewType == data)
+        if (viewType === data)
             setViewType('');
         else
             setViewType(data);
@@ -33,17 +34,18 @@ const FinanceList = () => {
         <div className='list-container'>
             <div className='product-button-list'>
                 <button className='productType-button' onClick={() => handleType('DEPOSIT')}>
-                    <img className='product-img' src = {require('./deposit.jpg')}/>예금</button>
+                    <img className='product-img' src={require('assets/deposit.jpg')} alt="예금" />예금</button>
                 <button className='productType-button' onClick={() => handleType('SAVINGS')}>
-                    <img className='product-img' src = {require('./savings.jpg')}/>적금</button>
-                <button className='productType-button'  onClick={() => handleType('LOAN')}>
-                    <img className='product-img' src = {require('./loan.jpg')}/>대출</button>
-                <Link to="/selectFinance">
+                    <img className='product-img' src={require('assets/savings.jpg')} alt="적금" />적금</button>
+                <button className='productType-button' onClick={() => handleType('LOAN')}>
+                    <img className='product-img' src={require('assets/loan.jpg')} alt="대출" />대출</button>
+                {true ? <Link to="/selectFinance">
                     <button className='productType-button'>
-                    <img className='product-img' src = {require('./Vector.jpg')}/>
+                        <img className='product-img' src={require('assets/Vector.jpg')} alt="추가" />
                         생성
                     </button>
-                </Link>
+                </Link> : null}
+
             </div>
             <FinancelistSet products={products} viewType={viewType}></FinancelistSet>
         </div>
