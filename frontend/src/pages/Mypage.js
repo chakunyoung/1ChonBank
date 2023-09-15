@@ -26,7 +26,9 @@ const Mypage = () => {
 
   return (
     <div className='MypageContainer'>
+      <div className='mypage-profilecontainer'>
       <Profile/>
+      </div>
       <div className="button-grid">
         <div className="row">
           <Link to="/account" className="button button-account">
@@ -53,7 +55,7 @@ const Mypage = () => {
           <span>오늘의 퀴즈</span>
         </div>
       </div>
-      <div><Footer/></div>
+      <div className='mypage-footer'><Footer/></div>
     </div>
   );
 };

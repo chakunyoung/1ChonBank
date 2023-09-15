@@ -1,0 +1,29 @@
+.myaccount-container {
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+    width: 330px;
+    height: 75px;
+    border-radius: 16px;
+    background-color: white;
+    position: relative;
+    font-size: 16px;
+    justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
+
+}
+.myaccount-total,
+.myaccount-date,
+.myaccount-balance {
+    padding: 5px;
+}
+.myaccount-total {
+    font-weight: bold;
+}
+
+.myaccount-textarea {
+    margin-left: 20px; /* 남은 공간을 모두 차지하도록 설정 */
+  }
+  
+  .myaccount-balance {
+    font-weight: bold;
+    margin-right: 20px; /* 오른쪽에 20px 마진 추가 */
+  }

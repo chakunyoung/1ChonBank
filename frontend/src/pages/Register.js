@@ -85,7 +85,7 @@ const Register = () => {
         <img src={char2} alt="char2" style={{ width: '200px' }} />
       </div>
 
-      <div className="card" onClick={() => handleCardClick("ROLE_PARENT")}>
+      <div className="register-card" onClick={() => handleCardClick("ROLE_PARENT")}>
         <label className="card-label">
           부모
         </label>
@@ -97,7 +97,7 @@ const Register = () => {
         />
       </div>
 
-      <div className="card" onClick={() => handleCardClick("ROLE_CHILD")}>
+      <div className="register-card" onClick={() => handleCardClick("ROLE_CHILD")}>
         <label className="card-label">
           자녀
         </label>
@@ -108,7 +108,7 @@ const Register = () => {
         />
       </div>
 
-      <div className="card"> {/* 텍스트 입력 필드 카드 */}
+      <div className="register-card"> {/* 텍스트 입력 필드 카드 */}
         <label className="card-label">
           닉네임
           </label>
@@ -122,11 +122,9 @@ const Register = () => {
       </div>
       {nicknameError && <p className="nickname-error">{nicknameError}</p>} {/* Display error message */}
       <div className="role-button-container">
-        
           <button className="role-button" onClick={handleSaveUser}>
             가입
           </button>
-        
         <div className="background-box"></div>
       </div>
     </div>
