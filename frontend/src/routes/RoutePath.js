@@ -13,6 +13,8 @@ import FinanceList from 'pages/finance/FinanceList';
 import FinanceDetail from 'pages/finance/FinanceDetail';
 import QuizResult from 'pages/QuizResult';
 import Account from 'pages/account/Account';
+import AccountDetail from 'pages/account/AccountDetail';
+
 
 const RoutePath = () => {
   return (
@@ -31,6 +33,7 @@ const RoutePath = () => {
         <Route path="/quizResult" element={<QuizResult />} />
         <Route path="/financelist" element={<FinanceList />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/accountDetail" element={<AccountDetail />} />
         <Route
           path="/login/kakao/code"
           element={<KakaoLoginRedirect />}

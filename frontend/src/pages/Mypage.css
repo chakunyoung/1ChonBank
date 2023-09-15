@@ -4,8 +4,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100vh;
   background-color: #f2f2f2; /* 배경색 추가 */
+}
+.mypage-profilecontainer{
+
 }
 
 .button-grid {
@@ -13,7 +16,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+
 }
 
 .row {
@@ -122,4 +125,8 @@
   color: black;
   text-decoration: none;
   padding: 10px;
+}
+.mypage-footer{
+  position: absolute;
+  bottom: 0;
 }

@@ -95,7 +95,9 @@ const Quiz = () => {
           <p>퀴즈 데이터를 불러오는 중...</p>
         )}
       </div>
+      <div className='quiz-container'>
       <Footer/>
+      </div>
     </div>
   );
 };

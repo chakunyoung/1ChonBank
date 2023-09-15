@@ -42,7 +42,7 @@ position: relative; /* 버튼 내부의 절대 위치 요소가 부모에 상대
 margin: 10px; /* 원하는 간격 설정 */
 
 }
-.icon{
+.footer-icon{
   font-size: 30px;
 
 }
@@ -58,8 +58,17 @@ cursor: pointer;
 box-shadow: 0 0 10px rgba(19, 63, 219, 0.5), 0 0 20px rgba(183, 0, 77, 0.4);
 transform: scale(1.1); /* 마우스 오버 시 버튼 크기 확대 */
 }
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 
-.gradient-circle {
+}
+
+.home-circle {
 width: 50px;
 height: 50px;
 border-radius: 50%;
@@ -71,5 +80,4 @@ position: absolute; /* 아이콘과 겹치게 하려면 절대 위치로 설정 
 top: 50%; /* 수직 가운데 정렬을 위해 절반의 위치로 이동 */
 left: 50%; /* 수평 가운데 정렬을 위해 절반의 위치로 이동 */
 transform: translate(-50%, -50%); /* 중앙 정렬 */
-
 }

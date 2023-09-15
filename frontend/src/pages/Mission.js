@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Mission.css';
+import Footer from 'components/common/Footer'
+
 
 const Mission = () => {
   const [missionTitle, setMissionTitle] = useState('');
@@ -79,6 +81,9 @@ const Mission = () => {
           미션 등록
           <div className="mission-background-box"></div>
         </button>
+      </div>
+      <div className='mission-footer'>
+      <Footer/>
       </div>
     </div>
   );
