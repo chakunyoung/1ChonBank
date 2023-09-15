@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "services/api/apis";
-
-axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
-axios.defaults.withCredentials = true;
+import apis from "services/api/apis";
 
 const initialState = {
     id:'',
@@ -17,7 +14,7 @@ export const makeLoaner = createAsyncThunk(
     "loaner/makeLoaner",
     async (data, { rejectWithValue }) => {
         try {
-            const res = await axios.post("/api/loaner", JSON.stringify(data), {
+            const res = await apis.post("/api/loaner", JSON.stringify(data), {
             });
             console.log(res.data);
         } catch (error) {

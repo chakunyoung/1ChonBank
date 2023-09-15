@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import TokenVerification from 'components/auth/TokenVerification';
 import Home from 'pages/Home';
 import Register from 'pages/Register';
 import Mypage from 'pages/Mypage';
 import Mission from 'pages/Mission';
 import KakaoLoginRedirect from 'pages/user/KakaoLoginRedirect';
-
 import Quiz from 'pages/Quiz';
 import SelectFinance from 'pages/finance/SelectFinance';
 import MakeFinance from 'pages/finance/MakeFinance';
@@ -25,7 +25,8 @@ const RoutePath = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/mypage" element=
+        {<TokenVerification> <Mypage /> </TokenVerification>} />
         <Route path="/mission" element={<Mission />} />
         <Route path="/selectFinance" element={<SelectFinance />} />
         <Route path="/makeFinance" element={<MakeFinance />} />
@@ -50,4 +51,4 @@ const RoutePath = () => {
 };
 
 export default RoutePath;
-        
+
