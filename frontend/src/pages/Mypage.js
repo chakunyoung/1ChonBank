@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BsBank, BsFillHouseFill } from "react-icons/bs";
+import { BsBank, BsFillHousesFill } from "react-icons/bs";
+
 import { AiFillDollarCircle } from "react-icons/ai";
 import { TbTargetArrow } from "react-icons/tb";
 import { RiQuestionnaireFill } from "react-icons/ri";
@@ -9,9 +10,6 @@ import Footer from "components/common/Footer";
 import Profile from "components/common/Profile"
 import './Mypage.css';
 import { useSelector } from 'react-redux';
-
-
-
 const Mypage = () => {
 
   const navigate= useNavigate();
@@ -22,6 +20,16 @@ const Mypage = () => {
     else{
       navigate("/quiz");
     }
+  }
+
+  const familyName = useSelector((state) => state.family.familyName);
+  const handleCheckHaveFamily = () => {
+    if (familyName === '') {
+      navigate("/createFamily");
+    } else {
+      navigate("/myFamily");
+    }
+
   }
 
   return (
@@ -35,10 +43,10 @@ const Mypage = () => {
             <AiFillDollarCircle className='logo'/>
             <span>계좌정보</span>
           </Link>
-          <Link to="/family" className="button button-family">
-            <BsFillHouseFill className='logo'/>
+          <div onClick={handleCheckHaveFamily} className="button button-family">
+            <BsFillHousesFill className='logo'/>
             <span>가족</span>
-          </Link>
+          </div>
         </div>
         <div className="row">
           <Link to="/financial" className="button button-financial">

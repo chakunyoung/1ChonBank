@@ -31,6 +31,9 @@ public class Family {
     @OneToMany(mappedBy = "family")
     private List<User> users = new ArrayList<>();
 
+    @OneToMany(mappedBy = "family", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Invitation> invitations = new ArrayList<>();
+
     public void addUser(User user) {
         this.users.add(user);
         user.setFamily(this);

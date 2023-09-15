@@ -5,7 +5,7 @@ import Register from 'pages/Register';
 import Mypage from 'pages/Mypage';
 import Mission from 'pages/Mission';
 import KakaoLoginRedirect from 'pages/user/KakaoLoginRedirect';
-import DailyQuiz from 'pages/Quiz';
+
 import Quiz from 'pages/Quiz';
 import SelectFinance from 'pages/finance/SelectFinance';
 import MakeFinance from 'pages/finance/MakeFinance';
@@ -14,6 +14,10 @@ import FinanceDetail from 'pages/finance/FinanceDetail';
 import QuizResult from 'pages/QuizResult';
 import Account from 'pages/account/Account';
 import AccountDetail from 'pages/account/AccountDetail';
+
+
+import CreateFamily from 'pages/family/CreateFamily';
+import MyFamily from 'pages/family/MyFamily';
 
 
 const RoutePath = () => {
@@ -28,12 +32,15 @@ const RoutePath = () => {
         <Route path="/financial" element={<FinanceList />} />
         <Route path="/financeDetail" element={<FinanceDetail />} />
         <Route path="/financelist" element={<FinanceList />} />
-        <Route path="/quiz" element={<DailyQuiz />} />
+
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/quizResult" element={<QuizResult />} />
         <Route path="/financelist" element={<FinanceList />} />
         <Route path="/account" element={<Account />} />
         <Route path="/accountDetail" element={<AccountDetail />} />
+        <Route path="/createFamily" element={<CreateFamily />} />
+        <Route path="/myFamily" element={<MyFamily />} />
+
         <Route
           path="/login/kakao/code"
           element={<KakaoLoginRedirect />}

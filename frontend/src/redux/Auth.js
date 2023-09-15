@@ -13,8 +13,10 @@ const initialState = {
   accessToken: '',
   roles : '',
   nickname:'',
-  serverNickname:'',
   quiz:'',
+  money:'',
+  score:'',
+
 };
 
 export const login = createAsyncThunk(
@@ -64,6 +66,10 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setQuiz(state,action){
+      state.quiz = action.payload;
+    },
+
     setAccessToken(state, action) {
       state.accessToken = action.payload;
     },
@@ -92,8 +98,12 @@ const authSlice = createSlice({
       state.nickname = action.payload;
     },
 
-    setServerNickname: (state, action) => {
-      state.serverNickname = action.payload;
+    setMoney:(state, action)=>{
+      state.money = action.payload;
+    },
+
+    setScore:(state, action)=>{
+      state.score = action.payload;
     },
     
     setQuiz: (state) => {
@@ -127,6 +137,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAccessToken, setRoles, setType, setUserId, setIsLogin,setRefreshToken,setNickname,setServerNickname, logout, setQuiz} = authSlice.actions;
+
+export const { setAccessToken, setMoney,setScore, setRoles, setType, setUserId, setIsLogin,setRefreshToken,setNickname,setServerNickname, logout,setQuiz} = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import './Register.css';
 import char2 from 'assets/char2x4.png';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,18 +7,18 @@ import apis from 'services/api/apis';
 
 const Register = () => {
 
-  
+
 
   const dispatch = useDispatch();
   // const [role, setRole] = useState(null);
   // const [nickname, setNickname] = useState("");
   const [nicknameError, setNicknameError] = useState(""); // State for nickname error message
 
-  const roles = useSelector((state)=>state.auth.roles);
-  const nickname = useSelector((state)=>state.auth.nickname);
-  const userId = useSelector((state)=>state.auth.userId);
+  const roles = useSelector((state) => state.auth.roles);
+  const nickname = useSelector((state) => state.auth.nickname);
+  const userId = useSelector((state) => state.auth.userId);
 
-  const data ={
+  const data = {
     roles,
     nickname,
     userId,
@@ -39,10 +38,10 @@ const Register = () => {
 
   const handleNicknameChange = (event) => {
     const newNickname = event.target.value;
-    
+
     if (newNickname.length > 10) {
       setNicknameError("닉네임의 최대 길이는 10자입니다.");
-    } 
+    }
     else {
       dispatch(setNickname(newNickname));
       setNicknameError(""); // Clear the error message if the nickname is within the limit
@@ -51,21 +50,21 @@ const Register = () => {
 
   const handleSaveUser = async () => {
     try {
-      if(nickname.length===0){
+      if (nickname.length === 0) {
         alert("닉네임을 한글자 이상 입력하시오");
         return;
       }
-      const response = await apis.get(`/user/duplication/${nickname}`);
+      const response = await apis.get(`/api/user/duplication/${nickname}`);
       const { success, status } = response;
-  
-      if (status === 200 || success ==="true") {
+
+      if (status === 200 || success === "true") {
         // 닉네임이 중복되지 않는 경우
 
-          // 회원가입 성공한 경우
-          apis.post("user/saveUser", data);
-          alert("회원가입 성공");
-          window.location.href = '/mypage';
-        
+        // 회원가입 성공한 경우
+        apis.post("/api/user/saveUser", data);
+        alert("회원가입 성공");
+        window.location.href = '/mypage';
+
       } else {
         // 닉네임이 중복된 경우 또는 서버에서 다른 오류가 발생한 경우
         alert("닉네임 중복"); // 서버에서 반환된 메시지를 표시
@@ -111,7 +110,7 @@ const Register = () => {
       <div className="register-card"> {/* 텍스트 입력 필드 카드 */}
         <label className="card-label">
           닉네임
-          </label>
+        </label>
         <input
           type="text"
           value={nickname}
@@ -122,9 +121,12 @@ const Register = () => {
       </div>
       {nicknameError && <p className="nickname-error">{nicknameError}</p>} {/* Display error message */}
       <div className="role-button-container">
-          <button className="role-button" onClick={handleSaveUser}>
-            가입
-          </button>
+
+
+        <button className="role-button" onClick={handleSaveUser}>
+          가입
+        </button>
+
         <div className="background-box"></div>
       </div>
     </div>
