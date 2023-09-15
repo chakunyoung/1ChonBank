@@ -120,7 +120,7 @@ public class LoanerServiceImpl implements CustomerService<LoanerDto> {
 			.money(loaner.getMoney())
 			.date(loaner.getDate())
 			.financialProductId(financialProduct.getId())
-			.ProductName(financialProduct.getName())
+			.productName(financialProduct.getName())
 			.build();
 	}
 }
