@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getProductList } from "redux/Finance";
 import './FinanceList.css';
 import { useDispatch } from 'react-redux';
-import FinancelistSet from 'components/Finance/FinancelistSet';
+import FinancelistSet from 'components/finance/FinancelistSet';
 import { Link } from 'react-router-dom';
 const FinanceList = () => {
     const [products, setProducts] = useState([]);

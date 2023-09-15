@@ -20,7 +20,7 @@ const SelectFinance = () => {
     setFinance(selectedFinance);
   };
   const handleSelectProduct = () => {
-    if (finance == ''){
+    if (finance === ''){
       setValidationMessage('상품을 선택해 주세요.');
       return;
     }

@@ -120,7 +120,7 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 			.money(savingser.getMoney())
 			.date(savingser.getDate())
 			.financialProductId(financialProduct.getId())
-			.ProductName(financialProduct.getName())
+			.productName(financialProduct.getName())
 			.regularMoney(savingser.getRegularMoney())
 			.build();
 	}

@@ -115,7 +115,7 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 			.money(depositor.getMoney())
 			.date(depositor.getDate())
 			.financialProductId(financialProduct.getId())
-			.ProductName(financialProduct.getName())
+			.productName(financialProduct.getName())
 			.build();
 	}
 

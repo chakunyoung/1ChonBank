@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import FinanceCard from './FinanceCard';
+import FinanceCard from './FinanceCard.js';
 import './FinancelistSet.css';
 import { setAll } from "redux/Finance";
 import { useDispatch } from 'react-redux';
