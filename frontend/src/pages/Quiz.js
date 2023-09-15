@@ -8,11 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import Footer from 'components/common/Footer';
 
 const Quiz = () => {
+
   // const [quizBack, setQuizBack] = useState(null); 
   const [selectedAnswer, setSelectedAnswer] = useState(null); 
   const [error, setError] = useState(null); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
 
   const quizInfo = useSelector((state)=>state.quizInfo.quizInfo)
   
@@ -24,6 +26,7 @@ const Quiz = () => {
         dispatch(setQuizInfo(quizData));
         console.log(quizData);
         setError(null); 
+
       } catch (error) {
         console.error('퀴즈 데이터를 가져오는 데 실패했습니다.', error);
         setError('퀴즈 데이터를 가져오는 데 실패했습니다.');
@@ -32,7 +35,7 @@ const Quiz = () => {
 
 
     fetchQuiz();
-  }, []); 
+  }, []);
 
   const handleAnswerSelect = (answer) => {
     setSelectedAnswer(answer);
@@ -86,9 +89,9 @@ const Quiz = () => {
                   <div className={`circle ${selectedAnswer === index ? 'selected' : ''}`}></div>
                 </div>
               ))}
-                <button onClick={handleSubmit} className="custom-button">
-                  정답 제출
-                </button>
+              <button onClick={handleSubmit} className="custom-button">
+                정답 제출
+              </button>
             </div>
           </div>
         ) : (

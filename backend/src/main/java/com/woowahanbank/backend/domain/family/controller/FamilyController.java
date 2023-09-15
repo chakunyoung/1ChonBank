@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,7 +21,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+
 import java.util.List;
+
+import java.util.Enumeration;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +36,7 @@ import java.util.List;
 @RequestMapping("/api/families")
 public class FamilyController {
     private final FamilyService familyService;
+
 
     @ApiOperation(value = "가족 구성원 조회")
     @ApiResponse(code = 200, message = "가족 구성원 조회 성공")
@@ -41,10 +49,9 @@ public class FamilyController {
     @ApiOperation(value = "가족 생성")
     @ApiImplicitParam(name = "familyName", value = "가족 이름", required = true, dataType = "string", paramType = "path")
     @ApiResponse(code = 200, message = "가족 생성 성공")
+
     @PostMapping("{familyName}")
     public ResponseEntity<?> registerFamily(@ApiIgnore @AuthenticationPrincipal CustomUserDetails customUser, @PathVariable String familyName) {
-        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        log.info("user = {}", user);
         familyService.createFamily(customUser.getNickname(), familyName);
 
         return BaseResponse.ok(HttpStatus.OK, "가족 생성 성공");

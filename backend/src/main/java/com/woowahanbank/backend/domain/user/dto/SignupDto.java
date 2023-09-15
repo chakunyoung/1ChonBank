@@ -23,4 +23,11 @@ public class SignupDto {
 
 	private Role roles;
 
+	private Long money;
+
+	private Long quiz;
+
+	private Integer score;
+
+
 }

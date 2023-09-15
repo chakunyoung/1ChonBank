@@ -45,6 +45,9 @@ public class UserService {
 			.userId(user.getUserId())
 			.nickname(user.getNickname())
 			.roles(user.getRoles())
+			.money(user.getMoney())
+			.quiz(user.getQuiz())
+			.score(user.getScore())
 			.build();
 	}
 

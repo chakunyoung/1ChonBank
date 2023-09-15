@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import char1 from 'assets/char1x4.png';
 import Kakaoicon from 'assets/kakao.svg';
-import Footer from 'components/common/Footer';
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Home = () => {
     const data = JSON.parse(localStorage.getItem('persist:root'));
     if (data) {
       const authData = JSON.parse(data.auth);
-      
+
       if (authData && authData.accessToken) {
         console.log('Access Token:', authData.accessToken);
         console.log('user nickname:', authData.nickname);

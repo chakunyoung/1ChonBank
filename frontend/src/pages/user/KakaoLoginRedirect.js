@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { kakaoLogin, setUserId, setNickname, setServerNickname, setIsLogin, setRoles } from "redux/Auth";
+import { kakaoLogin, setUserId, setNickname, setIsLogin, setRoles, setQuiz, setMoney, setScore } from "redux/Auth";
 import { setAccessToken } from "redux/Auth";
 import apis from "services/api/apis";
 
@@ -51,16 +51,19 @@ const KakaoLoginRedirect = () => {
             const payloadObj = JSON.parse(decodedPayload);
             // payload에서 sub 값을 추출합니다.
             const userId = payloadObj.sub;
+            dispatch(setUserId(userId));
 
-            apis.get(`/user/${userId}`)
+            apis.get(`/api/user/${userId}`)
               .then((response) => {
                 // 성공적인 API 응답을 처리합니다.
                 const userData = response.data.data;
                 dispatch(setUserId(userData.userId));
                 dispatch(setNickname(userData.nickname));
-                dispatch(setServerNickname(userData.serverNickname));
                 dispatch(setRoles(userData.roles));
                 dispatch(setIsLogin(true));
+                dispatch(setQuiz(userData.quiz));
+                dispatch(setMoney(userData.money));
+                dispatch(setScore(userData.score));
                 console.log(userData);
                 // type 값에 따라 navigate 처리
                 if (userData.roles === null) {

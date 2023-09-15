@@ -68,6 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	@Transactional(readOnly = true)
 	public Authentication getAuthentication(HttpServletRequest request) throws Exception {
+		log.info("{}", request.getHeader(JwtTokenUtil.HEADER_STRING));
 		String token = request.getHeader(JwtTokenUtil.HEADER_STRING);
 		// 요청 헤더에 Authorization 키값에 jwt 토큰이 포함된 경우에만, 토큰 검증 및 인증 처리 로직 실행.
 		if (token != null) {
