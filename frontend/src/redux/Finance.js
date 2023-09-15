@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "services/api/apis";
+import apis from "services/api/apis";
 
-axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
-axios.defaults.withCredentials = true;
 
 const initialState = {
     id: '0',
@@ -18,7 +16,7 @@ export const makeProduct = createAsyncThunk(
     "finance/makeProduct",
     async (data, { rejectWithValue }) => {
         try {
-            const res = await axios.post("/api/financial", JSON.stringify(data), {
+            const res = await apis.post("/api/financial", JSON.stringify(data), {
             });
             return res.data;
         } catch (error) {
@@ -30,7 +28,7 @@ export const getProductList = createAsyncThunk(
     "finance/getProductList",
     async (data, { rejectWithValue }) => {
         try {
-            const res = await axios.get("/api/financial/1", {
+            const res = await apis.get("/api/financial/1", {
             });
             return res.data;
         } catch (error) {

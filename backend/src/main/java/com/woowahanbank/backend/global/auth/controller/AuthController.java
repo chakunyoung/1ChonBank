@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 import com.woowahanbank.backend.global.response.BaseResponse;
 import com.woowahanbank.backend.global.util.JwtTokenUtil;
 
@@ -27,6 +29,14 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthController {
 
 	private final RedisTemplate<String, String> template;
+
+	@PostMapping("/api/users/verify-token")
+	public ResponseEntity<?> verifyToken(@AuthenticationPrincipal CustomUserDetails userDetails) {
+		if (userDetails == null) {
+			return BaseResponse.fail("DB에 해당되는 유작 없습니다.", 401);
+		}
+		return ResponseEntity.ok("JWT DB 검증 완료");
+	}
 
 	@PostMapping("/api/users/reissue")
 	public ResponseEntity<?> reissueAccessToken(@RequestHeader("Authorization") String token) {
