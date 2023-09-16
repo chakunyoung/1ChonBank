@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.woowahanbank.backend.global.auth.jwt.JwtHeaderDto;
 import com.woowahanbank.backend.global.auth.jwt.JwtPayloadDto;
+import com.woowahanbank.backend.global.auth.oauth.oidc.publickey.GooglePublicKeyService;
 import com.woowahanbank.backend.global.auth.oauth.oidc.publickey.PublicKeyService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,18 +25,26 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class OidcUtil {
-	private static final String ISS = "https://kauth.kakao.com";
-	private final String aud;
+	private static final String KAKAO_ISS = "https://kauth.kakao.com";
+	private static final String GOOGLE_ISS = "https://accounts.google.com";
+	private final String kakaoAud;
+	private final String googleAud;
 	private final PublicKeyService publicKeyService;
+	private final GooglePublicKeyService googlePublicKeyService;
 
-	@Autowired // 생성자를 통한 주입을 위해 @Autowired 어노테이션 추가
-	public OidcUtil(@Value("${spring.security.oauth2.client.registration.kakao.client-id}") String aud,
-		PublicKeyService publicKeyService) {
-		this.aud = aud;
+	@Autowired
+	public OidcUtil(
+		@Value("${spring.security.oauth2.client.registration.kakao.client-id}") String kakaoAud,
+		@Value("${spring.security.oauth2.client.registration.google.client-id}") String googleAud,
+		PublicKeyService publicKeyService,
+		GooglePublicKeyService googlePublicKeyService) {
+		this.kakaoAud = kakaoAud;
+		this.googleAud = googleAud;
 		this.publicKeyService = publicKeyService;
+		this.googlePublicKeyService= googlePublicKeyService;
 	}
 
-	public JwtPayloadDto decodeIdToken(String idToken) throws JsonProcessingException {
+	public JwtPayloadDto decodeIdToken(String idToken, String service) throws JsonProcessingException {
 		idToken = idToken.replace(JwtTokenUtil.TOKEN_PREFIX, "");
 		String jwtToken = idToken;
 
@@ -57,14 +66,28 @@ public class OidcUtil {
 		}
 
 		// 검증에 필요한 시크릿 키나 공개키를 생성합니다.
-		PublicKey publicKey = publicKeyService.getPublicKeyByKid(jwtHeaderDto.getKid());
+		PublicKey publicKey;
+		String issuer;
+		String audience;
+
+		if ("kakao".equals(service)) {
+			issuer = KAKAO_ISS;
+			audience = kakaoAud;
+			publicKey = publicKeyService.getPublicKeyByKid(jwtHeaderDto.getKid());
+		} else if ("google".equals(service)) {
+			issuer = GOOGLE_ISS;
+			audience = googleAud;
+			publicKey = googlePublicKeyService.getPublicKey(jwtHeaderDto.getKid());
+		} else {
+			throw new IllegalArgumentException("Unknown service: " + service);
+		}
 
 		// JWTVerifier를 생성하고 토큰을 검증합니다.
 		JWTVerifier verifier = JWT
 			.require(Algorithm.RSA256((RSAPublicKey)publicKey, null))
 			.ignoreIssuedAt()
-			.withIssuer(ISS)
-			.withAudience(aud)
+			.withIssuer(issuer)
+			.withAudience(audience)
 			.build();
 
 		DecodedJWT decodedJWT = verifier.verify(idToken);

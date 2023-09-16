@@ -53,7 +53,10 @@ public class SecurityConfig {
 
 		http
 			.authorizeRequests()
-			.antMatchers("/**").permitAll(); //테스트 페이지
+			.antMatchers("/**").permitAll() // 테스트 페이지
+			.and()
+			.oauth2Login()
+			.loginPage("/");
 		// 		.antMatchers("/api/users/login").permitAll() //로그인
 		// 		.antMatchers("/api/users/**").permitAll() //회원 가입
 		// 		.antMatchers("/api/interviews/rooms/**").permitAll() // 면접방 조회

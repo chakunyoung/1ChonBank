@@ -40,7 +40,7 @@ public class KakaoOidcController {
 	public ResponseEntity<?> oidcLogin(@RequestHeader("Authorization") String idToken) {
 		JwtPayloadDto memberData;
 		try {
-			memberData = oidcUtil.decodeIdToken(idToken);
+			memberData = oidcUtil.decodeIdToken(idToken, "kakao");
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
