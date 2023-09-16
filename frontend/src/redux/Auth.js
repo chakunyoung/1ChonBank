@@ -6,26 +6,23 @@ axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const initialState = {
-  refreshToken: '',
-  userId: '',
+  refreshToken: "",
+  userId: "",
   isLogin: false,
-  type : '',
-  accessToken: '',
-  roles : '',
-  nickname:'',
-  quiz:'',
-  money:'',
-  score:'',
-
+  type: "",
+  accessToken: "",
+  roles: "",
+  nickname: "",
+  quiz: "",
+  money: "",
+  score: "",
 };
 
 export const login = createAsyncThunk(
-  
   "auth/login",
   async (data, { rejectWithValue }) => {
     try {
-      const res = await axios.post("/api/users/login", data, {
-      });
+      const res = await axios.post("/api/users/login", data, {});
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -38,8 +35,7 @@ export const getUserInfo = createAsyncThunk(
   async (accessToken, { rejectWithValue }) => {
     try {
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-      const res = await axios.get("/api/mypage", {
-      });
+      const res = await axios.get("/api/mypage", {});
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -52,9 +48,8 @@ export const kakaoLogin = createAsyncThunk(
   async (accessToken, { rejectWithValue }) => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
     try {
-      const res = await axios.post("/api/users/login/kakao", {
-      });
-      console.log(res.data['access-token']);
+      const res = await axios.post("/api/users/login/kakao", {});
+      console.log(res.data["access-token"]);
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -66,7 +61,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setQuiz(state,action){
+    setQuiz(state, action) {
       state.quiz = action.payload;
     },
 
@@ -94,31 +89,31 @@ const authSlice = createSlice({
       state.refreshToken = action.payload;
     },
 
-    setNickname:(state, action)=>{
+    setNickname: (state, action) => {
       state.nickname = action.payload;
     },
 
-    setMoney:(state, action)=>{
+    setMoney: (state, action) => {
       state.money = action.payload;
     },
 
-    setScore:(state, action)=>{
+    setScore: (state, action) => {
       state.score = action.payload;
     },
-    
+
     setQuiz: (state) => {
       state.quiz = true;
     },
-    
+
     logout: (state, action) => {
-      state.refreshToken = '';
-      state.userId = '';
+      state.refreshToken = "";
+      state.userId = "";
       state.isLogin = false;
-      state.type = '';
-      state.accessToken = '';
-      state.roles = '';
-      state.nickname = '';
-      state.serverNickname = '';
+      state.type = "";
+      state.accessToken = "";
+      state.roles = "";
+      state.nickname = "";
+      state.serverNickname = "";
     },
   },
   extraReducers: (builder) => {
@@ -137,7 +132,19 @@ const authSlice = createSlice({
   },
 });
 
-
-export const { setAccessToken, setMoney,setScore, setRoles, setType, setUserId, setIsLogin,setRefreshToken,setNickname,setServerNickname, logout,setQuiz} = authSlice.actions;
+export const {
+  setAccessToken,
+  setMoney,
+  setScore,
+  setRoles,
+  setType,
+  setUserId,
+  setIsLogin,
+  setRefreshToken,
+  setNickname,
+  setServerNickname,
+  logout,
+  setQuiz,
+} = authSlice.actions;
 
 export default authSlice.reducer;

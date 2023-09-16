@@ -22,4 +22,13 @@ public class JwtPayloadDto {
 	private long iat;
 	private String picture;
 	private String email;
+	// 구글용 추가
+	private String azp;
+	private String at_hash;
+	private String name;
+	@JsonProperty("given_name")
+	private String givenName;
+	@JsonProperty("family_name")
+	private String familyName;
+	private String locale;
 }

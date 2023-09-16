@@ -38,6 +38,8 @@ public class AuthController {
 		return ResponseEntity.ok("JWT DB 검증 완료");
 	}
 
+
+
 	@PostMapping("/api/users/reissue")
 	public ResponseEntity<?> reissueAccessToken(@RequestHeader("Authorization") String token) {
 		DecodedJWT decodedJwt = null;
