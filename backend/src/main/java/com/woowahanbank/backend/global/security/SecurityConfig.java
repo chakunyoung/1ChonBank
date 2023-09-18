@@ -97,7 +97,8 @@ public class SecurityConfig {
 				"/swagger-ui/**",
 				"/v3/api-docs",
 				"/resources/**",
-				"/webjars/**"))
+				"/webjars/**",
+				"/swagger-ui.html"))
 			.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
 			.requestCache(RequestCacheConfigurer::disable)
 			.securityContext(AbstractHttpConfigurer::disable)

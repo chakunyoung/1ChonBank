@@ -16,6 +16,7 @@ const initialState = {
   quiz: "",
   money: "",
   score: "",
+  firebaseToken: "",
 };
 
 export const login = createAsyncThunk(
@@ -105,6 +106,10 @@ const authSlice = createSlice({
       state.quiz = true;
     },
 
+    setFirebaseToken: (state, action) => {
+      state.firebaseToken = action.payload;
+    },
+
     logout: (state, action) => {
       state.refreshToken = "";
       state.userId = "";
@@ -145,6 +150,7 @@ export const {
   setServerNickname,
   logout,
   setQuiz,
+  setFirebaseToken,
 } = authSlice.actions;
 
 export default authSlice.reducer;

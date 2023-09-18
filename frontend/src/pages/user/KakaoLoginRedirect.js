@@ -10,9 +10,11 @@ import {
   setQuiz,
   setMoney,
   setScore,
+  setFirebaseToken,
 } from "redux/Auth";
 import { setAccessToken } from "redux/Auth";
 import apis from "services/api/apis";
+import { getFirebaseToken } from "services/api/FirebaseAPI";
 
 const KakaoLoginRedirect = () => {
   const { search } = useLocation();
@@ -64,7 +66,7 @@ const KakaoLoginRedirect = () => {
 
             apis
               .get(`/api/user/${userId}`)
-              .then((response) => {
+              .then(async (response) => {
                 // 성공적인 API 응답을 처리합니다.
                 const userData = response.data.data;
                 dispatch(setUserId(userData.userId));
@@ -83,6 +85,15 @@ const KakaoLoginRedirect = () => {
                   // type이 null이 아닌 경우 /로 navigate
                   navigate("/mypage");
                 }
+
+                const firebaseToken = await getFirebaseToken();
+                if (firebaseToken) {
+                  console.log(firebaseToken);
+                  dispatch(setFirebaseToken(firebaseToken));
+                  //await apis.post('/api/update-token', { token: firebaseToken });
+                  console.log('FIREBASE - token updated successfully');
+                }
+                
               })
               .catch((error) => {
                 // API 오류를 처리합니다.
