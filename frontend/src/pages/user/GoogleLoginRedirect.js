@@ -11,8 +11,10 @@ import {
   setQuiz,
   setMoney,
   setScore,
+  setFirebaseToken,
 } from "redux/Auth"; // 필요한 액션들을 import 합니다.
 import apis from "services/api/apis";
+import { getFirebaseToken } from "services/api/FirebaseAPI";
 
 function GoogleLoginRedirect() {
   const location = useLocation();
@@ -72,6 +74,15 @@ function GoogleLoginRedirect() {
       } else {
         navigate("/mypage");
       }
+
+      const firebaseToken = await getFirebaseToken();
+      if (firebaseToken) {
+        console.log(firebaseToken);
+        dispatch(setFirebaseToken(firebaseToken));
+        //await apis.post('/api/update-token', { token: firebaseToken });
+        console.log('FIREBASE - token updated successfully');
+      }
+
     } catch (error) {
       console.error("API 오류:", error);
     }
