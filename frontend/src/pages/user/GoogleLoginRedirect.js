@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
   setAccessToken,
@@ -14,12 +14,14 @@ import {
   setFirebaseToken,
 } from "redux/Auth"; // 필요한 액션들을 import 합니다.
 import apis from "services/api/apis";
-import { getFirebaseToken } from "services/api/FirebaseAPI";
+import { getFirebaseToken, sendWebPushNotification } from "services/api/FirebaseAPI";
 
 function GoogleLoginRedirect() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const nickname = useSelector((state) => state.auth.nickname);
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -47,7 +49,7 @@ function GoogleLoginRedirect() {
       dispatch(setAccessToken(accessToken));
       dispatch(setUserId(userId));
 
-      fetchUserData(userId, navigate, dispatch);
+      fetchUserData(userId, navigate, dispatch, nickname, token);
     } catch (error) {
       console.error("구글 로그인 에러:", error);
       navigate("/");
@@ -55,7 +57,7 @@ function GoogleLoginRedirect() {
     }
   };
 
-  const fetchUserData = async (userId, navigate, dispatch) => {
+  const fetchUserData = async (userId, navigate, dispatch, nickname, token) => {
     try {
       const response = await apis.get(`/api/user/${userId}`);
       const userData = response.data.data;
@@ -77,16 +79,24 @@ function GoogleLoginRedirect() {
 
       const firebaseToken = await getFirebaseToken();
       if (firebaseToken) {
-        console.log(firebaseToken);
         dispatch(setFirebaseToken(firebaseToken));
-        //await apis.post('/api/update-token', { token: firebaseToken });
         console.log('FIREBASE - token updated successfully');
+
+        if (userData.nickname && firebaseToken) {
+          await sendWebPushNotification(userData.nickname, firebaseToken)
+            .then(res => {
+              console.log('FIREBASE - send backend firebase token successfully');
+            }).catch((error) => {
+              console.error('Error sending web push notification:', error);
+            });
+        }
       }
 
     } catch (error) {
       console.error("API 오류:", error);
     }
   };
+
 
   return <div>Redirecting...</div>;
 }
