@@ -1,13 +1,15 @@
-importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-messaging-compat.js');
-importScripts('/FirebaseConfig.js');
+importScripts('https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/7.24.0/firebase-messaging.js');
+importScripts('./FirebaseConfig.js'); // FirebaseConfig.js는 firebaseConfig 객체만 export 해야 합니다.
 
 firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
 
-messaging.setBackgroundMessageHandler((payload) => {
+// 이름 변경: messaging -> swMessaging
+const swMessaging = firebase.messaging();
+
+swMessaging.setBackgroundMessageHandler((payload) => {
   console.log('Received background message ', payload);
-  
+
   const notificationTitle = 'Message Title';
   const notificationOptions = {
     body: 'Background Message body.',
