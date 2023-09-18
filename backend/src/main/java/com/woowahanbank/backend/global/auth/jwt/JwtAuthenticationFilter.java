@@ -84,8 +84,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				// 식별된 정상 유저인 경우, 요청 context 내에서 참조 가능한 인증 정보(jwtAuthentication) 생성.
 				CustomUserDetails userDetails = new CustomUserDetails(user);
 				UsernamePasswordAuthenticationToken jwtAuthentication = new UsernamePasswordAuthenticationToken(
-					userDetails,
-					null, userDetails.getAuthorities());
+						userDetails,
+						null, userDetails.getAuthorities());
 				jwtAuthentication.setDetails(userDetails);
 				log.info("JWT Auth OK!");
 				return jwtAuthentication;

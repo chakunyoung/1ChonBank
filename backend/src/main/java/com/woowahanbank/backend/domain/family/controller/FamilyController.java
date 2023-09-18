@@ -5,6 +5,8 @@ import com.woowahanbank.backend.domain.family.service.FamilyService;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
+import com.woowahanbank.backend.global.notification.dto.NotificationDto;
+import com.woowahanbank.backend.global.notification.event.NotificationEvent;
 import com.woowahanbank.backend.global.response.BaseResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -13,6 +15,7 @@ import io.swagger.annotations.ApiResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-
 import java.util.List;
-
-import java.util.Enumeration;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api/families")
 public class FamilyController {
     private final FamilyService familyService;
-
+    private final ApplicationEventPublisher eventPublisher;
 
     @ApiOperation(value = "가족 구성원 조회")
     @ApiResponse(code = 200, message = "가족 구성원 조회 성공")
@@ -49,7 +46,6 @@ public class FamilyController {
     @ApiOperation(value = "가족 생성")
     @ApiImplicitParam(name = "familyName", value = "가족 이름", required = true, dataType = "string", paramType = "path")
     @ApiResponse(code = 200, message = "가족 생성 성공")
-
     @PostMapping("{familyName}")
     public ResponseEntity<?> registerFamily(@ApiIgnore @AuthenticationPrincipal CustomUserDetails customUser, @PathVariable String familyName) {
         familyService.createFamily(customUser.getNickname(), familyName);
@@ -84,7 +80,13 @@ public class FamilyController {
     @PostMapping("/invitation/{nickname}")
     public ResponseEntity<?> sendFamilyInvitation(@ApiIgnore @AuthenticationPrincipal CustomUserDetails customUser, @PathVariable String nickname) {
         familyService.inviteToFamily(customUser.getNickname(), nickname);
-
+        eventPublisher.publishEvent(new NotificationEvent(
+                this, nickname, NotificationDto.builder()
+                .title("가족 초대")
+                .body(customUser.getNickname() + "님이 " + customUser.getUser().getFamily().getFamilyName() + " 가족방에 초대했습니다.")
+                .clickAction("http://localhost:3000")
+                .icon("")
+                .build()));
         return BaseResponse.ok(HttpStatus.OK, "초대 전송 성공");
     }
 
