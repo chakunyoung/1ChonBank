@@ -61,16 +61,16 @@ public class QuizService {
 				.model("gpt-3.5-turbo")
 				// .model("gpt-4")
 				.messages(List.of(new GptMessage("system", "너는 똑똑한 경제 선생님이야, 쉬운 문제 중심으로 금융 문제 1개를 5지 선다로 내어줘"
-					+ " 항상 아래와 같은 형식을 맞추어서 대답해줘 그리고 각 형식은 한 줄로 만 답 해줘"
-					+ "공백 : (공백)\n"
-					+ "문제 : (문제)\n"
-					+ "1번 선지 : (1번 선지)\n"
-					+ "2번 선지 : (2번 선지)\n"
-					+ "3번 선지 : (3번 선지)\n"
-					+ "4번 선지 : (4번 선지)\n"
-					+ "5번 선지 : (5번 선지)\n"
-					+ "정답 : (정답 선지 숫자만)\n"
-					+ "해설 : (해설)\n")))
+					+ " 항상 아래와 같은 형식을 맞추어서 대답해줘 그리고 각 형식은 한 줄로 만 답 해주고 한국말로 답해줘"
+					+ "\n"
+					+ "문제: (문제, 앞에 '문제: '를 꼭 넣어줘)\n"
+					+ "1번 선지: (1번 선지)\n"
+					+ "2번 선지: (2번 선지)\n"
+					+ "3번 선지: (3번 선지)\n"
+					+ "4번 선지: (4번 선지)\n"
+					+ "5번 선지: (5번 선지)\n"
+					+ "정답: (정답의 번호, 앞에 '정답: '를 꼭 넣어줘)\n"
+					+ "해설: (해설, 앞에 '해설: '를 꼭 넣어줘)\n")))
 				.build();
 
 
@@ -97,8 +97,7 @@ public class QuizService {
 				for (GptResponseDto.Choice choice : gptResponseDto.getChoices()) {
 					choicesDetails += "Choice { index=" + choice.getIndex()
 						+ ", message { role=" + choice.getMessage().getRole()
-						+ ", content=" + choice.getMessage().getContent()
-						+ " } } ";
+						+ ", content=" + choice.getMessage().getContent();
 				}
 
 				// String logMessage = "GptResponseDto(id=" + gptResponseDto.getId()
@@ -122,28 +121,28 @@ public class QuizService {
 				String[] parts = choicesDetails.split("\n");
 				for (String part : parts) {
 					 if (part.startsWith("문제")){
-						question = part.substring("문제 : ".length()).trim();
+						question = part.substring("문제:".length()).trim();
 						System.out.println(question);
 					} else if (part.startsWith("1번 선지")) {
-						choice1 = part.substring("1번 선지 : ".length()).trim();
+						choice1 = part.substring("1번 선지:".length()).trim();
 						System.out.println(choice1);
 					} else if (part.startsWith("2번 선지")) {
-						choice2 = part.substring("2번 선지 : ".length()).trim();
+						choice2 = part.substring("2번 선지:".length()).trim();
 						System.out.println(choice2);
 					} else if (part.startsWith("3번 선지")) {
-						choice3 = part.substring("3번 선지 : ".length()).trim();
+						choice3 = part.substring("3번 선지:".length()).trim();
 						System.out.println(choice3);
 					} else if (part.startsWith("4번 선지")) {
-						choice4 = part.substring("4번 선지 : ".length()).trim();
+						choice4 = part.substring("4번 선지:".length()).trim();
 						System.out.println(choice4);
 					} else if (part.startsWith("5번 선지")) {
-						choice5 = part.substring("5번 선지 : ".length()).trim();
+						choice5 = part.substring("5번 선지:".length()).trim();
 						System.out.println(choice5);
 					} else if (part.startsWith("정답")) {
-						answer = part.substring("정답 : ".length()).trim();
+						answer = part.substring("정답:".length()).trim();
 						System.out.println(answer);
 					} else if (part.startsWith("해설")) {
-						commentary = part.substring("해설 : ".length()).trim();
+						commentary = part.substring("해설:".length()).trim();
 						System.out.println(commentary);
 					}
 				}
