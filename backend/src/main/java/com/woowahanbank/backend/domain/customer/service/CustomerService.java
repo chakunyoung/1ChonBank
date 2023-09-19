@@ -5,7 +5,7 @@ import java.util.List;
 import com.woowahanbank.backend.domain.user.dto.UserDto;
 
 public interface CustomerService<T> {
-	void apply(T tDto, UserDto userDto);
+	void apply(T tDto);
 
 	List<T> getDisallow(UserDto userDto);
 

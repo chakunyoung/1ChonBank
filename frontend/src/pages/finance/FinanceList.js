@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { getProductList } from "redux/Finance";
 import './FinanceList.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FinancelistSet from 'components/finance/FinancelistSet';
 import { Link } from 'react-router-dom';
 const FinanceList = () => {
     const [products, setProducts] = useState([]);
     const [viewType, setViewType] = useState('');
-
+    const [test, setTest] = useState(0);
+    const role = useSelector((state) => state.auth.roles);
+    
     const dispatch = useDispatch();
     const getListAll = () => {
-        dispatch(getProductList())
+        dispatch(getProductList(1))
             .then((resultAction) => {
                 if (getProductList.fulfilled.match(resultAction)) {
                     // 성공적으로 완료됐을 때
@@ -23,7 +25,7 @@ const FinanceList = () => {
                 }
             });
     };
-    useEffect(getListAll);
+    useEffect(getListAll,[test]);
     const handleType = (data) => {
         if (viewType === data)
             setViewType('');
@@ -39,7 +41,7 @@ const FinanceList = () => {
                     <img className='product-img' src={require('assets/savings.jpg')} alt="적금" />적금</button>
                 <button className='productType-button' onClick={() => handleType('LOAN')}>
                     <img className='product-img' src={require('assets/loan.jpg')} alt="대출" />대출</button>
-                {true ? <Link to="/selectFinance">
+                {role === 'ROLE_PARENT' ? <Link to="/selectFinance"> {/*부모인지 판별 넣어야됨*/}
                     <button className='productType-button'>
                         <img className='product-img' src={require('assets/Vector.jpg')} alt="추가" />
                         생성

@@ -28,10 +28,9 @@ public class LoanController {
 	private final CustomerService<LoanerDto> customerService;
 
 	@PostMapping
-	public ResponseEntity<?> apply(@RequestBody LoanerDto loanerDto,
-		@RequestBody UserDto userDto) {
+	public ResponseEntity<?> apply(@RequestBody LoanerDto loanerDto) {
 		try {
-			customerService.apply(loanerDto, userDto);
+			customerService.apply(loanerDto);
 			return BaseResponse.ok(HttpStatus.OK, "대출 상품 등록 성공");
 		} catch (Exception e) {
 			return BaseResponse.fail("대출 상품 등록 실패", 400);

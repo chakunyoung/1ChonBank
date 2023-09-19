@@ -11,46 +11,46 @@ const initialState = {
 	date:'',
 };
 export const makeDepositor = createAsyncThunk(
-    "finance/makeDepositor",
+    "depositor/makeDepositor",
     async (data, { rejectWithValue }) => {
         try {
             const res = await apis.post("/api/depositor", JSON.stringify(data), {
             });
-            return res.data;
+            console.log(res.data);
         } catch (error) {
-            return rejectWithValue(error.response.data);
+            rejectWithValue(error.response.data);
         }
     }
 );
 
 const depositorSlice = createSlice({
-    name: "auth",
+    name: "depositor",
     initialState,
     reducers: {
-        setId(state, action) {
+        setDepositorId(state, action) {
             state.id = action.payload;
         },
-        setUserId(state, action) {
+        setDepositorUserId(state, action) {
             state.userId = action.payload;
         },
-        setFinancialProductId(state, action) {
+        setDepositorFinancialProductId(state, action) {
             state.financialProductId = action.payload;
         },
-        setProductName(state, action) {
+        setDepositorProductName(state, action) {
             state.productName = action.payload;
         },
-        setGrant(state, action) {
+        setDepositorGrant(state, action) {
             state.grant = action.payload;
         },
-        setMoney(state, action) {
+        setDepositorMoney(state, action) {
             state.money = action.payload;
         },
-        setDate(state, action) {
+        setDepositorDate(state, action) {
             state.date = action.payload;
         },
     },
 });
 
-export const { setId, setUserId, setFinancialProductId, setProductName, setGrant, setMoney, setDate } = depositorSlice.actions;
+export const { setDepositorId, setDepositorUserId, setDepositorFinancialProductId, setDepositorProductName, setDepositorGrant, setDepositorMoney, setDepositorDate } = depositorSlice.actions;
 
 export default depositorSlice.reducer;

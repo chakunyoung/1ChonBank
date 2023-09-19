@@ -12,13 +12,12 @@
 .productType-button {
     width: 4.75rem;
     height: 4.75rem;
-    flex-shrink: 0;
+    border:none;
     border-radius: 10px;
+    border-color: white;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
-    flex-shrink: 0;
     background-color: white;
 }
 

@@ -28,10 +28,9 @@ public class SavingserController {
 	private final CustomerService<SavingserDto> customerService;
 
 	@PostMapping
-	public ResponseEntity<?> applySavingser(@RequestBody SavingserDto savingserDto,
-		@RequestBody UserDto userDto) {
+	public ResponseEntity<?> applySavingser(@RequestBody SavingserDto savingserDto) {
 		try {
-			customerService.apply(savingserDto, userDto);
+			customerService.apply(savingserDto);
 			return BaseResponse.ok(HttpStatus.OK, "적금 상품 등록 성공");
 		} catch (Exception e) {
 			return BaseResponse.fail("적금 상품 등록 실패", 400);

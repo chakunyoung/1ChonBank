@@ -34,8 +34,8 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 	private final PointServiceImpl pointService;
 
 	@Override
-	public void apply(SavingserDto savingserDto, UserDto userDto) {
-		User user = userRepository.findById(userDto.getId()).get();
+	public void apply(SavingserDto savingserDto) {
+		User user = userRepository.findById(savingserDto.getUserId()).get();
 		FinancialProduct financialProduct = financialProductRepository.findById(savingserDto.getFinancialProductId())
 			.get();
 		Savingser savingser = Savingser.builder()

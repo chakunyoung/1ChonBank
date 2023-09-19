@@ -34,8 +34,8 @@ public class LoanerServiceImpl implements CustomerService<LoanerDto> {
 	private final PointServiceImpl pointService;
 
 	@Override
-	public void apply(LoanerDto loanerDto, UserDto userDto) {
-		User user = userRepository.findById(userDto.getId()).get();
+	public void apply(LoanerDto loanerDto) {
+		User user = userRepository.findById(loanerDto.getUserId()).get();
 		FinancialProduct financialProduct = financialProductRepository.findById(loanerDto.getFinancialProductId())
 			.get();
 		Loaner loaner = Loaner.builder()

@@ -34,8 +34,8 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 	private final PointServiceImpl pointService;
 
 	@Override
-	public void apply(DepositorDto depositorDto, UserDto userDto) {
-		User user = userRepository.findById(userDto.getId()).get();
+	public void apply(DepositorDto depositorDto) {
+		User user = userRepository.findById(depositorDto.getUserId()).get();
 		FinancialProduct financialProduct = financialProductRepository.findById(depositorDto.getFinancialProductId())
 			.get();
 		Depositor depositor = Depositor.builder()
