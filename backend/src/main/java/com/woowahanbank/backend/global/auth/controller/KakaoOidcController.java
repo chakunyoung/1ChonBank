@@ -68,6 +68,7 @@ public class KakaoOidcController {
 		tokens.put("access-token", JwtTokenUtil.getAccessToken(userId));
 		tokens.put("refresh-token", JwtTokenUtil.getRefreshToken(userId));
 
+		log.info("access-token = {}", tokens.get("access-token"));
 		//Redis에 20일 동안 저장
 		template.opsForValue().set("refresh " + userId, tokens.get("refresh-token"), Duration.ofDays(20));
 

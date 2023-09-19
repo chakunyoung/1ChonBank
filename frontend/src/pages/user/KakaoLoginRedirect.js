@@ -2,11 +2,21 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { kakaoLogin, setUser, setFirebaseToken, setAccessToken } from "redux/Auth";
+import {
+  kakaoLogin,
+  setUser,
+  setFirebaseToken,
+  setAccessToken,
+} from "redux/Auth";
 import { setFamilyName } from "redux/Family";
 
 import apis from "services/api/apis";
-import { getFirebaseToken, sendWebPushNotification } from "services/api/FirebaseAPI";
+import axios from "axios";
+
+import {
+  getFirebaseToken,
+  sendWebPushInfomation,
+} from "services/api/FirebaseAPI";
 
 const KakaoLoginRedirect = () => {
   const { search } = useLocation();
@@ -38,20 +48,15 @@ const KakaoLoginRedirect = () => {
       .then((data) => {
         dispatch(kakaoLogin(data["id_token"]))
           .unwrap()
-          .then(({ data }) => {
-            console.log(data["access-token"]);
-            dispatch(setAccessToken(data["access-token"]))
-            const accessToken = data["access-token"]; // access-token을 가져옵니다.
-
-            // JWT의 payload 부분을 디코딩합니다.
-            const payloadBase64 = accessToken.split('.')[1]; // JWT의 payload 부분은 두 번째 부분입니다.
-            const decodedPayload = atob(payloadBase64); // Base64 디코딩
-            // JSON 형식으로 파싱하여 payload 객체를 가져옵니다.
+          .then((data) => {
+            dispatch(setAccessToken(data["access-token"])); // 우리 서버 accesstoken
+            const accessToken = data["access-token"];
+            const payloadBase64 = accessToken.split(".")[1];
+            const decodedPayload = atob(payloadBase64);
             const payloadObj = JSON.parse(decodedPayload);
             const userId = payloadObj.sub;
-            // dispatch(setUserId(userId));
 
-            return apis.get(`/api/user/${userId}`);
+            return axios.get(`/api/user/${userId}`); // DB 에 저장된 유저 정보 가져오기
           })
           .then(async (response) => {
             const userData = response.data.data;
@@ -63,31 +68,30 @@ const KakaoLoginRedirect = () => {
             } else {
               navigate("/mypage");
             }
-
+            return userData;
+          })
+          .then(async (userData) => {
             const firebaseToken = await getFirebaseToken();
             if (firebaseToken) {
               dispatch(setFirebaseToken(firebaseToken));
-              console.log('FIREBASE - token updated successfully');
+              console.log("FIREBASE - token updated successfully");
             }
 
-            return { userData: userData, token: firebaseToken };
-          })
-          .then(async (data) => {
-            console.log(data);
-            if (data.userData.nickname && data.token) {
-              await sendWebPushNotification(data.userData.nickname, data.token);
-              console.log('FIREBASE - send backend firebase token successfully');
+            if (userData.nickname && data.token) {
+              await sendWebPushInfomation(userData.nickname, data.token);
+              console.log(
+                "FIREBASE - send backend firebase token successfully"
+              );
             }
-            navigate("/");
           })
           .catch((error) => {
             console.error("API 오류:", error);
-            navigate("/login");
+            navigate("/");
             alert("카카오 로그인 오류.");
           });
       });
 
-    return () => { };
+    return () => {};
   }, []);
   return <>카카오 리다이렉트 페이지</>;
 };
