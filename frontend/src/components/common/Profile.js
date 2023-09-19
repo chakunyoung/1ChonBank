@@ -12,7 +12,7 @@
   import Char8 from 'assets/char8x4.png';
 
   function Profile() {
-    const userNickname = useSelector((state) => state.auth.nickname);
+    const userNickname = useSelector((state) => state.auth.user.nickname);
     const [characterImage, setCharacterImage] = useState(null);
     useEffect(() => {
       // 이미지 로드

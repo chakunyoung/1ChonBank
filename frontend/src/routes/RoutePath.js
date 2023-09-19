@@ -27,10 +27,9 @@ const RoutePath = () => {
       <Route
         path="/mypage"
         element={
-          <TokenVerification>
-            {" "}
-            <Mypage />{" "}
-          </TokenVerification>
+          // <TokenVerification>
+          <Mypage />
+          // </TokenVerification>
         }
       />
       <Route path="/mission" element={<Mission />} />
