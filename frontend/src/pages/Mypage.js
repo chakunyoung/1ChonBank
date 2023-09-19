@@ -13,10 +13,10 @@ import { useSelector } from 'react-redux';
 const Mypage = () => {
 
   const navigate= useNavigate();
-  const dailyQuiz = useSelector((state) => state.auth.quiz);
-  const userNickname = useSelector((state) => state.auth.nickname)
+  const user = useSelector((state) => state.auth.user);
+  
   const checkQuiz = () =>{
-    if(dailyQuiz) alert("오늘은 이미 푸셨습니다.");
+    if(user.quiz) alert("오늘은 이미 푸셨습니다.");
     else{
       navigate("/quiz");
     }
@@ -24,7 +24,7 @@ const Mypage = () => {
 
   const familyName = useSelector((state) => state.family.familyName);
   const handleCheckHaveFamily = () => {
-    if (familyName === '') {
+    if (familyName === null) {
       navigate("/createFamily");
     } else {
       navigate("/myFamily");

@@ -1,18 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  kakaoLogin,
-  setUserId,
-  setNickname,
-  setIsLogin,
-  setRoles,
-  setQuiz,
-  setMoney,
-  setScore,
-  setFirebaseToken,
-} from "redux/Auth";
-import { setAccessToken } from "redux/Auth";
+
+import { kakaoLogin, setUser, setFirebaseToken, setAccessToken } from "redux/Auth";
+import { setFamilyName } from "redux/Family";
+
 import apis from "services/api/apis";
 import { getFirebaseToken, sendWebPushNotification } from "services/api/FirebaseAPI";
 
@@ -47,25 +39,24 @@ const KakaoLoginRedirect = () => {
         dispatch(kakaoLogin(data["id_token"]))
           .unwrap()
           .then(({ data }) => {
-            dispatch(setAccessToken(data["access-token"]));
-            const accessToken = data["access-token"];
-            const payloadBase64 = accessToken.split(".")[1];
-            const decodedPayload = atob(payloadBase64);
+            console.log(data["access-token"]);
+            dispatch(setAccessToken(data["access-token"]))
+            const accessToken = data["access-token"]; // access-token을 가져옵니다.
+
+            // JWT의 payload 부분을 디코딩합니다.
+            const payloadBase64 = accessToken.split('.')[1]; // JWT의 payload 부분은 두 번째 부분입니다.
+            const decodedPayload = atob(payloadBase64); // Base64 디코딩
+            // JSON 형식으로 파싱하여 payload 객체를 가져옵니다.
             const payloadObj = JSON.parse(decodedPayload);
             const userId = payloadObj.sub;
-            dispatch(setUserId(userId));
+            // dispatch(setUserId(userId));
 
             return apis.get(`/api/user/${userId}`);
           })
           .then(async (response) => {
             const userData = response.data.data;
-            dispatch(setUserId(userData.userId));
-            dispatch(setNickname(userData.nickname));
-            dispatch(setRoles(userData.roles));
-            dispatch(setIsLogin(true));
-            dispatch(setQuiz(userData.quiz));
-            dispatch(setMoney(userData.money));
-            dispatch(setScore(userData.score));
+            dispatch(setUser(userData));
+            dispatch(setFamilyName(userData.familyName));
 
             if (userData.roles === null) {
               navigate("/register");
@@ -87,6 +78,7 @@ const KakaoLoginRedirect = () => {
               await sendWebPushNotification(data.userData.nickname, data.token);
               console.log('FIREBASE - send backend firebase token successfully');
             }
+            navigate("/");
           })
           .catch((error) => {
             console.error("API 오류:", error);
@@ -97,7 +89,6 @@ const KakaoLoginRedirect = () => {
 
     return () => { };
   }, []);
-
   return <>카카오 리다이렉트 페이지</>;
 };
 

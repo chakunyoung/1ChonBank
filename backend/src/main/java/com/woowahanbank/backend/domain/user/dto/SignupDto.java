@@ -1,5 +1,6 @@
 package com.woowahanbank.backend.domain.user.dto;
 
+import com.woowahanbank.backend.domain.family.domain.Family;
 import com.woowahanbank.backend.domain.user.domain.Role;
 
 import lombok.AllArgsConstructor;
@@ -29,5 +30,5 @@ public class SignupDto {
 
 	private Integer score;
 
-
+	private String familyName;
 }
