@@ -6,10 +6,10 @@ axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const initialState = {
-  refreshToken: '',
-  user : null,
-  accessToken: '',
-  firebaseToken: '',
+  refreshToken: "",
+  user: null,
+  accessToken: "",
+  firebaseToken: "",
 };
 
 export const login = createAsyncThunk(
@@ -37,14 +37,14 @@ export const getUserInfo = createAsyncThunk(
   }
 );
 
+// 카카오 id_token 정보로, 우리서버 유저 정보 만들기
 export const kakaoLogin = createAsyncThunk(
   "auth/kakaoLogin",
-  async (accessToken, { rejectWithValue }) => {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  async (id_token, { rejectWithValue }) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${id_token}`;
     try {
       const res = await axios.post("/api/users/login/kakao", {});
-      console.log(res.data["access-token"]);
-      return res.data;
+      return res.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -55,7 +55,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser(state, action){
+    setUser(state, action) {
       state.user = action.payload;
     },
     setAccessToken(state, action) {
@@ -67,7 +67,7 @@ const authSlice = createSlice({
     setFirebaseToken: (state, action) => {
       state.firebaseToken = action.payload;
     },
-    
+
     // logout: (state, action) => {
     //   state.refreshToken = '';
     //   state.userId = '';
@@ -89,19 +89,15 @@ const authSlice = createSlice({
         state.user = payload.data;
       })
       .addCase(kakaoLogin.fulfilled, (state, { payload }) => {
-        state.accessToken = payload.data["access-token"];
-        state.refreshToken = payload.data["refresh-token"];
+        console.log("풀필", payload);
+        state.accessToken = payload[`access-token`];
+        state.refreshToken = payload[`refresh-token`];
       });
   },
 });
 
-
 // export const { setAccessToken, setMoney,setScore, setRoles, setType, setUserId, setIsLogin,setRefreshToken,setNickname,setServerNickname, logout,setQuiz} = authSlice.actions;
-export const { 
-  setUser, 
-  setAccessToken,
-  setRefreshToken, 
-  setFirebaseToken,
-} = authSlice.actions;
+export const { setUser, setAccessToken, setRefreshToken, setFirebaseToken } =
+  authSlice.actions;
 
 export default authSlice.reducer;

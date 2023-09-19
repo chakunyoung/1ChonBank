@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import {
-  setAccessToken,
-  setUser,
-  setFirebaseToken,
-} from "redux/Auth"; // 필요한 액션들을 import 합니다.
+import { setAccessToken, setUser, setFirebaseToken } from "redux/Auth"; // 필요한 액션들을 import 합니다.
 import apis from "services/api/apis";
-import { getFirebaseToken, sendWebPushNotification } from "services/api/FirebaseAPI";
+import {
+  getFirebaseToken,
+  sendWebPushInfomation,
+} from "services/api/FirebaseAPI";
 
 function GoogleLoginRedirect() {
   const location = useLocation();
@@ -42,10 +41,10 @@ function GoogleLoginRedirect() {
       const userId = payloadObj.sub;
 
       dispatch(setAccessToken(accessToken));
-      if(user === null){
-          const tempUser = {
-            userId : userId,
-          }
+      if (user === null) {
+        const tempUser = {
+          userId: userId,
+        };
         dispatch(setUser(tempUser));
       }
 
@@ -53,7 +52,7 @@ function GoogleLoginRedirect() {
     } catch (error) {
       console.error("구글 로그인 에러:", error);
       navigate("/");
-      alert("구글 로그인 오류."); // 여기도 sweetalert로 변경할 수 있습니다.
+      alert("구글 로그인 오류.");
     }
   };
 
@@ -63,7 +62,6 @@ function GoogleLoginRedirect() {
       const userData = response.data.data;
 
       dispatch(setUser(userData));
-      console.log(userData);
 
       if (userData.roles === null) {
         navigate("/register");
@@ -74,23 +72,24 @@ function GoogleLoginRedirect() {
       const firebaseToken = await getFirebaseToken();
       if (firebaseToken) {
         dispatch(setFirebaseToken(firebaseToken));
-        console.log('FIREBASE - token updated successfully');
+        console.log("FIREBASE - token updated successfully");
 
         if (userData.nickname && firebaseToken) {
-          await sendWebPushNotification(userData.nickname, firebaseToken)
-            .then(res => {
-              console.log('FIREBASE - send backend firebase token successfully');
-            }).catch((error) => {
-              console.error('Error sending web push notification:', error);
+          await sendWebPushInfomation(userData.nickname, firebaseToken)
+            .then((res) => {
+              console.log(
+                "FIREBASE - send backend firebase token successfully"
+              );
+            })
+            .catch((error) => {
+              console.error("Error sending web push notification:", error);
             });
         }
       }
-
     } catch (error) {
       console.error("API 오류:", error);
     }
   };
-
 
   return <div>Redirecting...</div>;
 }
