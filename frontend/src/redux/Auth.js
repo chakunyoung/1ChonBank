@@ -6,17 +6,10 @@ axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const initialState = {
-  refreshToken: "",
-  userId: "",
-  isLogin: false,
-  type: "",
-  accessToken: "",
-  roles: "",
-  nickname: "",
-  quiz: "",
-  money: "",
-  score: "",
-  firebaseToken: "",
+  refreshToken: '',
+  user : null,
+  accessToken: '',
+  firebaseToken: '',
 };
 
 export const login = createAsyncThunk(
@@ -62,64 +55,29 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setQuiz(state, action) {
-      state.quiz = action.payload;
+    setUser(state, action){
+      state.user = action.payload;
     },
-
     setAccessToken(state, action) {
       state.accessToken = action.payload;
     },
-
-    setRoles(state, action) {
-      state.roles = action.payload;
-    },
-
-    setType(state, action) {
-      state.type = action.payload;
-    },
-
-    setUserId(state, action) {
-      state.userId = action.payload;
-    },
-
-    setIsLogin: (state, action) => {
-      state.isLogin = action.payload;
-    },
-
     setRefreshToken: (state, action) => {
       state.refreshToken = action.payload;
     },
-
-    setNickname: (state, action) => {
-      state.nickname = action.payload;
-    },
-
-    setMoney: (state, action) => {
-      state.money = action.payload;
-    },
-
-    setScore: (state, action) => {
-      state.score = action.payload;
-    },
-
-    setQuiz: (state) => {
-      state.quiz = true;
-    },
-
     setFirebaseToken: (state, action) => {
       state.firebaseToken = action.payload;
     },
-
-    logout: (state, action) => {
-      state.refreshToken = "";
-      state.userId = "";
-      state.isLogin = false;
-      state.type = "";
-      state.accessToken = "";
-      state.roles = "";
-      state.nickname = "";
-      state.serverNickname = "";
-    },
+    
+    // logout: (state, action) => {
+    //   state.refreshToken = '';
+    //   state.userId = '';
+    //   state.isLogin = false;
+    //   state.type = '';
+    //   state.accessToken = '';
+    //   state.roles = '';
+    //   state.nickname = '';
+    //   state.serverNickname = '';
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -137,19 +95,12 @@ const authSlice = createSlice({
   },
 });
 
-export const {
+
+// export const { setAccessToken, setMoney,setScore, setRoles, setType, setUserId, setIsLogin,setRefreshToken,setNickname,setServerNickname, logout,setQuiz} = authSlice.actions;
+export const { 
+  setUser, 
   setAccessToken,
-  setMoney,
-  setScore,
-  setRoles,
-  setType,
-  setUserId,
-  setIsLogin,
-  setRefreshToken,
-  setNickname,
-  setServerNickname,
-  logout,
-  setQuiz,
+  setRefreshToken, 
   setFirebaseToken,
 } = authSlice.actions;
 

@@ -10,28 +10,54 @@ import Savingser from "./Savingser";
 import Loaner from "./Loaner";
 import Family from "./Family";
 
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+};
 
-const persistConfig = {
-  key: 'root',
+const financePersistConfig = {
+  key: 'finance',
+  storage,
+};
+
+const depositorPersistConfig = {
+  key: 'depositor',
+  storage,
+};
+
+const savingserPersistConfig = {
+  key: 'savingser',
+  storage,
+};
+
+const loanerPersistConfig = {
+  key: 'loaner',
+  storage,
+};
+
+const quizInfoPersistConfig = {
+  key: 'quizInfo',
+  storage,
+};
+
+const familyPersistConfig = {
+  key: 'family',
   storage,
 };
 
 const reducers = combineReducers({
-  auth: authReducer,
-  finance: Finance,
-  depositor : Depositor,
-  savingser : Savingser,
-  loaner : Loaner,
-  quizInfo: QuizInfo, 
-  family : Family,
-
-  // 여기에 다른 리듀서들을 추가할 수 있습니다. 예: boardList: boardListSlice,
+  auth: persistReducer(authPersistConfig, authReducer),
+  finance: persistReducer(financePersistConfig, Finance),
+  depositor: persistReducer(depositorPersistConfig, Depositor),
+  savingser: persistReducer(savingserPersistConfig, Savingser),
+  loaner: persistReducer(loanerPersistConfig, Loaner),
+  quizInfo: persistReducer(quizInfoPersistConfig, QuizInfo),
+  family: persistReducer(familyPersistConfig, Family),
 });
 
-const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: reducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,

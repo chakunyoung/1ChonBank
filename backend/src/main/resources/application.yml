@@ -19,6 +19,9 @@ spring:
 logging:
   level:
     org:
+      apache:
+        coyote:
+          http11: debug
       hibernate:
         SQL: DEBUG
         type:
@@ -30,4 +33,3 @@ springfox:
   documentation:
     swagger:
       use-model-v3: false
-

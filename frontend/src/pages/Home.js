@@ -13,10 +13,10 @@ const Home = () => {
     if (data) {
       const authData = JSON.parse(data.auth);
 
-      if (authData && authData.accessToken) {
-        console.log("Access Token:", authData.accessToken);
-        console.log("user nickname:", authData.nickname);
-        navigate("/mypage");
+      if (authData.user && authData.accessToken) {
+        console.log('Access Token:', authData.accessToken);
+        console.log('user nickname:', authData.user.nickname);
+        navigate('/mypage');
       }
     }
   }, [navigate]);
