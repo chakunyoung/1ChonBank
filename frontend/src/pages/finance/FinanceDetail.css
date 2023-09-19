@@ -2,11 +2,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* 수직 가운데 정렬을 위해 추가 */
-    justify-content: center;
-    /* 수평 가운데 정렬을 위해 추가 */
-    min-height: 100vh;
-    /* 화면 높이와 같은 최소 높이 설정 */
+}
+
+.product-detail-header {
+    width: 100%;
+    background: #52B69A;
+}
+
+.product-detail-name {
+    padding-top: 19px;
+    padding-left: 24px;
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 
 .product-apply-button {
@@ -18,4 +28,125 @@
     border-radius: 180px;
     background: #52B69A;
     width: 147px;
+    margin-top: 53px;
+}
+
+.product-info-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: white;
+}
+
+.product-space-between {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+}
+
+.agree-button {
+    display: inline-block;
+    width: 57px;
+    height: 28px;
+    border-radius: 180px;
+    border: 2px solid #000;
+    background: #FFF;
+    text-align: center;
+    /* 수평 가운데 정렬 */
+    vertical-align: middle;
+    /* 수직 가운데 정렬 */
+}
+
+.disagree-button {
+    display: inline-block;
+    width: 57px;
+    height: 28px;
+    border-radius: 180px;
+    border: 2px solid #000;
+    background: #52B69A;
+    text-align: center;
+    /* 수평 가운데 정렬 */
+    vertical-align: middle;
+    /* 수직 가운데 정렬 */
+}
+
+.show-info-button {
+    margin-left: 20px;
+    margin-right: 1.5rem;
+}
+
+.product-summary-rate {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: url('assets/rate.png'), #52B69A 50% / cover no-repeat;
+}
+
+.product-summary-period {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: url('assets/period.png'), #52B69A 50% / cover no-repeat;
+}
+
+.product-summary-infomation {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 24px;
+}
+
+.product-common-info {
+    margin: 0px 21px 21px;
+}
+
+.product-detail-explanation {
+    display: flex;
+    margin: 24px;
+    justify-content: space-between;
+}
+
+.product-info-div {
+    width: 80%;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.product-info-label {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 1rem;
+    margin-left: 1.2rem;
+    background: url('assets/label.png'), white 50% / cover no-repeat;
+}
+
+.join-essential-info {
+    margin-right: 50px;
+}
+
+.errorMessage {
+    text-align: center;
+    width: 100%;
+    padding-bottom: 1.1rem;
+    color:red;
+}
+
+.option-title {
+    padding-left: 1.5rem;
+    font-size: 1.1rem;
+    color: #808080;
+}
+.option-input{
+    text-align: center;
+    width: 100%;
+    padding-bottom: 1.1rem;
+}
+.detail-dropdown{
+    width: 90%;
 }

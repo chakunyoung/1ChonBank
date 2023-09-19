@@ -27,30 +27,30 @@ const loanerSlice = createSlice({
     name: "loaner",
     initialState,
     reducers: {
-        setId(state, action) {
+        setLoanerId(state, action) {
             state.id = action.payload;
         },
-        setUserId(state, action) {
+        setLoanerUserId(state, action) {
             state.userId = action.payload;
         },
-        setFinancialProductId(state, action) {
+        setLoanerFinancialProductId(state, action) {
             state.financialProductId = action.payload;
         },
-        setProductName(state, action) {
+        setLoanerProductName(state, action) {
             state.productName = action.payload;
         },
-        setGrant(state, action) {
+        setLoanerGrant(state, action) {
             state.grant = action.payload;
         },
-        setMoney(state, action) {
+        setLoanerMoney(state, action) {
             state.money = action.payload;
         },
-        setDate(state, action) {
+        setLoanerDate(state, action) {
             state.date = action.payload;
         },
     },
 });
 
-export const { setId, setUserId, setFinancialProductId, setProductName, setGrant, setMoney, setDate } = loanerSlice.actions;
+export const { setLoanerId, setLoanerUserId, setLoanerFinancialProductId, setLoanerProductName, setLoanerGrant, setLoanerMoney, setLoanerDate } = loanerSlice.actions;
 
 export default loanerSlice.reducer;

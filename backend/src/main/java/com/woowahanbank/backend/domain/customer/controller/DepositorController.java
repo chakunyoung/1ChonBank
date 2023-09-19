@@ -28,10 +28,10 @@ public class DepositorController {
 	private final DepositMoneyService depositMoneyService;
 
 	@PostMapping
-	public ResponseEntity<?> apply(@RequestBody DepositorDto depositorDto,
-		@RequestBody UserDto userDto) {
+	public ResponseEntity<?> apply(@RequestBody DepositorDto depositorDto) {
+		System.out.println(depositorDto);
 		try {
-			customerService.apply(depositorDto, userDto);
+			customerService.apply(depositorDto);
 			return BaseResponse.ok(HttpStatus.OK, "예금 상품 등록 성공");
 		} catch (Exception e) {
 			return BaseResponse.fail("예금 상품 등록 실패", 400);

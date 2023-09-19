@@ -3,14 +3,14 @@ import apis from "services/api/apis";
 
 
 const initialState = {
-    id: '0',
-    parentId: '1',
-    familyId: '1',
-    name: '1',
-    rate: '1',
-    info: '1',
-    period: '1',
-    productType: '1',
+    id: '',
+    parentId: '',
+    familyId: '',
+    name: '',
+    rate: '',
+    info: '',
+    period: '',
+    productType: '',
 };
 export const makeProduct = createAsyncThunk(
     "finance/makeProduct",
@@ -28,7 +28,7 @@ export const getProductList = createAsyncThunk(
     "finance/getProductList",
     async (data, { rejectWithValue }) => {
         try {
-            const res = await apis.get("/api/financial/1", {
+            const res = await apis.get("/api/financial/" + data, {
             });
             return res.data;
         } catch (error) {
@@ -39,7 +39,7 @@ export const getProductList = createAsyncThunk(
 
 
 const financeSlice = createSlice({
-    name: "auth",
+    name: "finance",
     initialState,
     reducers: {
         setParentId(state, action) {

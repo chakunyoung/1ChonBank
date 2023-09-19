@@ -19,9 +19,9 @@ const persistConfig = {
 const reducers = combineReducers({
   auth: authReducer,
   finance: Finance,
-  depositor: Depositor,
-  savingser: Savingser,
-  loaner: Loaner,
+  depositor : Depositor,
+  savingser : Savingser,
+  loaner : Loaner,
   quizInfo: QuizInfo, 
   family : Family,
 
