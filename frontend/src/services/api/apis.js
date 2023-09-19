@@ -26,7 +26,7 @@ if (!tokenString) {
 
 // tokenString을 파싱하여 token 객체로 변환합니다.
 const token = JSON.parse(tokenString);
-
+console.log("여기 토큰 "+token);
 // token 객체에서 accessToken을 추출합니다.
 const accessToken = token && token.auth ? JSON.parse(token.auth).accessToken : null;
 const apis = axios.create({

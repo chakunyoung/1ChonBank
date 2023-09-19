@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.woowahanbank.backend.domain.family.domain.Family;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.JoinDto;
 import com.woowahanbank.backend.domain.user.dto.SignupDto;
@@ -39,8 +40,12 @@ public class UserService {
 		userRepository.save(user);
 	}
 
+
+
 	public SignupDto signup(String userId) {
 		User user = userRepository.findByUserId(userId).orElse(null);
+		Family family = user.getFamily();
+		String familyName = (family != null) ? family.getFamilyName() : null;
 		return SignupDto.builder()
 			.userId(user.getUserId())
 			.nickname(user.getNickname())
@@ -48,6 +53,7 @@ public class UserService {
 			.money(user.getMoney())
 			.quiz(user.getQuiz())
 			.score(user.getScore())
+			.familyName(familyName)
 			.build();
 	}
 

@@ -38,7 +38,7 @@ public class FamilyController {
     @ApiOperation(value = "가족 구성원 조회")
     @ApiResponse(code = 200, message = "가족 구성원 조회 성공")
     @GetMapping
-    public ResponseEntity<?> getFamily(@ApiIgnore @AuthenticationPrincipal CustomUserDetails customUser) {
+    public ResponseEntity<?> getFamily(@AuthenticationPrincipal CustomUserDetails customUser) {
         List<FamilyUserDto> familyMembers = familyService.findFamilyMembers(customUser.getUser());
         return BaseResponse.okWithData(HttpStatus.OK, "가족 구성원 조회 성공", familyMembers);
     }

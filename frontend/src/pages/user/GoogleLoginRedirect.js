@@ -4,13 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
   setAccessToken,
-  setUserId,
-  setNickname,
-  setIsLogin,
-  setRoles,
-  setQuiz,
-  setMoney,
-  setScore,
+  setUser,
   setFirebaseToken,
 } from "redux/Auth"; // 필요한 액션들을 import 합니다.
 import apis from "services/api/apis";
@@ -22,6 +16,7 @@ function GoogleLoginRedirect() {
   const dispatch = useDispatch();
   const nickname = useSelector((state) => state.auth.nickname);
   const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -47,7 +42,12 @@ function GoogleLoginRedirect() {
       const userId = payloadObj.sub;
 
       dispatch(setAccessToken(accessToken));
-      dispatch(setUserId(userId));
+      if(user === null){
+          const tempUser = {
+            userId : userId,
+          }
+        dispatch(setUser(tempUser));
+      }
 
       fetchUserData(userId, navigate, dispatch, nickname, token);
     } catch (error) {
@@ -62,13 +62,7 @@ function GoogleLoginRedirect() {
       const response = await apis.get(`/api/user/${userId}`);
       const userData = response.data.data;
 
-      dispatch(setUserId(userData.userId));
-      dispatch(setNickname(userData.nickname));
-      dispatch(setRoles(userData.roles));
-      dispatch(setIsLogin(true));
-      dispatch(setQuiz(userData.quiz));
-      dispatch(setMoney(userData.money));
-      dispatch(setScore(userData.score));
+      dispatch(setUser(userData));
       console.log(userData);
 
       if (userData.roles === null) {
