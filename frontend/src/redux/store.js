@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; 
-import authReducer from "redux/Auth"; 
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import authReducer from "redux/Auth";
 import Finance from "./Finance";
 
 import QuizInfo from "./QuizInfo";
@@ -11,37 +11,37 @@ import Loaner from "./Loaner";
 import Family from "./Family";
 
 const authPersistConfig = {
-  key: 'auth',
+  key: "auth",
   storage,
 };
 
 const financePersistConfig = {
-  key: 'finance',
+  key: "finance",
   storage,
 };
 
 const depositorPersistConfig = {
-  key: 'depositor',
+  key: "depositor",
   storage,
 };
 
 const savingserPersistConfig = {
-  key: 'savingser',
+  key: "savingser",
   storage,
 };
 
 const loanerPersistConfig = {
-  key: 'loaner',
+  key: "loaner",
   storage,
 };
 
 const quizInfoPersistConfig = {
-  key: 'quizInfo',
+  key: "quizInfo",
   storage,
 };
 
 const familyPersistConfig = {
-  key: 'family',
+  key: "family",
   storage,
 };
 
@@ -54,7 +54,6 @@ const reducers = combineReducers({
   quizInfo: persistReducer(quizInfoPersistConfig, QuizInfo),
   family: persistReducer(familyPersistConfig, Family),
 });
-
 
 const store = configureStore({
   reducer: reducers,
