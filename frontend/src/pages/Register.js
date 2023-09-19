@@ -2,37 +2,34 @@ import React, { useState } from 'react';
 import './Register.css';
 import char2 from 'assets/char2x4.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { setNickname, setRoles } from 'redux/Auth';
+
 import apis from 'services/api/apis';
+import { setUser } from 'redux/Auth';
 
 const Register = () => {
 
-
-
   const dispatch = useDispatch();
-  // const [role, setRole] = useState(null);
-  // const [nickname, setNickname] = useState("");
   const [nicknameError, setNicknameError] = useState(""); // State for nickname error message
 
-  const roles = useSelector((state) => state.auth.roles);
-  const nickname = useSelector((state) => state.auth.nickname);
-  const userId = useSelector((state) => state.auth.userId);
+  const user = useSelector((state) => state.auth.user);
 
-  const data = {
-    roles,
-    nickname,
-    userId,
-  }
+  console.log(user);
+  console.log(user.userId)
 
   const handleCheckboxChange = (selectedRole) => {
-    dispatch(setRoles(selectedRole));
+    const updatedUser = { ...user, roles: selectedRole };
+
+    // updateUser 액션을 디스패치하여 상태를 업데이트합니다.
+    dispatch(setUser(updatedUser));
   };
 
   const handleCardClick = (selectedRole) => {
-    if (selectedRole === roles) {
-      dispatch(setRoles(null));
-    } else {
-      dispatch(setRoles(selectedRole));
+    if (selectedRole !== user.roles) {
+
+      const updatedUser = { ...user, roles: selectedRole };
+
+      // updateUser 액션을 디스패치하여 상태를 업데이트합니다.
+      dispatch(setUser(updatedUser));
     }
   };
 
@@ -43,25 +40,28 @@ const Register = () => {
       setNicknameError("닉네임의 최대 길이는 10자입니다.");
     }
     else {
-      dispatch(setNickname(newNickname));
+      const updatedUser = { ...user, nickname: newNickname };
+      dispatch(setUser(updatedUser));
       setNicknameError(""); // Clear the error message if the nickname is within the limit
     }
   };
 
+
   const handleSaveUser = async () => {
     try {
-      if (nickname.length === 0) {
+      if (user.nickname.length === 0) {
         alert("닉네임을 한글자 이상 입력하시오");
         return;
       }
-      const response = await apis.get(`/api/user/duplication/${nickname}`);
+      const response = await apis.get(`/api/user/duplication/${user.nickname}`);
       const { success, status } = response;
 
       if (status === 200 || success === "true") {
         // 닉네임이 중복되지 않는 경우
 
         // 회원가입 성공한 경우
-        apis.post("/api/user/saveUser", data);
+        console.log(user);
+        apis.post("/api/user/saveUser", user);
         alert("회원가입 성공");
         window.location.href = '/mypage';
 
@@ -91,7 +91,7 @@ const Register = () => {
         <input
           type="checkbox"
           className="custom-checkbox"
-          checked={roles === "ROLE_PARENT"}
+          checked={user.roles === "ROLE_PARENT"}
           onChange={() => handleCheckboxChange("ROLE_PARENT")}
         />
       </div>
@@ -102,7 +102,7 @@ const Register = () => {
         </label>
         <input
           type="checkbox"
-          checked={roles === "ROLE_CHILD"}
+          checked={user.roles === "ROLE_CHILD"}
           onChange={() => handleCheckboxChange("ROLE_CHILD")}
         />
       </div>
@@ -113,7 +113,7 @@ const Register = () => {
         </label>
         <input
           type="text"
-          value={nickname}
+          value={user.nickname}
           onChange={handleNicknameChange}
           className="custom-input"
           maxLength="10" // Use "maxLength" attribute to limit the input length

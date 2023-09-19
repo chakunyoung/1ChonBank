@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import apis from "services/api/apis";
 
 function ShowMyFamily() {
   const [familyData, setFamilyData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // 데이터를 가져오는 비동기 함수를 정의합니다.
     const fetchData = async () => {
       try {
+        console.log("가족 정보 조회 보냄");
         const response = await apis.get("/api/families");
+        console.log(response);
         const data = response.data.data;
         setFamilyData(data); // 데이터를 상태에 저장
         setLoading(false); // 데이터 로딩이 완료됨을 표시
