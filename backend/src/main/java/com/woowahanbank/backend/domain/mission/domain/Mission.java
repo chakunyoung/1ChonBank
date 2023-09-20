@@ -26,34 +26,23 @@ public class Mission {
 	private Long missionId;
 
 	@NotNull
-	@Column(name = "mission_name")
 	private String missionName;
 
-	@ManyToOne
-	@JoinColumn(name="mission_family_id")
-	private Family missionFamilyId;
+	private Long missionFamilyId;
 
-	@ManyToOne
-	@JoinColumn(name="mission_child_id")
-	private User missionChildId;
+	private String childNickname;
 
-	@ManyToOne
-	@JoinColumn(name="mission_parent_id")
-	private User missionParentId;
+	private String parentNickname;
 
 	@NotNull
-	@Column(name = "mission_description")
 	private String missionDescription;
 
 	@Column(name = "mission_status", columnDefinition = "VARCHAR(255) DEFAULT '시작전'")
 	private String missionStatus;
 
 	@NotNull
-	@Column(name = "mission_point")
 	private Integer missionPoint;
 
-	@NotNull
-	@Column(name = "mission_terminate_date")
 	private Date missionTerminateDate;
 
 }

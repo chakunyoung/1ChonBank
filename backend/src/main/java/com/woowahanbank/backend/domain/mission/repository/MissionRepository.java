@@ -10,15 +10,10 @@ import com.woowahanbank.backend.domain.mission.domain.Mission;
 
 public interface MissionRepository extends JpaRepository<Mission, Long> {
 
-	List<Optional<Mission>> findByMissionName(String missionName);
 
-	List<Optional<Mission>> findByMissionFamilyId(Long missionFamilyId);
+	List<Optional<Mission>> findByFamilyId(Long missionFamilyId);
 
-	List<Optional<Mission>> findByMissionChildId(Long missionChildId);
-
-	List<Optional<Mission>> findByMissionStatus(String missionStatus);
-
-
+	List<Optional<Mission>> findByChildNickname(String nickname);
 
 	void deleteByMissionId(Long missionId);
 

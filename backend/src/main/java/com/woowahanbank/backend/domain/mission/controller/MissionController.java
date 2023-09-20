@@ -1,6 +1,9 @@
 package com.woowahanbank.backend.domain.mission.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.woowahanbank.backend.domain.mission.dto.MissionMakeDto;
+import com.woowahanbank.backend.global.response.BaseResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.woowahanbank.backend.domain.mission.service.MissionService;
 import com.woowahanbank.backend.domain.mission.domain.Mission;
@@ -11,35 +14,28 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/missions")
+@RequestMapping("/api/missions")
 @RequiredArgsConstructor
 public class MissionController {
 
 	private final MissionService missionService;
 
-	@PostMapping("/")
-	public Mission createMission(@RequestBody Mission mission) {
-		return missionService.createMission(mission);
+	@PostMapping("/make")
+	public ResponseEntity<?> createMission(@RequestBody MissionMakeDto missionMakeDto) {
+		missionService.createMission(missionMakeDto);
+		return BaseResponse.ok(HttpStatus.OK, "새로운 미션");
 	}
 
-	@GetMapping("/family")
-	public List<Mission> getMissionsByFamilyId() {
-		return missionService.getMissionAll();
+	@GetMapping("/family-id")
+	public ResponseEntity<?> getMissionListByFamilyId(@RequestParam Long missionFamilyId) {
+		List<Optional<Mission>> missionListByFamilyId = missionService.getMissionByFamilyId(missionFamilyId);
+		return BaseResponse.okWithData(HttpStatus.OK, "가족 전체 미션 리스트", missionListByFamilyId);
 	}
 
-	@GetMapping("/family/{familyId}")
-	public List<Optional<Mission>> getMissionsByFamilyId(@PathVariable Long missionfamilyId) {
-		return missionService.getMissionsByFamilyId(missionfamilyId);
-	}
-
-	@GetMapping("/child/{childId}")
-	public List<Optional<Mission>> getMissionsByChildId(@PathVariable Long missionChildId) {
-		return missionService.getMissionsByChildId(missionChildId);
-	}
-
-	@GetMapping("/status/{status}")
-	public List<Optional<Mission>> getMissionsByStatus(@PathVariable String missionStatus) {
-		return missionService.getMissionsByStatus(missionStatus);
+	@GetMapping("/child-nickname")
+	public ResponseEntity<?>getMissionListByChildNickName(@RequestParam String nickname) {
+		List<Optional<Mission>> missionListByChildNickname = missionService.getMissionByChildNickName(nickname);
+		return BaseResponse.okWithData(HttpStatus.OK, "가족 전체 미션 리스트", missionListByChildNickname);
 	}
 
 	@PutMapping("/{missionId}")
@@ -53,7 +49,7 @@ public class MissionController {
 		missionService.deleteMissionById(missionId);
 	}
 
-	@DeleteMapping("/terminateDate/{terminateDate}")
+	@DeleteMapping("/terminate-date/{terminateDate}")
 	public void deleteMissionsByTerminateDateBefore(@PathVariable Date terminateDate) {
 		missionService.deleteMissionsByTerminateDateBefore(terminateDate);
 	}
