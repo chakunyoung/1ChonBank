@@ -56,8 +56,8 @@ public class SecurityConfig {
 			.apply(new MyCustomDsl());
 
 		http.authorizeRequests()
-			.antMatchers("/api/families/**")
-			.authenticated()
+			.antMatchers("/api/families/**").authenticated()
+			.antMatchers("/api/banking/**").authenticated()
 			.antMatchers("/**").permitAll()
 			.and().oauth2Login().permitAll();
 		// 		.antMatchers("/api/users/login").permitAll() //로그인
