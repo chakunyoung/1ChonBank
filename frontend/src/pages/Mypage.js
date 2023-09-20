@@ -77,7 +77,7 @@ const Mypage = () => {
             <BsBank className='logo'/>
             <span>금융상품</span>
           </Link>
-          <Link to="/missionlist" className="button button-mission">
+          <Link to="/missionList" className="button button-mission">
             <TbTargetArrow className='logo'/>
             <span>미션</span>
           </Link>
