@@ -19,9 +19,6 @@ spring:
 logging:
   level:
     org:
-      apache:
-        coyote:
-          http11: debug
       hibernate:
         SQL: DEBUG
         type:
