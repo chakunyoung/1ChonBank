@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setAccessToken, setUser, setFirebaseToken } from "redux/Auth"; // 필요한 액션들을 import 합니다.
+import { setAccessToken, setUser, setFirebaseToken, setRefreshToken } from "redux/Auth"; // 필요한 액션들을 import 합니다.
 import apis from "services/api/apis";
 import {
   getFirebaseToken,
@@ -41,6 +41,7 @@ function GoogleLoginRedirect() {
       const userId = payloadObj.sub;
 
       dispatch(setAccessToken(accessToken));
+      dispatch(setRefreshToken(response.data.data["refresh-token"]));
       if (user === null) {
         const tempUser = {
           userId: userId,
