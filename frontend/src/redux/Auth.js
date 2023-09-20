@@ -6,10 +6,10 @@ axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const initialState = {
-  refreshToken: "",
   user: null,
-  accessToken: "엑세스 토큰",
   firebaseToken: "",
+  accessToken: "",
+  refreshToken: "",
 };
 
 export const login = createAsyncThunk(
@@ -56,14 +56,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action) {
-      console.log(action.payload);
       state.user = action.payload;
-    },
-    setAccessToken(state, action) {
-      state.accessToken = action.payload;
-    },
-    setRefreshToken: (state, action) => {
-      state.refreshToken = action.payload;
     },
     setFirebaseToken: (state, action) => {
       state.firebaseToken = action.payload;
@@ -98,7 +91,6 @@ const authSlice = createSlice({
 });
 
 // export const { setAccessToken, setMoney,setScore, setRoles, setType, setUserId, setIsLogin,setRefreshToken,setNickname,setServerNickname, logout,setQuiz} = authSlice.actions;
-export const { setUser, setAccessToken, setRefreshToken, setFirebaseToken } =
-  authSlice.actions;
+export const { setUser, setFirebaseToken } = authSlice.actions;
 
 export default authSlice.reducer;

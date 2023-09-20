@@ -8,18 +8,18 @@ import Googleicon from "assets/btn_google_signin_light_focus_web@2x.png";
 const Home = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("persist:root"));
-    if (data) {
-      const authData = JSON.parse(data.auth);
+  // useEffect(() => {
+  //   const data = JSON.parse(localStorage.getItem("persist:root"));
+  //   if (data) {
+  //     const authData = JSON.parse(data.auth);
 
-      if (authData.user && authData.accessToken) {
-        console.log('Access Token:', authData.accessToken);
-        console.log('user nickname:', authData.user.nickname);
-        navigate('/mypage');
-      }
-    }
-  }, [navigate]);
+  //     if (authData.user && authData.accessToken) {
+  //       console.log('Access Token:', authData.accessToken);
+  //       console.log('user nickname:', authData.user.nickname);
+  //       navigate('/mypage');
+  //     }
+  //   }
+  // }, [navigate]);
 
   const handleKakaoLoginClick = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code`;

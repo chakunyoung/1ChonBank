@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setAccessToken, setUser, setFirebaseToken, setRefreshToken } from "redux/Auth"; // 필요한 액션들을 import 합니다.
-import apis from "services/api/apis";
+import { setUser, setFirebaseToken } from "redux/Auth"; // 필요한 액션들을 import 합니다.
 import {
   getFirebaseToken,
   sendWebPushInfomation,
@@ -41,15 +40,23 @@ function GoogleLoginRedirect() {
       const payloadObj = JSON.parse(decodedPayload);
       const userId = payloadObj.sub;
 
-      dispatch(setAccessToken(accessToken));
-      dispatch(setRefreshToken(response.data.data["refresh-token"]));
+      localStorage.setItem("access-token", accessToken);
+      localStorage.setItem(
+        "refresh-token",
+        response.data.data["refresh-token"]
+      );
       if (user === null) {
-        dispatch(setUser({...user, userId: userId}));
+        dispatch(setUser({ ...user, userId: userId }));
       }
 
-      let userData = await fetchUserData(userId, navigate, dispatch, nickname, token);
+      let userData = await fetchUserData(
+        userId,
+        navigate,
+        dispatch,
+        nickname,
+        token
+      );
       await performFirebaseTokenTask(userData, dispatch);
-
     } catch (error) {
       console.error("구글 로그인 에러:", error);
       navigate("/");
@@ -82,7 +89,7 @@ function GoogleLoginRedirect() {
     if (firebaseToken) {
       dispatch(setFirebaseToken(firebaseToken));
       console.log("FIREBASE - token updated successfully");
-  
+
       if (userData.nickname && firebaseToken) {
         await sendWebPushInfomation(userData.nickname, firebaseToken)
           .then((res) => {

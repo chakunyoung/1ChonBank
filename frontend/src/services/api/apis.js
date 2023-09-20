@@ -1,6 +1,10 @@
-// axiosInstance.js
 import axios from "axios";
-import { getAccessTokenAxios, getRefreshTokenAxios, updateAccessTokenAxios } from "./TokenManager";
+import {
+  getAccessTokenAxios,
+  getRefreshTokenAxios,
+  updateAccessTokenAxios,
+} from "./TokenManager";
+import store from "redux/store"; // store import 추가
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -28,27 +32,36 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    console.log("access token 에러", error);
-   
-    if (error.response.data.status === 401 || error.response.data.status === 419 || error.response.data.status === 500) {
+
+    if (
+      error.response.data.status === 401 ||
+      error.response.data.status === 419 ||
+      error.response.data.status === 500
+    ) {
       originalRequest._retry = true;
       const refreshToken = getRefreshTokenAxios();
       if (refreshToken) {
         try {
-          const response = await axios.post("/api/users/reissue", {}, {
-            headers: {
-              "Authorization": `Bearer ${refreshToken}`,
+          const response = await axios.post(
+            "/api/users/reissue",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${refreshToken}`,
+              },
             }
-          });
+          );
 
           if (response.status === 200) {
-           
+            console.log("access token 만료되어 재발급");
             const newAccessToken = response.data.data["access-token"];
             const newRefreshToken = response.data.data["refresh-token"];
             updateAccessTokenAxios(newAccessToken, newRefreshToken);
 
             // 새로운 access token으로 요청을 새로 다시 보냄
-            originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+            originalRequest.headers[
+              "Authorization"
+            ] = `Bearer ${newAccessToken}`;
             return axiosInstance(originalRequest);
           }
         } catch (refreshError) {
