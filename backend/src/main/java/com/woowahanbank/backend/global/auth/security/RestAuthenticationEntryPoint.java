@@ -39,7 +39,6 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 			body.put("message", authException.getMessage());
 			body.put("detail", ((TokenExpiredException)expiredException).getMessage());
 			body.put("path", request.getServletPath());
-			body.put("redirectUrl", "http://localhost:8000/api/users/refresh");
 		} else {
 			// 응답 객체 초기화
 			body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
@@ -48,10 +47,8 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 			body.put("detail", request.getAttribute("exception"));
 			body.put("path", request.getServletPath());
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
 		}
 		final ObjectMapper mapper = new ObjectMapper();
-		// response 객체에 응답 객체를 넣어줌
 		mapper.writeValue(response.getOutputStream(), body);
 
 	}

@@ -38,10 +38,9 @@ public class AuthController {
 		return ResponseEntity.ok("JWT DB 검증 완료");
 	}
 
-
-
 	@PostMapping("/api/users/reissue")
 	public ResponseEntity<?> reissueAccessToken(@RequestHeader("Authorization") String token) {
+		System.out.println(token);
 		DecodedJWT decodedJwt = null;
 		final Map<String, Object> body = new LinkedHashMap<>();
 		try {
@@ -56,25 +55,24 @@ public class AuthController {
 		String userId = decodedJwt.getSubject();
 		Date expiresAt = decodedJwt.getExpiresAt();
 
-		String dbToken = template.opsForValue().get("refresh " + userId);
+		String dbToken = template.opsForValue().get("refresh " + userId); // refresh token
 
-		String reissuedRefreshToken = null;
 		String reissuedAccessToken = JwtTokenUtil.getAccessToken(userId);
 
 		if (dbToken.equals(token.replace(JwtTokenUtil.TOKEN_PREFIX, ""))) {
-
 			//refresh token 만료가 2일 이내라면 재발급
 			if (expiresAt.getTime() - new Date().getTime() < JwtTokenUtil.TWO_DAYS) {
-				reissuedRefreshToken = JwtTokenUtil.getRefreshToken(userId);
+				dbToken = JwtTokenUtil.getRefreshToken(userId);
 				template.opsForValue().set
 					(
 						"refresh " + userId,
-						reissuedRefreshToken,
+						dbToken,
 						Duration.ofDays(20)
 					);
 			}
+
 			body.put("access-token", reissuedAccessToken);
-			body.put("refresh-token", reissuedRefreshToken);
+			body.put("refresh-token", dbToken);
 
 			return BaseResponse.okWithData(HttpStatus.OK, "Token Reissuance Successful", body);
 		}

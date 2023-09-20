@@ -10,7 +10,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = getAccessTokenAxios();
-    console.log("액세스 토큰 확인", accessToken);
     if (accessToken) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
     }
@@ -29,9 +28,9 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-
-    if (error.response.status === 401 && error.response.status === 419) {
-      console.log("access token err");
+    console.log("access token 에러", error);
+   
+    if (error.response.data.status === 401 || error.response.data.status === 419 || error.response.data.status === 500) {
       originalRequest._retry = true;
       const refreshToken = getRefreshTokenAxios();
       if (refreshToken) {
@@ -42,12 +41,13 @@ axiosInstance.interceptors.response.use(
             }
           });
 
-          response = response.data;
-
           if (response.status === 200) {
-            const newAccessToken = response.data["access-token"];
-            const newRefreshToken = response.data["refresh-token"];
+           
+            const newAccessToken = response.data.data["access-token"];
+            const newRefreshToken = response.data.data["refresh-token"];
             updateAccessTokenAxios(newAccessToken, newRefreshToken);
+
+            // 새로운 access token으로 요청을 새로 다시 보냄
             originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
             return axiosInstance(originalRequest);
           }
