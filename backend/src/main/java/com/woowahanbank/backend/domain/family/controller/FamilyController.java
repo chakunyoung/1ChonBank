@@ -1,10 +1,7 @@
 package com.woowahanbank.backend.domain.family.controller;
 
-import com.google.firebase.messaging.Notification;
 import com.woowahanbank.backend.domain.family.dto.FamilyUserDto;
 import com.woowahanbank.backend.domain.family.service.FamilyService;
-import com.woowahanbank.backend.domain.user.domain.User;
-import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 import com.woowahanbank.backend.global.notification.dto.NotificationDto;
 import com.woowahanbank.backend.global.notification.event.NotificationEvent;
@@ -14,15 +11,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -86,9 +80,9 @@ public class FamilyController {
                 this, nickname,
                 NotificationUtil.clickUrl("mypage"),
                 NotificationDto.builder()
-                .title("가족 초대")
-                .body(customUser.getNickname() + "님이 [" + customUser.getUser().getFamily().getFamilyName() + "] 가족방에 초대했습니다.")
-                .build()
+                        .title("가족 초대")
+                        .body(customUser.getNickname() + "님이 [" + customUser.getUser().getFamily().getFamilyName() + "] 가족방에 초대했습니다.")
+                        .build()
         ));
 
         return BaseResponse.ok(HttpStatus.OK, "초대 전송 성공");

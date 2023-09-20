@@ -1,6 +1,5 @@
 package com.woowahanbank.backend.global.notification.event;
 
-import com.google.firebase.messaging.Notification;
 import com.woowahanbank.backend.global.notification.dto.NotificationDto;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;

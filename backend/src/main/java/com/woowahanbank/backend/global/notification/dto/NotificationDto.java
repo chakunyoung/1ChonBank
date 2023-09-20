@@ -12,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class NotificationDto implements Serializable{
+public class NotificationDto implements Serializable {
     private String title;
     private String body;
 
