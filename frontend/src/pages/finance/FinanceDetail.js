@@ -5,8 +5,11 @@ import { makeDepositor, setDepositorUserId, setDepositorFinancialProductId } fro
 import { makeSavingser, setSavingserUserId, setSavingserFinancialProductId } from "redux/Savingser";
 import { makeLoaner, setLoanerUserId, setLoanerFinancialProductId } from "redux/Loaner";
 import './FinanceDetail.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Footer from 'components/common/Footer';
+import ApplyList from 'components/finance/ApplyList';
 const FinanceDetail = () => {
+    const { state } = useLocation();
     const [showDiv1, setShowDiv1] = useState(false);
     const [showDiv2, setShowDiv2] = useState(false);
     const [showDiv3, setShowDiv3] = useState(false);
@@ -16,10 +19,12 @@ const FinanceDetail = () => {
     const [agreePart3, setAgreePart3] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [regularMoney, setRegularMoney] = useState('');
-    const finance = useSelector((state) => state.finance);
-    const depositor = useSelector((state) => state.depositor);
-    const savingser = useSelector((state) => state.savingser);
-    const loaner = useSelector((state) => state.loaner);
+    const finance = useSelector((state) => state.finance.data);
+    const depositor = useSelector((state) => state.depositor.data);
+    const savingser = useSelector((state) => state.savingser.data);
+    const loaner = useSelector((state) => state.loaner.data);
+    const role = useSelector((state) => state.auth.user.roles);
+    const applys = state;
     const info = {
         'DEPOSIT': '예금은 금융 기관에 돈을 보관하는 금융 제품으로, 안전하게 자금을 보호하고 미래에 사용할 수 있도록 합니다. 예금은 이자를 얻을 수 있고, 금융 기관은 이러한 예금을 활용하여 대출을 제공하며 경제에 기여합니다. 예금은 금융 계획과 금전 관리에서 중요한 역할을 합니다.',
         'SAVINGS': '적금은 정기적으로 일정 금액을 저축하는 금융 상품으로, 목표 금액을 달성하거나 일정 기간 후에 원금과 이자를 받을 수 있습니다. 이는 금전 관리와 재무 목표 달성을 위한 효과적인 방법으로 사용되며, 안정적인 이자 수입을 제공하여 금융 안전성을 높입니다. 적금은 금융 계획과 금전 관리에서 중요한 역할을 합니다.',
@@ -36,15 +41,12 @@ const FinanceDetail = () => {
         switch (finance.productType) {
             case 'DEPOSIT':
                 dispatch(setDepositorFinancialProductId(finance.id));
-                dispatch(setDepositorUserId(4)); // 자식(현재 유저)의 id 넣어줘야됨
                 break;
             case 'SAVINGS':
                 dispatch(setSavingserFinancialProductId(finance.id));
-                dispatch(setSavingserUserId(4));// 자식(현재 유저)의 id 넣어줘야됨
                 break;
             case 'LOAN':
                 dispatch(setLoanerFinancialProductId(finance.id));
-                dispatch(setLoanerUserId(4));// 자식(현재 유저)의 id 넣어줘야됨
                 break;
             default:
                 break;
@@ -112,6 +114,7 @@ const FinanceDetail = () => {
     const makeL = () => {
         dispatch(makeLoaner(loaner))
             .then((resultAction) => {
+                console.log(loaner);
                 if (makeLoaner.fulfilled.match(resultAction)) {
                     // 성공적으로 완료됐을 때
                     const product = resultAction.payload; // 액션의 payload에 결과 데이터가 있을 것입니다.
@@ -132,11 +135,8 @@ const FinanceDetail = () => {
             {regularMoney}
             <div className='product-detail-header'>
                 <div className='product-detail-name'>{finance.name}</div>
-                <div className='product-detail-explanation'>
-                    <img className='card-product-img' src={finance.productType === 'DEPOSIT' ? require('assets/deposit.jpg') : finance.productType === 'SAVINGS' ? require('assets/savings.jpg') : require('assets/loan.jpg')} alt="상품" />
-                    <div className='product-info-div'> {finance.info}</div>
-                </div>
                 <div className='product-summary-infomation'>
+                    <img className='card-product-img' src={finance.productType === 'DEPOSIT' ? require('assets/deposit.jpg') : finance.productType === 'SAVINGS' ? require('assets/savings.jpg') : require('assets/loan.jpg')} alt="상품" />
                     <div style={{ 'textAlign': 'center' }}>
                         <div className='product-summary-rate'></div>
                         <div>{finance.rate} % </div>
@@ -151,7 +151,7 @@ const FinanceDetail = () => {
                 <div className='product-space-between'>
                     <span className='option-title'>상품 안내</span>
                     <div className='option-buttons'>
-                        {agreePart1 ? <span className='disagree-button' onClick={() => setAgreePart1(!agreePart1)}>동의</span> : <span className='agree-button' onClick={() => setAgreePart1(!agreePart1)}>동의</span>}
+                        {role === 'ROLE_PARENT'? null :agreePart1 ? <span className='disagree-button' onClick={() => setAgreePart1(!agreePart1)}>동의</span> : <span className='agree-button' onClick={() => setAgreePart1(!agreePart1)}>동의</span>}
                         <span className='show-info-button' onClick={() => setShowDiv1(!showDiv1)}>
                             <AiOutlineDown />
                         </span>
@@ -179,7 +179,7 @@ const FinanceDetail = () => {
                 <div className='product-space-between'>
                     <span className='option-title'>가입 정보</span>
                     <div className='option-buttons'>
-                        {agreePart2 ? <span className='disagree-button' onClick={() => setAgreePart2(!agreePart2)}>동의</span> : <span className='agree-button' onClick={() => setAgreePart2(!agreePart2)}>동의</span>}
+                        {role === 'ROLE_PARENT'? null :agreePart2 ? <span className='disagree-button' onClick={() => setAgreePart2(!agreePart2)}>동의</span> : <span className='agree-button' onClick={() => setAgreePart2(!agreePart2)}>동의</span>}
                         <span className='show-info-button' onClick={() => setShowDiv2(!showDiv2)}>
                             <AiOutlineDown />
                         </span>
@@ -189,14 +189,14 @@ const FinanceDetail = () => {
                     <div className='detail-dropdown'>
                         <div className='flex-row'>
                             <AiOutlineNotification className="icon" />
-                            <div className="text-label join-essential-info">가입후 생기는 불이익은 모두 가입자가 부담합니다.</div>
+                            <div className="text-label join-essential-info">{finance.info}</div>
                         </div>
                     </div>
                 )}
                 <div className='product-space-between'>
                     <span className='option-title'>{productName[finance.productType]} 설명서 확인</span>
                     <div className='option-buttons'>
-                        {agreePart3 ? <span className='disagree-button' onClick={() => setAgreePart3(!agreePart3)}>동의</span> : <span className='agree-button' onClick={() => setAgreePart3(!agreePart3)}>동의</span>}
+                        {role === 'ROLE_PARENT'? null :agreePart3 ? <span className='disagree-button' onClick={() => setAgreePart3(!agreePart3)}>동의</span> : <span className='agree-button' onClick={() => setAgreePart3(!agreePart3)}>동의</span>}
                         <span className='show-info-button' onClick={() => setShowDiv3(!showDiv3)}>
                             <AiOutlineDown />
                         </span>
@@ -207,7 +207,7 @@ const FinanceDetail = () => {
                         {info[finance.productType]}
                     </div>
                 )}
-                {(finance.productType === 'SAVINGS') && <div className='product-space-between'>
+                {role === 'ROLE_PARENT'? null :(finance.productType === 'SAVINGS') && <div className='product-space-between'>
                     <span className='option-title'>필수 기입 정보</span>
                     <div>
                         <span className='show-info-button' onClick={() => setShowDiv4(!showDiv4)}>
@@ -224,7 +224,9 @@ const FinanceDetail = () => {
                 <div className='errorMessage'>{errorMessage}</div>
             </div>
 
-            <div className='product-apply-button' onClick={apply}>신청 하기</div>
+            {role === 'ROLE_PARENT'? null:<div className='product-apply-button' onClick={apply}>신청 하기</div>}
+            {role === 'ROLE_PARENT'?<ApplyList applys={applys} type ={finance.productType}/>:null}
+            <Footer/>
         </div>
     );
 };

@@ -2,23 +2,61 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import apis from "services/api/apis";
 
 const initialState = {
-    id:'',
-	userId:'',
-	financialProductId:'',
-	productName:'',
-	grant:'',
-	money:'',
-	date:'',
+    data: {
+        id: '',
+        userId: '',
+        financialProductId: '',
+        productName: '',
+        grant: '',
+        money: '',
+        date: '',
+    },
 };
 export const makeDepositor = createAsyncThunk(
     "depositor/makeDepositor",
     async (data, { rejectWithValue }) => {
         try {
-            const res = await apis.post("/api/depositor", JSON.stringify(data), {
+            const res = await apis.post("/api/depositor", data, {
             });
             console.log(res.data);
         } catch (error) {
             rejectWithValue(error.response.data);
+        }
+    }
+);
+export const getDepositor = createAsyncThunk(
+    "depositor/getDepositor",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.get("/api/depositor/disallowList", {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+export const allowDepositor = createAsyncThunk(
+    "depositor/allowDepositor",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.put("/api/depositor/allow/" + data, {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+export const refuseDepositor = createAsyncThunk(
+    "depositor/refuseDepositor",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.put("/api/depositor/refuse/" + data, {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
         }
     }
 );
@@ -28,25 +66,25 @@ const depositorSlice = createSlice({
     initialState,
     reducers: {
         setDepositorId(state, action) {
-            state.id = action.payload;
+            state.data.id = action.payload;
         },
         setDepositorUserId(state, action) {
-            state.userId = action.payload;
+            state.data.userId = action.payload;
         },
         setDepositorFinancialProductId(state, action) {
-            state.financialProductId = action.payload;
+            state.data.financialProductId = action.payload;
         },
         setDepositorProductName(state, action) {
-            state.productName = action.payload;
+            state.data.productName = action.payload;
         },
         setDepositorGrant(state, action) {
-            state.grant = action.payload;
+            state.data.grant = action.payload;
         },
         setDepositorMoney(state, action) {
-            state.money = action.payload;
+            state.data.money = action.payload;
         },
         setDepositorDate(state, action) {
-            state.date = action.payload;
+            state.data.date = action.payload;
         },
     },
 });

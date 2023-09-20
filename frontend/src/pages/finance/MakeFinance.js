@@ -28,7 +28,7 @@ const SelectFinance = () => {
         setProductDescription(event.target.value);
         dispatch(setInfo(event.target.value));
     };
-    let finance = useSelector((state) => state.finance);
+    const finance = useSelector((state) => state.finance.data);
     const handlemakeProduct = () => {
         if (productTitle === '' || productPeriod === '' || productRate === '' || productDescription === ''){
             setValidationMessage('입력 정보가 부족합니다.');
@@ -44,10 +44,10 @@ const SelectFinance = () => {
         }
         dispatch(makeProduct(finance))
             .then((resultAction) => {
+                console.log(finance);
                 if (makeProduct.fulfilled.match(resultAction)) {
                     // 성공적으로 완료됐을 때
                     const product = resultAction.payload; // 액션의 payload에 결과 데이터가 있을 것입니다.
-                    console.log(product);
                     nav("/financial");
                 } else if (makeProduct.rejected.match(resultAction)) {
                     // 작업이 실패했을 때
@@ -77,9 +77,9 @@ const SelectFinance = () => {
             nav("/");
     }
     return (
-        <div className='make-container'>
-            <p>{productTypeName} 상품 생성</p>
-            <div>
+        <div className='make-product-container'>
+            <h1>{productTypeName} 상품 생성</h1>
+            <div className='title-info-set'>
                 <label htmlFor="productTitle">상품 이름</label><br />
                 <input
                     id="productTitle"
@@ -89,7 +89,7 @@ const SelectFinance = () => {
                     className="product-title-input"
                 />
             </div>
-            <div>
+            <div className='title-info-set'>
                 <label htmlFor="productPeriod">계약 기간 ( 개월 )</label><br />
                 <input
                     id="productPeriod"
@@ -99,7 +99,7 @@ const SelectFinance = () => {
                     className="product-title-input"
                 />
             </div>
-            <div>
+            <div className='title-info-set'>
                 <label htmlFor="productRate">{productRateName} ( % )</label><br />
                 <input
                     id="productRate"
@@ -109,7 +109,7 @@ const SelectFinance = () => {
                     className="product-title-input"
                 />
             </div>
-            <div>
+            <div className='title-info-set'>
                 <label htmlFor="productDescription">상품 설명</label><br />
                 <textarea
                     id="productDescription"
