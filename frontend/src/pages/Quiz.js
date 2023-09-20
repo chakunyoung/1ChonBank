@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
 import apis from 'services/api/apis';
 import './Quiz.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +17,7 @@ const Quiz = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user)
+
 
 
   const quizInfo = useSelector((state)=>state.quizInfo.quizInfo)
@@ -43,10 +45,11 @@ const Quiz = () => {
     setSelectedAnswer(answer);
   };
 
-  const handleSubmit = () => {
-    apis.post("/api/quiz/solved");
 
-    dispatch(setUser({ ...user, quiz: true}));
+  const handleSubmit = () => {
+    const updatedUser = { ...user, quiz: 1 };
+    dispatch(setUser(updatedUser));
+
 
     if (selectedAnswer !== null) {
       if(selectedAnswer+1==quizInfo.quizAnswer){
