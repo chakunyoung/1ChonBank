@@ -4,7 +4,7 @@ import TokenVerification from "components/auth/TokenVerification";
 import Home from "pages/Home";
 import Register from "pages/Register";
 import Mypage from "pages/Mypage";
-import Mission from "pages/Mission";
+import Mission from "pages/mission/Mission";
 import KakaoLoginRedirect from "pages/user/KakaoLoginRedirect";
 import GoogleLoginRedirect from "pages/user/GoogleLoginRedirect";
 import Quiz from "pages/Quiz";
@@ -18,6 +18,7 @@ import AccountDetail from "pages/account/AccountDetail";
 
 import CreateFamily from "pages/family/CreateFamily";
 import MyFamily from "pages/family/MyFamily";
+import MissionList from "pages/mission/MissionList";
 
 const RoutePath = () => {
   return (
@@ -52,6 +53,7 @@ const RoutePath = () => {
         path="/login/oauth2/code/google"
         element={<GoogleLoginRedirect />}
       />
+      <Route path="/missionlist" element={<MissionList />} />
     </Routes>
   );
 };
