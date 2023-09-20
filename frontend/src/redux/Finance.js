@@ -3,20 +3,24 @@ import apis from "services/api/apis";
 
 
 const initialState = {
-    id: '',
-    parentId: '',
-    familyId: '',
-    name: '',
-    rate: '',
-    info: '',
-    period: '',
-    productType: '',
+    data: {
+        id: '',
+        parentId: '',
+        familyId: '',
+        name: '',
+        rate: '',
+        info: '',
+        period: '',
+        productType: '',
+    },
 };
 export const makeProduct = createAsyncThunk(
     "finance/makeProduct",
     async (data, { rejectWithValue }) => {
+        console.log("jht");
         try {
-            const res = await apis.post("/api/financial", JSON.stringify(data), {
+            console.log(data);
+            const res = await apis.post("/api/financial", data, {
             });
             return res.data;
         } catch (error) {
@@ -28,7 +32,7 @@ export const getProductList = createAsyncThunk(
     "finance/getProductList",
     async (data, { rejectWithValue }) => {
         try {
-            const res = await apis.get("/api/financial/" + data, {
+            const res = await apis.get("/api/financial", {
             });
             return res.data;
         } catch (error) {
@@ -43,35 +47,35 @@ const financeSlice = createSlice({
     initialState,
     reducers: {
         setParentId(state, action) {
-            state.parentId = action.payload;
+            state.data.parentId = action.payload;
         },
         setFamilyId(state, action) {
-            state.familyId = action.payload;
+            state.data.familyId = action.payload;
         },
         setProductType(state, action) {
-            state.productType = action.payload;
+            state.data.productType = action.payload;
         },
         setName(state, action) {
-            state.name = action.payload;
+            state.data.name = action.payload;
         },
         setInfo(state, action) {
-            state.info = action.payload;
+            state.data.info = action.payload;
         },
         setPeriod(state, action) {
-            state.period = action.payload;
+            state.data.period = action.payload;
         },
         setRate(state, action) {
-            state.rate = action.payload;
+            state.data.rate = action.payload;
         },
         resetAll(state) {
-            state.id = '0';
-            state.parentId = '';
-            state.familyId = '';
-            state.name = '';
-            state.rate = '';
-            state.info = '';
-            state.period = '';
-            state.productType = '';
+            state.data.id = '0';
+            state.data.parentId = '';
+            state.data.familyId = '';
+            state.data.name = '';
+            state.data.rate = '';
+            state.data.info = '';
+            state.data.period = '';
+            state.data.productType = '';
         },
         setAll(state, action) {
             const {
@@ -83,15 +87,15 @@ const financeSlice = createSlice({
                 info,
                 period,
                 productType,
-              } = action.payload;
-            state.id = id;
-            state.parentId = parentId;
-            state.familyId = familyId;
-            state.name = name;
-            state.rate = rate;
-            state.info = info;
-            state.period = period;
-            state.productType = productType;
+            } = action.payload;
+            state.data.id = id;
+            state.data.parentId = parentId;
+            state.data.familyId = familyId;
+            state.data.name = name;
+            state.data.rate = rate;
+            state.data.info = info;
+            state.data.period = period;
+            state.data.productType = productType;
         },
     },
 });

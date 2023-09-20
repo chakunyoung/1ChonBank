@@ -41,3 +41,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.apply-alarm{
+    background-color: red;
+    width:15px;
+    height:15px;
+    border-radius: 50px;
+    margin-right: 16px;
+}

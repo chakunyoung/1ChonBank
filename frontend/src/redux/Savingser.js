@@ -2,24 +2,62 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import apis from "services/api/apis";
 
 const initialState = {
-    id:'',
-	userId:'',
-	financialProductId:'',
-	productName:'',
-	grant:'',
-	money:'',
-	date:'',
-    regularMoney: '',
+    data: {
+        id: '',
+        userId: '',
+        financialProductId: '',
+        productName: '',
+        grant: '',
+        money: '',
+        date: '',
+        regularMoney: '',
+    },
 };
 export const makeSavingser = createAsyncThunk(
-    "loaner/savingser",
+    "savingser/makeSavingser",
     async (data, { rejectWithValue }) => {
         try {
-            const res = await apis.post("/api/savingser", JSON.stringify(data), {
+            const res = await apis.post("/api/savingser", data, {
             });
             console.log(res.data);
         } catch (error) {
             rejectWithValue(error.response.data);
+        }
+    }
+);
+export const getSavingser = createAsyncThunk(
+    "savingser/getSavingser",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.get("/api/savingser/disallowList", {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+export const allowSavingser = createAsyncThunk(
+    "savingser/allowSavingser",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.put("/api/savingser/allow/" + data, {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+export const refuseSavingser = createAsyncThunk(
+    "savingser/refuseSavingser",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.put("/api/savingser/refuse/" + data, {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
         }
     }
 );
@@ -29,30 +67,30 @@ const savingserSlice = createSlice({
     initialState,
     reducers: {
         setSavingserId(state, action) {
-            state.id = action.payload;
+            state.data.id = action.payload;
         },
         setSavingserUserId(state, action) {
-            state.userId = action.payload;
+            state.data.userId = action.payload;
         },
         setSavingserFinancialProductId(state, action) {
-            state.financialProductId = action.payload;
+            state.data.financialProductId = action.payload;
         },
         setSavingserProductName(state, action) {
-            state.productName = action.payload;
+            state.data.productName = action.payload;
         },
         setSavingserGrant(state, action) {
-            state.grant = action.payload;
+            state.data.grant = action.payload;
         },
         setSavingserMoney(state, action) {
-            state.money = action.payload;
+            state.data.money = action.payload;
         },
         setSavingserDate(state, action) {
-            state.date = action.payload;
+            state.data.date = action.payload;
         },
         setSavingserRegularMoney(state, action) {
-            state.regularMoney = action.payload;
+            state.data.regularMoney = action.payload;
         },
-        
+
     },
 });
 

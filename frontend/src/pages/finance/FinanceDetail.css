@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .product-detail-header {
@@ -96,25 +97,11 @@
 .product-summary-infomation {
     display: flex;
     justify-content: space-evenly;
-    margin-bottom: 24px;
+    margin: 24px 0px;
 }
 
 .product-common-info {
     margin: 0px 21px 21px;
-}
-
-.product-detail-explanation {
-    display: flex;
-    margin: 24px;
-    justify-content: space-between;
-}
-
-.product-info-div {
-    width: 80%;
-    color: #FFF;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: normal;
 }
 
 .product-info-label {
@@ -127,7 +114,9 @@
 }
 
 .join-essential-info {
-    margin-right: 50px;
+    width: 80%;
+    word-break: break-all;
+    white-space:pre-wrap
 }
 
 .errorMessage {
