@@ -1,0 +1,48 @@
+.missionlist-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+    height: 100vh; /* 화면 높이와 같은 최소 높이 설정 */
+    position: relative;
+}
+.missionlist-footer {
+    position: absolute;
+    bottom: 0;
+}
+.make-mission {
+    position: absolute;
+    bottom: 10vh;
+    font-size: 25px;
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    background: linear-gradient(45deg, rgba(19, 63, 219, 0.5), rgba(183, 0, 77, 0.4));
+    border-radius: 16px;
+    width: 330px;
+    height: 60px;
+    transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    color: white;
+
+}
+
+.mission-title {
+    width: 180px;
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 28px;
+}
+.make-mission:hover {
+    box-shadow: 0 0 10px rgba(19, 63, 219, 0.5), 0 0 20px rgba(183, 0, 77, 0.4);
+    transform: scale(1.05); /* 마우스 오버 시 버튼 크기 확대 */
+    }
+
+.mission-icon {
+    width: 55px;
+    height: 55px;
+}
+.button-text {
+  margin: 5px; /* 아이콘과의 간격을 조절할 수 있습니다. */
+}
