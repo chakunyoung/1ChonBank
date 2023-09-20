@@ -11,7 +11,7 @@ function MyFamily() {
     const familyName = useSelector((state) => state.family.familyName);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    console.log(familyName);
+    console.log("familyName:", familyName);
 
     const handleDeleteFamily = () => {
         const confirmed = window.confirm("정말 삭제하시겠습니까?");
