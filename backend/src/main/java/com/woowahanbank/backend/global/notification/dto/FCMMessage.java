@@ -1,5 +1,7 @@
 package com.woowahanbank.backend.global.notification.dto;
 
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,16 +18,8 @@ public class FCMMessage {
     @Data
     public static class Message {
         private Notification notification;
-        private String token;
-    }
-
-    @Builder
-    @AllArgsConstructor
-    @Data
-    public static class Notification {
-        private String title;
-        private String body;
         private String icon;
         private String clickAction;
+        private String token;
     }
 }

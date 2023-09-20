@@ -30,3 +30,7 @@ springfox:
   documentation:
     swagger:
       use-model-v3: false
+
+util:
+  domain:
+    prefix: localhost:3000/
