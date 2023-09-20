@@ -20,6 +20,7 @@ import CreateFamily from "pages/family/CreateFamily";
 import MyFamily from "pages/family/MyFamily";
 import MissionList from "pages/mission/MissionList";
 
+
 const RoutePath = () => {
   return (
     <Routes>
@@ -53,7 +54,7 @@ const RoutePath = () => {
         path="/login/oauth2/code/google"
         element={<GoogleLoginRedirect />}
       />
-      <Route path="/missionlist" element={<MissionList />} />
+      <Route path="/missionList" element={<MissionList />} />
     </Routes>
   );
 };
