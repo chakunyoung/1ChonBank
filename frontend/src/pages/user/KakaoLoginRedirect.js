@@ -2,16 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import {
-  kakaoLogin,
-  setUser,
-  setFirebaseToken,
-  setAccessToken,
-  setRefreshToken
-} from "redux/Auth";
+import { kakaoLogin, setUser, setFirebaseToken } from "redux/Auth";
 import { setFamilyName } from "redux/Family";
 
-import apis from "services/api/apis";
 import axios from "axios";
 
 import {
@@ -50,13 +43,16 @@ const KakaoLoginRedirect = () => {
         dispatch(kakaoLogin(data["id_token"]))
           .unwrap()
           .then((data) => {
-            dispatch(setAccessToken(data["access-token"])); // 우리 서버 accesstoken
             const accessToken = data["access-token"];
+
             const payloadBase64 = accessToken.split(".")[1];
             const decodedPayload = atob(payloadBase64);
             const payloadObj = JSON.parse(decodedPayload);
             const userId = payloadObj.sub;
-            dispatch(setRefreshToken(data["refresh-token"]));
+
+            localStorage.setItem("access-token", data["access-token"]);
+            localStorage.setItem("refresh-token", data["refresh-token"]);
+
             return axios.get(`/api/user/${userId}`); // DB 에 저장된 유저 정보 가져오기
           })
           .then(async (response) => {
