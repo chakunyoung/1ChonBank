@@ -10,6 +10,9 @@ import Footer from "components/common/Footer";
 import Profile from "components/common/Profile"
 import './Mypage.css';
 import { useSelector } from 'react-redux';
+
+import apis from 'services/api/apis'
+
 const Mypage = () => {
 
   const navigate= useNavigate();
@@ -31,6 +34,27 @@ const Mypage = () => {
     }
 
   }
+
+  const sendPinMoneyRequest = async () => {
+    try {
+      const response = await apis.post('/api/banking/pinmoney', {
+        childNickname: user.nickname,
+        pinMoney: 10000,
+        receiveTime: '2023-09-20', // 날짜 형식에 따라 변경
+      });
+  
+      if (response.status === 200) {
+        console.log('요청 성공:', response.data);
+        return response.data;
+      } else {
+        console.error('요청 실패:', response);
+        throw new Error('요청 실패');
+      }
+    } catch (error) {
+      console.error('오류 발생:', error);
+      throw error;
+    }
+  };
 
   return (
     <div className='MypageContainer'>
@@ -61,6 +85,11 @@ const Mypage = () => {
         <div className="button button-quiz" style={{ width: 340, height: '70px' }} onClick={checkQuiz}>
           <RiQuestionnaireFill className='logo'/>
           <span>오늘의 퀴즈</span>
+        </div>
+
+        <div className="button button-quiz" style={{ width: 340, height: '70px' }} onClick={sendPinMoneyRequest}>
+          <RiQuestionnaireFill className='logo'/>
+          <span>test</span>
         </div>
       </div>
       <div className='mypage-footer'><Footer/></div>
