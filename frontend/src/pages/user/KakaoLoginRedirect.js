@@ -7,6 +7,7 @@ import {
   setUser,
   setFirebaseToken,
   setAccessToken,
+  setRefreshToken
 } from "redux/Auth";
 import { setFamilyName } from "redux/Family";
 
@@ -55,7 +56,7 @@ const KakaoLoginRedirect = () => {
             const decodedPayload = atob(payloadBase64);
             const payloadObj = JSON.parse(decodedPayload);
             const userId = payloadObj.sub;
-
+            dispatch(setRefreshToken(data["refresh-token"]));
             return axios.get(`/api/user/${userId}`); // DB 에 저장된 유저 정보 가져오기
           })
           .then(async (response) => {
