@@ -1,14 +1,52 @@
-import React, { useState } from 'react';
-import './Mission.css';
+import React, { useEffect, useState } from 'react';
+import './MissionMake.css';
 import Footer from 'components/common/Footer'
+import { useDispatch, useSelector } from 'react-redux';
+import apis from '../../services/api/apis'
+import { setFamilyMember } from 'redux/Family';
 
+const MissionMake = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // 데이터를 가져오는 비동기 함수를 정의합니다.
+    const fetchData = async () => {
+      try {
+        console.log("가족 정보 조회 보냄");
+        const response = await apis.get("/api/families");
+        console.log(response);
+        const data = response.data.data;
+        dispatch(setFamilyMember(data));
+         // 데이터 로딩이 완료됨을 표시
+      } catch (error) {
+        console.error('데이터를 가져오지 못했습니다:', error);
+         // 데이터 로딩 실패를 표시
+      }
+    };
 
-const Mission = () => {
+    fetchData(); // 데이터 가져오기 함수 호출
+  }, []); 
+
   const [missionTitle, setMissionTitle] = useState('');
   const [missionDescription, setMissionDescription] = useState('');
   const [selectedChild, setSelectedChild] = useState('');
   const [points, setPoints] = useState(''); // 포인트 상태 추가
   const [validationMessage, setValidationMessage] = useState('');
+
+  const familyMember = useSelector((state)=>state.family.familyMember);
+  const childMembers = familyMember.filter((member) => member.role === 'ROLE_CHILD');
+  const user = useSelector((state)=>state.auth.user)
+  const date = Date.now();
+
+  const data ={
+    missionTitle : missionTitle,
+    missionDescription : missionDescription,
+    selectedChild: selectedChild,
+    points:points,
+    date: date,
+    familyId:user.familyId,
+    parentId:user.userId,
+
+  }
 
   const handleMissionAssignClick = () => {
     // 미션 부여 로직을 이곳에 추가하세요.
@@ -22,9 +60,11 @@ const Mission = () => {
     } else if (parseInt(points) % 100 !== 0) {
       setValidationMessage('100단위로 입력하세요.');
     } else {
-      // 유효성 검사를 통과한 경우 메시지를 초기화합니다.
+      apis.put("/missions/makeMission",data);
       setValidationMessage('');
     }
+
+
   };
 
   return (
@@ -58,10 +98,11 @@ const Mission = () => {
           onChange={(e) => setSelectedChild(e.target.value)}
           className="selected-child-select"
         >
-          <option value="child1">자식 1</option>
-          <option value="child2">자식 2</option>
-          <option value="child3">자식 3</option>
-          {/* 필요한 선택 옵션들을 추가하세요 */}
+          {childMembers.map((member) => (
+          <option key={member.nickname} value={member.nickname}>
+            {member.nickname}
+          </option>
+          ))}
         </select>
       </div>
       <div>
@@ -88,4 +129,4 @@ const Mission = () => {
   );
 };
 
-export default Mission;
+export default MissionMake;
