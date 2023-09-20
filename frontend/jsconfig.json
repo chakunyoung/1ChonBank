@@ -2,6 +2,6 @@
     "compilerOptions": {
       "baseUrl": "src"
     },
-    "include": ["src/**/*", "public/FirebaseConfig.js"]
+    "include": ["src/**/*", "public/firebaseConfig.js"]
   }
   
