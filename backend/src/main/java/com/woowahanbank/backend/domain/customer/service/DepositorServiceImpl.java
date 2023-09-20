@@ -19,8 +19,8 @@ import com.woowahanbank.backend.domain.financialproducts.domain.FinancialProduct
 import com.woowahanbank.backend.domain.financialproducts.repository.FinancialProductRepository;
 import com.woowahanbank.backend.domain.point.service.PointServiceImpl;
 import com.woowahanbank.backend.domain.user.domain.User;
-import com.woowahanbank.backend.domain.user.dto.UserDto;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
+import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 
 import lombok.RequiredArgsConstructor;
 
@@ -48,9 +48,9 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 	}
 
 	@Override
-	public List<DepositorDto> getDisallow(UserDto userDto) {
+	public List<DepositorDto> getDisallow(CustomUserDetails customUser) {
 		List<Depositor> list = depositorRepository.findAllByUser_FamilyIdAndAllowProductIsFalseOrderByIdDesc(
-			userDto.getFamilyId());
+			customUser.getUser().getFamily().getId());
 		List<DepositorDto> res = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			res.add(changeToDto(list.get(i)));
@@ -79,10 +79,10 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 			parent.moneyTransfer(-money);
 			userRepository.save(parent);
 			pointService.makePoint(parent, admin, "예금 이자", money);
-		}, new CronTrigger("0 0 0 " + dayDate + " ?"));
+		}, new CronTrigger("0 0 0 " + dayDate + " * ?"));
 		String endDate = depositor.getDate()
-			.plus(financialProduct.getPeriod() + 1, ChronoUnit.DAYS)
-			.format(DateTimeFormatter.ofPattern("d M e yyyy"))
+			.plus(financialProduct.getPeriod() + 1, ChronoUnit.MONTHS)
+			.format(DateTimeFormatter.ofPattern("d M e"))
 			.toString();
 		endS.schedule(() -> {
 			int money = depositor.getMoney();

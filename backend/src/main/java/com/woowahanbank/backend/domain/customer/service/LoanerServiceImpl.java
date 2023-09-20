@@ -19,8 +19,8 @@ import com.woowahanbank.backend.domain.financialproducts.domain.FinancialProduct
 import com.woowahanbank.backend.domain.financialproducts.repository.FinancialProductRepository;
 import com.woowahanbank.backend.domain.point.service.PointServiceImpl;
 import com.woowahanbank.backend.domain.user.domain.User;
-import com.woowahanbank.backend.domain.user.dto.UserDto;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
+import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 
 import lombok.RequiredArgsConstructor;
 
@@ -48,9 +48,9 @@ public class LoanerServiceImpl implements CustomerService<LoanerDto> {
 	}
 
 	@Override
-	public List<LoanerDto> getDisallow(UserDto userDto) {
+	public List<LoanerDto> getDisallow(CustomUserDetails customUser) {
 		List<Loaner> list = loanerRepository.findAllByUser_FamilyIdAndAllowProductIsFalseOrderByIdDesc(
-			userDto.getFamilyId());
+			customUser.getUser().getFamily().getId());
 		List<LoanerDto> res = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			res.add(changeToDto(list.get(i)));
@@ -81,10 +81,10 @@ public class LoanerServiceImpl implements CustomerService<LoanerDto> {
 			parent.moneyTransfer(money);
 			userRepository.save(parent);
 			pointService.makePoint(admin, parent, "대출 이자", money);
-		}, new CronTrigger("0 0 0 " + dayDate + " ?"));
+		}, new CronTrigger("0 0 0 " + dayDate + " * ?"));
 		String endDate = loaner.getDate()
-			.plus(financialProduct.getPeriod() + 1, ChronoUnit.DAYS)
-			.format(DateTimeFormatter.ofPattern("d M e yyyy"))
+			.plus(financialProduct.getPeriod() + 1, ChronoUnit.MONTHS)
+			.format(DateTimeFormatter.ofPattern("d M e"))
 			.toString();
 		endS.schedule(() -> {
 			int money = loaner.getMoney();

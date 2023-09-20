@@ -19,8 +19,8 @@ import com.woowahanbank.backend.domain.financialproducts.domain.FinancialProduct
 import com.woowahanbank.backend.domain.financialproducts.repository.FinancialProductRepository;
 import com.woowahanbank.backend.domain.point.service.PointServiceImpl;
 import com.woowahanbank.backend.domain.user.domain.User;
-import com.woowahanbank.backend.domain.user.dto.UserDto;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
+import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 
 import lombok.RequiredArgsConstructor;
 
@@ -49,9 +49,9 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 	}
 
 	@Override
-	public List<SavingserDto> getDisallow(UserDto userDto) {
+	public List<SavingserDto> getDisallow(CustomUserDetails customUser) {
 		List<Savingser> list = savingserRepository.findAllByUser_FamilyIdAndAllowProductIsFalseOrderByIdDesc(
-			userDto.getFamilyId());
+			customUser.getUser().getFamily().getId());
 		List<SavingserDto> res = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			res.add(changeToDto(list.get(i)));
@@ -80,10 +80,10 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 			userRepository.save(child);
 			pointService.makePoint(child, admin, "정기 적금", regMoney);
 			savingser.depositMoney(regMoney);
-		}, new CronTrigger("0 0 0 " + dayDate + " ?"));
+		}, new CronTrigger("0 0 0 " + dayDate + " * ?"));
 		String endDate = savingser.getDate()
-			.plus(financialProduct.getPeriod() + 1, ChronoUnit.DAYS)
-			.format(DateTimeFormatter.ofPattern("d M e yyyy"))
+			.plus(financialProduct.getPeriod() + 1, ChronoUnit.MONTHS)
+			.format(DateTimeFormatter.ofPattern("d M e"))
 			.toString();
 		endS.schedule(() -> {
 			int money = savingser.getMoney();

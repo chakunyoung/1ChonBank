@@ -8,6 +8,7 @@ const FinanceCard = (props) => {
             <div className='product-info'>
                 <div className='product-name'>
                     <div>{props.product.name}</div>
+                    {props.cnt !== 0 ? <div className='apply-alarm'></div> : null}
                 </div>
                 <div className='product-etc'>
                     <div>기간 : {props.product.period} 개월 </div>
