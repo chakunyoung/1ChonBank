@@ -19,6 +19,6 @@ public class NotificationQueueProducer {
 
     @EventListener
     public void handleCustomEvent(NotificationEvent event) {
-        rabbitTemplate.convertAndSend(exchangeName, routingKey, event.getData());
+        rabbitTemplate.convertAndSend(exchangeName, routingKey, event);
     }
 }

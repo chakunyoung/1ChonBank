@@ -1,5 +1,6 @@
 package com.woowahanbank.backend.domain.family.controller;
 
+import com.google.firebase.messaging.Notification;
 import com.woowahanbank.backend.domain.family.dto.FamilyUserDto;
 import com.woowahanbank.backend.domain.family.service.FamilyService;
 import com.woowahanbank.backend.domain.user.domain.User;
@@ -8,6 +9,7 @@ import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 import com.woowahanbank.backend.global.notification.dto.NotificationDto;
 import com.woowahanbank.backend.global.notification.event.NotificationEvent;
 import com.woowahanbank.backend.global.response.BaseResponse;
+import com.woowahanbank.backend.global.util.NotificationUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -81,12 +83,14 @@ public class FamilyController {
     public ResponseEntity<?> sendFamilyInvitation(@ApiIgnore @AuthenticationPrincipal CustomUserDetails customUser, @PathVariable String nickname) {
         familyService.inviteToFamily(customUser.getNickname(), nickname);
         eventPublisher.publishEvent(new NotificationEvent(
-                this, nickname, NotificationDto.builder()
+                this, nickname,
+                NotificationUtil.clickUrl("mypage"),
+                NotificationDto.builder()
                 .title("가족 초대")
-                .body(customUser.getNickname() + "님이 " + customUser.getUser().getFamily().getFamilyName() + " 가족방에 초대했습니다.")
-                .clickAction("http://localhost:3000")
-                .icon("")
-                .build()));
+                .body(customUser.getNickname() + "님이 [" + customUser.getUser().getFamily().getFamilyName() + "] 가족방에 초대했습니다.")
+                .build()
+        ));
+
         return BaseResponse.ok(HttpStatus.OK, "초대 전송 성공");
     }
 
