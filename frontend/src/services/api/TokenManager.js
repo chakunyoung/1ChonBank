@@ -27,10 +27,11 @@ export const getRefreshTokenAxios = () => {
 };
 
 export const updateAccessTokenAxios = (newAccessToken, newRefreshToken) => {
+  console.log("access token 만료, 새로 갱신");
   const authString = JSON.parse(localStorage.getItem("persist:auth"));
   if (authString) {
     localStorage.setItem("persist:auth", JSON.stringify({ ...authString, accessToken: newAccessToken, refreshToken: newRefreshToken }));
   } else {
-    console.log("updated Access Token");
+    console.log("update Access token err");
   }
 }

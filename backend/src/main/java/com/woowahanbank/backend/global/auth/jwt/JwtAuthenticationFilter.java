@@ -67,7 +67,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	}
 
 	@Transactional(readOnly = true)
-	public Authentication getAuthentication(HttpServletRequest request) throws Exception {
+	public Authentication getAuthentication(HttpServletRequest request) throws TokenExpiredException {
 		log.info("{}", request.getHeader(JwtTokenUtil.HEADER_STRING));
 		String token = request.getHeader(JwtTokenUtil.HEADER_STRING);
 		// 요청 헤더에 Authorization 키값에 jwt 토큰이 포함된 경우에만, 토큰 검증 및 인증 처리 로직 실행.
@@ -84,8 +84,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				// 식별된 정상 유저인 경우, 요청 context 내에서 참조 가능한 인증 정보(jwtAuthentication) 생성.
 				CustomUserDetails userDetails = new CustomUserDetails(user);
 				UsernamePasswordAuthenticationToken jwtAuthentication = new UsernamePasswordAuthenticationToken(
-						userDetails,
-						null, userDetails.getAuthorities());
+					userDetails,
+					null, userDetails.getAuthorities());
 				jwtAuthentication.setDetails(userDetails);
 				log.info("JWT Auth OK!");
 				return jwtAuthentication;
