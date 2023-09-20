@@ -1,24 +1,23 @@
 package com.woowahanbank.backend.global.notification.event;
 
+import com.google.firebase.messaging.Notification;
 import com.woowahanbank.backend.global.notification.dto.NotificationDto;
+import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
+import java.io.Serializable;
 
-public class NotificationEvent extends ApplicationEvent {
-    private NotificationDto data;
+
+@Getter
+public class NotificationEvent extends ApplicationEvent implements Serializable {
+    private NotificationDto notificationDto;
+    private String clickAction;
     private String nickname;
 
-    public NotificationEvent(Object source, String nickname, NotificationDto notificationDto) {
+    public NotificationEvent(Object source, String nickname, String clickAction, NotificationDto notificationDto) {
         super(source);
+        this.notificationDto = notificationDto;
+        this.clickAction = clickAction;
         this.nickname = nickname;
-        this.data = notificationDto;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public NotificationDto getData() {
-        return data;
     }
 }
