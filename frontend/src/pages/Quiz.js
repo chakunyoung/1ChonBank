@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import apis from 'services/api/apis';
 import './Quiz.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from 'redux/Auth';
@@ -43,6 +44,8 @@ const Quiz = () => {
   };
 
   const handleSubmit = () => {
+    apis.post("/api/quiz/solved");
+
     dispatch(setUser({ ...user, quiz: true}));
 
     if (selectedAnswer !== null) {

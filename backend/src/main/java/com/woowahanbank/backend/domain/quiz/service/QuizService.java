@@ -1,11 +1,9 @@
 package com.woowahanbank.backend.domain.quiz.service;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,8 +20,9 @@ import com.woowahanbank.backend.domain.quiz.domain.Quiz;
 import com.woowahanbank.backend.domain.quiz.dto.GptMessage;
 import com.woowahanbank.backend.domain.quiz.dto.GptRequestDto;
 import com.woowahanbank.backend.domain.quiz.dto.GptResponseDto;
-import com.woowahanbank.backend.domain.quiz.dto.QuizDto;
 import com.woowahanbank.backend.domain.quiz.repository.QuizRepository;
+import com.woowahanbank.backend.domain.user.domain.User;
+import com.woowahanbank.backend.domain.user.repository.UserRepository;
 import com.woowahanbank.backend.global.util.JwtTokenUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +42,8 @@ public class QuizService {
 
 	private final QuizRepository quizRepository;
 
+	private final UserRepository userRepository;
+
 	public void chatGpt(String key) {
 		this.restTemplate = new RestTemplate();
 		this.headers = new HttpHeaders();
@@ -54,8 +54,6 @@ public class QuizService {
 	public ResponseEntity<String> createQuestionsBasedOnIntro(Map<String, String> body) {
 		log.info("AI 질문 Generate!");
 		try {
-
-
 
 			GptRequestDto gptRequestDto = GptRequestDto.builder()
 				.model("gpt-3.5-turbo")
@@ -72,8 +70,6 @@ public class QuizService {
 					+ "정답: (정답의 번호, 앞에 '정답: '를 꼭 넣어줘)\n"
 					+ "해설: (해설, 앞에 '해설: '를 꼭 넣어줘)\n")))
 				.build();
-
-
 
 			ObjectMapper objectMapper = new ObjectMapper();
 			String requestBody = objectMapper.writeValueAsString(gptRequestDto);
@@ -120,7 +116,7 @@ public class QuizService {
 
 				String[] parts = choicesDetails.split("\n");
 				for (String part : parts) {
-					 if (part.startsWith("문제")){
+					if (part.startsWith("문제")) {
 						question = part.substring("문제:".length()).trim();
 						System.out.println(question);
 					} else if (part.startsWith("1번 선지")) {
@@ -147,7 +143,6 @@ public class QuizService {
 					}
 				}
 
-
 				Quiz build = Quiz.builder()
 					.quizChoice1(choice1)
 					.quizChoice2(choice2)
@@ -160,7 +155,6 @@ public class QuizService {
 					.build();
 
 				quizRepository.save(build);
-
 
 				return new ResponseEntity<>(generatedQuestion, HttpStatus.OK);
 			} else {
@@ -179,6 +173,7 @@ public class QuizService {
 		chatGpt(gptKey);
 		createQuestionsBasedOnIntro(null);
 	}
+
 	public Optional<Quiz> showQuiz(Long quizId) {
 		return quizRepository.findById(quizId);
 	}
@@ -201,9 +196,12 @@ public class QuizService {
 
 	}
 
-
 	public void deleteQuiz() {
 		quizRepository.deleteAll();
 	}
 
+	public void solvedQuiz(User user) {
+		user.solvedQuiz(1L);
+		userRepository.save(user);
+	}
 }
