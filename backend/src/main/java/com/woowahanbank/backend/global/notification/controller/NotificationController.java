@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class NotificationController {
 
-	private final FCMTokenService fcmTokenService;
+    private final FCMTokenService fcmTokenService;
 
     @PostMapping("/token")
     public ResponseEntity<?> saveToken(@RequestBody FCMTokenRequestDto tokenRequestDto) {
