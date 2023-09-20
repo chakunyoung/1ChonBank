@@ -9,6 +9,7 @@ import Depositor from "./Depositor";
 import Savingser from "./Savingser";
 import Loaner from "./Loaner";
 import Family from "./Family";
+import Mission from "./Mission";
 
 const authPersistConfig = {
   key: "auth",
@@ -45,6 +46,11 @@ const familyPersistConfig = {
   storage,
 };
 
+const missionPersistConfig = {
+  key: "mission",
+  storage,
+};
+
 const reducers = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   finance: persistReducer(financePersistConfig, Finance),
@@ -53,6 +59,7 @@ const reducers = combineReducers({
   loaner: persistReducer(loanerPersistConfig, Loaner),
   quizInfo: persistReducer(quizInfoPersistConfig, QuizInfo),
   family: persistReducer(familyPersistConfig, Family),
+  mission: persistReducer(missionPersistConfig, Mission),
 });
 
 const store = configureStore({
