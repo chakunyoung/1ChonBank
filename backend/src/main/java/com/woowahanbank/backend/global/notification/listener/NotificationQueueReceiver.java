@@ -8,6 +8,7 @@ import com.woowahanbank.backend.global.notification.event.NotificationEvent;
 import com.woowahanbank.backend.global.notification.service.FCMTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class NotificationQueueReceiver {
     private final FCMTokenService fcmTokenService;
 
     @RabbitListener(queues = "${spring.rabbitmq.queue-name}")
+    @Async
     public void receiveMessage(NotificationEvent event) {
         // FCM 메시지 구성
         FCMMessage fcmMessage = FCMMessage.builder()
@@ -32,7 +34,8 @@ public class NotificationQueueReceiver {
         sendFCMMessage(fcmMessage);
     }
 
-    private void sendFCMMessage(FCMMessage fcmMessage) {
+    @Async
+    protected void sendFCMMessage(FCMMessage fcmMessage) {
         // FCM 전송 로직. Firebase SDK를 사용해 FCM 서버로 요청 전송
         Message message = Message.builder()
                 .setNotification(fcmMessage.getMessage().getNotification())
