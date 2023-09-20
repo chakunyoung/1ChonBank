@@ -8,6 +8,7 @@ import {
   getFirebaseToken,
   sendWebPushInfomation,
 } from "services/api/FirebaseAPI";
+import { setFamilyName } from "redux/Family";
 
 function GoogleLoginRedirect() {
   const location = useLocation();
@@ -43,13 +44,12 @@ function GoogleLoginRedirect() {
       dispatch(setAccessToken(accessToken));
       dispatch(setRefreshToken(response.data.data["refresh-token"]));
       if (user === null) {
-        const tempUser = {
-          userId: userId,
-        };
-        dispatch(setUser(tempUser));
+        dispatch(setUser({...user, userId: userId}));
       }
 
-      fetchUserData(userId, navigate, dispatch, nickname, token);
+      let userData = await fetchUserData(userId, navigate, dispatch, nickname, token);
+      await performFirebaseTokenTask(userData, dispatch);
+
     } catch (error) {
       console.error("구글 로그인 에러:", error);
       navigate("/");
@@ -59,38 +59,41 @@ function GoogleLoginRedirect() {
 
   const fetchUserData = async (userId, navigate, dispatch, nickname, token) => {
     try {
-      const response = await apis.get(`/api/user/${userId}`);
+      const response = await axios.get(`/api/user/${userId}`);
+      console.log(response);
       const userData = response.data.data;
 
       dispatch(setUser(userData));
-
+      dispatch(setFamilyName(userData.familyName));
       if (userData.roles === null) {
         navigate("/register");
       } else {
         navigate("/mypage");
       }
 
-      const firebaseToken = await getFirebaseToken();
-      if (firebaseToken) {
-        dispatch(setFirebaseToken(firebaseToken));
-        console.log("FIREBASE - token updated successfully");
-
-        if (userData.nickname && firebaseToken) {
-          await sendWebPushInfomation(userData.nickname, firebaseToken)
-            .then((res) => {
-              console.log(
-                "FIREBASE - send backend firebase token successfully"
-              );
-            })
-            .catch((error) => {
-              console.error("Error sending web push notification:", error);
-            });
-        }
-      }
+      return userData;
     } catch (error) {
       console.error("API 오류:", error);
     }
   };
+
+  async function performFirebaseTokenTask(userData, dispatch) {
+    const firebaseToken = await getFirebaseToken();
+    if (firebaseToken) {
+      dispatch(setFirebaseToken(firebaseToken));
+      console.log("FIREBASE - token updated successfully");
+  
+      if (userData.nickname && firebaseToken) {
+        await sendWebPushInfomation(userData.nickname, firebaseToken)
+          .then((res) => {
+            console.log("FIREBASE - send backend firebase token successfully");
+          })
+          .catch((error) => {
+            console.error("Error sending web push notification:", error);
+          });
+      }
+    }
+  }
 
   return <div>Redirecting...</div>;
 }

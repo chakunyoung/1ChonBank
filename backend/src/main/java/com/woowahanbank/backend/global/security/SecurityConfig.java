@@ -41,22 +41,25 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http
-			.cors().configurationSource(corsConfigurationSource()).and()
-			.csrf().disable()
-			.httpBasic().disable()
-			.formLogin().disable()
+		http.cors()
+			.configurationSource(corsConfigurationSource())
+			.and()
+			.csrf()
+			.disable()
+			.httpBasic()
+			.disable()
+			.formLogin()
+			.disable()
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.apply(new MyCustomDsl());
 
-		http
-			.authorizeRequests()
-			.antMatchers("/**").permitAll() // 테스트 페이지
-			.and()
-			.oauth2Login()
-			.loginPage("/");
+		http.authorizeRequests()
+			.antMatchers("/api/families/**")
+			.authenticated()
+			.antMatchers("/**").permitAll()
+			.and().oauth2Login().permitAll();
 		// 		.antMatchers("/api/users/login").permitAll() //로그인
 		// 		.antMatchers("/api/users/**").permitAll() //회원 가입
 		// 		.antMatchers("/api/interviews/rooms/**").permitAll() // 면접방 조회
@@ -65,8 +68,7 @@ public class SecurityConfig {
 		// 		.antMatchers("/api/ws/**").permitAll()
 		// 		.anyRequest().authenticated();
 		//
-		http
-			.exceptionHandling()
+		http.exceptionHandling()
 			.accessDeniedHandler(new RestAccessDeniedHandler())
 			.authenticationEntryPoint(new RestAuthenticationEntryPoint()); // 그 외 모든 요청에 대해 인증 필요
 		//
@@ -88,21 +90,14 @@ public class SecurityConfig {
 	@Bean
 	@Order(0)
 	public SecurityFilterChain resources(HttpSecurity http) throws Exception {
-		return http.requestMatchers(matchers -> matchers.antMatchers(
-				"/favicon.ico",
-				"/category/**",
-				"/rooms",
-				"/error",
-				"/swagger-resources/**",
-				"/swagger-ui/**",
-				"/v3/api-docs",
-				"/resources/**",
-				"/webjars/**",
+		return http.requestMatchers(matchers -> matchers.antMatchers("/favicon.ico", "/category/**", "/rooms", "/error",
+				"/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs", "/resources/**", "/webjars/**",
 				"/swagger-ui.html"))
 			.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
 			.requestCache(RequestCacheConfigurer::disable)
 			.securityContext(AbstractHttpConfigurer::disable)
-			.sessionManagement(AbstractHttpConfigurer::disable).build();
+			.sessionManagement(AbstractHttpConfigurer::disable)
+			.build();
 	}
 
 	@Bean
@@ -122,9 +117,8 @@ public class SecurityConfig {
 		@Override
 		public void configure(HttpSecurity http) throws Exception {
 			AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-			http
-				.addFilterBefore(new JwtAuthenticationFilter(authenticationManager, userService, template),
-					UsernamePasswordAuthenticationFilter.class);
+			http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager, userService, template),
+				UsernamePasswordAuthenticationFilter.class);
 		}
 	}
 }

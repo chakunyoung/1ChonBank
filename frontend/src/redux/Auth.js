@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 const initialState = {
   refreshToken: "",
   user: null,
-  accessToken: "",
+  accessToken: "엑세스 토큰",
   firebaseToken: "",
 };
 
@@ -90,7 +90,7 @@ const authSlice = createSlice({
         state.user = payload.data;
       })
       .addCase(kakaoLogin.fulfilled, (state, { payload }) => {
-        console.log("풀필", payload);
+        console.log(payload);
         state.accessToken = payload[`access-token`];
         state.refreshToken = payload[`refresh-token`];
       });
