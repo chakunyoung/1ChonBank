@@ -2,23 +2,62 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import apis from "services/api/apis";
 
 const initialState = {
-    id:'',
-	userId:'',
-	financialProductId:'',
-	productName:'',
-	grant:'',
-	money:'',
-	date:'',
+    data: {
+        id: '',
+        userId: '',
+        financialProductId: '',
+        productName: '',
+        grant: '',
+        money: '',
+        date: '',
+    },
 };
 export const makeLoaner = createAsyncThunk(
     "loaner/makeLoaner",
     async (data, { rejectWithValue }) => {
         try {
-            const res = await apis.post("/api/loaner", JSON.stringify(data), {
+            const res = await apis.post("/api/loaner", data, {
             });
             console.log(res.data);
         } catch (error) {
             rejectWithValue(error.response.data);
+        }
+    }
+);
+export const getLoaner = createAsyncThunk(
+    "loaner/getLoaner",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.get("/api/loaner/disallowList", {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const allowLoaner = createAsyncThunk(
+    "loaner/allowLoaner",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.put("/api/loaner/allow/" + data, {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+export const refuseLoaner = createAsyncThunk(
+    "loaner/refuseLoaner",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.put("/api/loaner/refuse/" + data, {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
         }
     }
 );
@@ -28,25 +67,25 @@ const loanerSlice = createSlice({
     initialState,
     reducers: {
         setLoanerId(state, action) {
-            state.id = action.payload;
+            state.data.id = action.payload;
         },
         setLoanerUserId(state, action) {
-            state.userId = action.payload;
+            state.data.userId = action.payload;
         },
         setLoanerFinancialProductId(state, action) {
-            state.financialProductId = action.payload;
+            state.data.financialProductId = action.payload;
         },
         setLoanerProductName(state, action) {
-            state.productName = action.payload;
+            state.data.productName = action.payload;
         },
         setLoanerGrant(state, action) {
-            state.grant = action.payload;
+            state.data.grant = action.payload;
         },
         setLoanerMoney(state, action) {
-            state.money = action.payload;
+            state.data.money = action.payload;
         },
         setLoanerDate(state, action) {
-            state.date = action.payload;
+            state.data.date = action.payload;
         },
     },
 });

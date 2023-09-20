@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import com.woowahanbank.backend.domain.customer.dto.DepositorDto;
 import com.woowahanbank.backend.domain.customer.service.CustomerService;
 import com.woowahanbank.backend.domain.customer.service.DepositMoneyService;
 import com.woowahanbank.backend.domain.user.dto.UserDto;
+import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 import com.woowahanbank.backend.global.response.BaseResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -28,8 +30,9 @@ public class DepositorController {
 	private final DepositMoneyService depositMoneyService;
 
 	@PostMapping
-	public ResponseEntity<?> apply(@RequestBody DepositorDto depositorDto) {
-		System.out.println(depositorDto);
+	public ResponseEntity<?> apply(@AuthenticationPrincipal CustomUserDetails customUser,
+		@RequestBody DepositorDto depositorDto) {
+		depositorDto.setUserId(customUser.getUser().getId());
 		try {
 			customerService.apply(depositorDto);
 			return BaseResponse.ok(HttpStatus.OK, "예금 상품 등록 성공");
@@ -39,8 +42,8 @@ public class DepositorController {
 	}
 
 	@GetMapping("/disallowList")
-	public ResponseEntity<?> getDisallow(@RequestBody UserDto userDto) {
-		List<DepositorDto> disallowList = customerService.getDisallow(userDto);
+	public ResponseEntity<?> getDisallow(@AuthenticationPrincipal CustomUserDetails customUser) {
+		List<DepositorDto> disallowList = customerService.getDisallow(customUser);
 		return BaseResponse.okWithData(HttpStatus.OK, "우리 가족 불허 예금 상품", disallowList);
 	}
 

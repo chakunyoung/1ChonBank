@@ -11,14 +11,14 @@ const FinancelistSet = (props) => {
     const dispatch = useDispatch();
     const nav = useNavigate();
     useEffect(()=>{
-    	setType(props.viewType);
+        setType(props.viewType);
     }, [props.viewType]);
     useEffect(()=>{
     	setCnt(5);
     },[type]);
-    const handlerFinanceDetail = (product) => {
+    const handlerFinanceDetail = (product, applys) => {
         dispatch(setAll({id: product.id, parentId: product.parentId, familyId: product.familyId, name: product.name, rate: product.rate, info: product.info, period: product.period, productType: product.productType}));
-        nav("/financeDetail");
+        nav("/financeDetail", {state: applys});
     }
     const rendering = () => {
         const tester = props.products;
@@ -27,12 +27,19 @@ const FinancelistSet = (props) => {
         let i = 0;
         for (; i < tester.length && check < cnt; i++) {
             const p = tester[i];
+            const applys = tester[i].productType === 'DEPOSIT'? props.dapplys: tester[i].productType === 'SAVINGS'? props.sapplys: props.lapplys;
+            let needarr = [];
+            for (let index = 0; index < applys.length; index++) {
+                if (applys[index].financialProductId === p.id){
+                    needarr = needarr.concat([applys[index]]);
+                }
+            }
             if (type === '') {
-                result.push(<div className='card-product-box' key={tester[i].id} onClick={() => handlerFinanceDetail(p)}><FinanceCard product={p}></FinanceCard></div>);
+                result.push(<div className='card-product-box' key={tester[i].id} onClick={() => handlerFinanceDetail(p, needarr)}><FinanceCard product={p} cnt={needarr.length}></FinanceCard></div>);
                 check++;
             }
             else if (tester[i].productType === type) {
-                result.push(<div className='card-product-box' key={tester[i].id} onClick={() => handlerFinanceDetail(p)}><FinanceCard product={p}></FinanceCard></div>);
+                result.push(<div className='card-product-box' key={tester[i].id} onClick={() => handlerFinanceDetail(p, needarr)}><FinanceCard product={p}></FinanceCard></div>);
                 check++;
             }
         }

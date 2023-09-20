@@ -14,6 +14,7 @@ import com.woowahanbank.backend.domain.financialproducts.dto.FinancialProductsDt
 import com.woowahanbank.backend.domain.financialproducts.repository.FinancialProductRepository;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
+import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +32,8 @@ public class FinancialProductsServiceImple implements FinancialProductsService {
 	}
 
 	@Override
-	public List<FinancialProductsDto> getFinancialProductDtoList(Long familyId) {
+	public List<FinancialProductsDto> getFinancialProductDtoList(CustomUserDetails customUser) {
+		long familyId = customUser.getUser().getFamily().getId();
 		List<FinancialProduct> entityList = financialProductRepository.findAllByFamily_IdOrderByIdDesc(familyId);
 		List<FinancialProductsDto> dtoList = new ArrayList<>();
 		for (int i = 0; i < entityList.size(); i++) {
