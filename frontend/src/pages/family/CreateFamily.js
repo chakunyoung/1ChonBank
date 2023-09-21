@@ -11,11 +11,11 @@ function CreateFamily() {
 
   const navigate = useNavigate();
   const handleCreateFamily = (e) => {
-    if(familyName===''){
+    if (familyName === '') {
       alert("한글자 이상 입력하세요.");
       return;
     }
-    
+
     // familyName 변수를 이용하여 경로를 구성하여 POST 요청을 보냅니다.
     apis.post(`/api/families/${familyName}`)
       .then((response) => {
@@ -36,7 +36,9 @@ function CreateFamily() {
 
   return (
     <div>
-      <input type="text" placeholder="가족명 입력란" value={familyName}
+      <input type="text"
+        placeholder="가족명 입력란"
+        value={familyName || ""}
         onChange={handleSetFamilyName}></input>
       <button onClick={handleCreateFamily}>생성</button>
       나<br />

@@ -57,6 +57,7 @@ const KakaoLoginRedirect = () => {
           })
           .then(async (response) => {
             const userData = response.data.data;
+            console.log(userData);
             dispatch(setUser(userData));
             dispatch(setFamilyName(userData.familyName));
 

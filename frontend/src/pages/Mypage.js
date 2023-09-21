@@ -10,8 +10,11 @@ import Footer from "components/common/Footer";
 import Profile from "components/common/Profile"
 import './Mypage.css';
 import { useSelector } from 'react-redux';
+import Circle from 'components/common/Circle';
+import HalfCircleRight from 'components/common/HarfCircleRight';
 
 import apis from 'services/api/apis'
+
 
 const Mypage = () => {
 
@@ -58,6 +61,8 @@ const Mypage = () => {
 
   return (
     <div className='MypageContainer'>
+      <Circle color="#E9E9FF"/>
+      <HalfCircleRight color="#E9E9FF"/>
       <div className='mypage-profilecontainer'>
       <Profile/>
       </div>

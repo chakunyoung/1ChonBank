@@ -8,7 +8,7 @@
   background-color: #f2f2f2; /* 배경색 추가 */
 }
 .mypage-profilecontainer{
-
+  z-index: 1;
 }
 
 .button-grid {
