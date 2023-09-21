@@ -60,7 +60,7 @@ const Mypage = () => {
   };
 
   return (
-    <div className='MypageContainer'>
+    <div className='MypageContainer'> 
       <Circle color="#E9E9FF"/>
       <HalfCircleRight color="#E9E9FF"/>
       <div className='mypage-profilecontainer'>
