@@ -56,7 +56,7 @@ axiosInstance.interceptors.response.use(
           );
 
           if (response.status === 200) {
-            console.log("access token 만료되어 재발급");
+            console.log("access token 재발급");
             const newAccessToken = response.data.data["access-token"];
             const newRefreshToken = response.data.data["refresh-token"];
             updateAccessTokenAxios(newAccessToken, newRefreshToken);
