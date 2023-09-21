@@ -8,7 +8,7 @@ application-redis.yml
 backend/out
 backend/build/**
 .class
-
+backend/src/main/resources/firebase/woowahan-bank-firebase-adminsdk-v0u7y-a045156f09.json
 
 # frontend ignore files
 

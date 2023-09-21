@@ -1,108 +1,170 @@
 @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
 }
 
-Body{
-    background-color: #F5F5F5;
-    font-family: 'Pretendard-Regular';
+Body {
+  background-color: #F5F5F5;
+  font-family: 'Pretendard-Regular';
 }
 
 @keyframes floatAnimation {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-    100% {
-      transform: translateY(0);
-    }
+  0% {
+    transform: translateY(0);
   }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  @keyframes moveLeftRight {
-    0% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(20px); /* 좌로 이동할 거리를 설정 */
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-  
-  .Homecontainer{
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* 수직 가운데 정렬을 위해 추가 */
 
-    min-height: 100vh; /* 화면 높이와 같은 최소 높이 설정 */
+  50% {
+    transform: translateY(-10px);
   }
-  .kakao-login-button{
-    font-family: 'Pretendard-Regular';
-    font-size: 30px;
-    color: #191919;
-    width: 400px;
-    height: 60px;
-    background-color: #FEE500;
-    border-radius: 16px;
-    border-color: transparent;
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveLeftRight {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(20px);
+    /* 좌로 이동할 거리를 설정 */
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.Homecontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 수직 가운데 정렬을 위해 추가 */
+
+  min-height: 100vh;
+  /* 화면 높이와 같은 최소 높이 설정 */
+}
+
+.kakao-login-button {
+  font-family: 'Pretendard-Regular';
+  font-size: 30px;
+  color: #191919;
+  width: 400px;
+  height: 60px;
+  background-color: #FEE500;
+  border-radius: 16px;
+  border-color: transparent;
 
 
-  }
-  .kakao-login-button:hover {
-    cursor: pointer; /* 마우스 호버 시 커서를 포인터로 변경 */
-  }
-  .kakao-icon {
+}
 
-  }
-  .register-buttoncontainer{
-    position: relative;
-    display: inline-block;
-  }
-  .register-button {
-    font-family: 'Pretendard-Regular';
-    font-size: 30px;
-    color: white;
-    width: 400px;
-    height: 60px;
-    background-color: #E4C9F9;
-    border-radius: 16px;
-    border-color: transparent;
-    /* background: linear-gradient(135.96deg, #8B78FF 0%, #5451D6 101.74%);
+.kakao-login-button:hover {
+  cursor: pointer;
+  /* 마우스 호버 시 커서를 포인터로 변경 */
+}
+
+.kakao-icon {}
+
+.register-buttoncontainer {
+  position: relative;
+  display: inline-block;
+}
+
+.register-button {
+  font-family: 'Pretendard-Regular';
+  font-size: 30px;
+  color: white;
+  width: 400px;
+  height: 60px;
+  background-color: #E4C9F9;
+  border-radius: 16px;
+  border-color: transparent;
+  /* background: linear-gradient(135.96deg, #8B78FF 0%, #5451D6 101.74%);
     opacity: 0.7;
     filter: blur(18.5px); */
 
-  }
-  .register-button:hover {
-    cursor: pointer;    
+}
+
+.register-button:hover {
+  cursor: pointer;
+}
+
+.char1-container {
+  position: relative;
+  display: inline-block;
+  animation: floatAnimation 2.1s infinite;
+}
+
+.char1-text {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.social-button {
+  font-family: 'Pretendard-Regular';
+  font-size: 30px;
+  color: #191919;
+  width: 400px;
+  height: 60px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+.social-icon {
+  width: 104%;  /* 1.1배 크기 */
+  height: 130%; /* 1.1배 크기 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.google-login-button {
+  background-color: #4285F4;
+}
+
+.Buttoncontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 1600px) {
+  .Homecontainer {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
-  .char1-container {
-    position: relative;
-    display: inline-block;
-    animation: floatAnimation 2.1s infinite;
-}
-  
-  .char1-text {
-    position: absolute;
-    top: 44%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: black;
-    font-size: 40px;
-    font-weight: bold;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  .Buttoncontainer {
+    flex-direction: column;
+    align-items: center;
   }
+}
