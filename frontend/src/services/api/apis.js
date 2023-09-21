@@ -33,10 +33,13 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    if (originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
     if (
       error.response.data.status === 401 ||
-      error.response.data.status === 419 ||
-      error.response.data.status === 500
+      error.response.data.status === 419 
     ) {
       originalRequest._retry = true;
       const refreshToken = getRefreshTokenAxios();
