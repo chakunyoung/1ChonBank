@@ -69,7 +69,7 @@ function GoogleLoginRedirect() {
       const response = await axios.get(`/api/user/${userId}`);
       console.log(response);
       const userData = response.data.data;
-
+      console.log(userData);
       dispatch(setUser(userData));
       dispatch(setFamilyName(userData.familyName));
       if (userData.roles === null) {

@@ -21,7 +21,6 @@ public class Family {
     @ApiModelProperty(notes = "Primary Key")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @ApiModelProperty(notes = "가족 이름")

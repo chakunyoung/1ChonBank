@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import TokenVerification from "components/auth/TokenVerification";
+import TokenVerification from "components/auth/TokenVerificationToRoot";
 import Home from "pages/Home";
 import Register from "pages/Register";
 import Mypage from "pages/Mypage";

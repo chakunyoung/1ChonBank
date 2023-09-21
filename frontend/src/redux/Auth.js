@@ -8,8 +8,8 @@ axios.defaults.withCredentials = true;
 const initialState = {
   user: null,
   firebaseToken: "",
-  accessToken: "",
-  refreshToken: "",
+  accessToken: "", // 카카오 로그인 이외에 사용하지 않음
+  refreshToken: "", // 카카오 로그인 이외에 사용하지 않음
 };
 
 export const login = createAsyncThunk(
