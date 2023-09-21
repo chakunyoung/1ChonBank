@@ -52,14 +52,14 @@ public class QuizService {
                     // .model("gpt-4")
                     .messages(List.of(new GptMessage("system", "너는 똑똑한 경제 선생님이야, 쉬운 문제 중심으로 금융 문제 1개를 5지 선다로 내어줘"
                             + " 항상 아래와 같은 형식을 맞추어서 대답해줘 그리고 각 형식은 한 줄로 만 답 해주고 한국말로 답해줘"
-                            + "시작: \n"
+                            + "시작: (오늘 날짜)\n"
                             + "문제: (문제)\n"
                             + "1번 선지: (1번 선지, 선지는 무조건 숫자로만)\n"
                             + "2번 선지: (2번 선지, 선지는 무조건 숫자로만)\n"
                             + "3번 선지: (3번 선지, 선지는 무조건 숫자로만)\n"
                             + "4번 선지: (4번 선지, 선지는 무조건 숫자로만)\n"
                             + "5번 선지: (5번 선지, 선지는 무조건 숫자로만)n"
-                            + "정답: (정답의 번호만 보여줘, 앞에 '정답: '를 꼭 넣어줘)\n"
+                            + "정답: (선지 번호만 출력해줘, 앞에 '정답: '를 꼭 넣어줘)\n"
                             + "해설: (해설, 앞에 '해설: '를 꼭 넣어줘)\n")))
                     .build();
 
@@ -216,7 +216,7 @@ public class QuizService {
         List<Quiz> quizList = quizRepository.findAll();
 
         if (!quizList.isEmpty()) {
-            Quiz todayQuiz = quizList.get(0);
+            Quiz todayQuiz = quizList.get(quizList.size()-1);
 
             return Optional.of(todayQuiz);
         } else {

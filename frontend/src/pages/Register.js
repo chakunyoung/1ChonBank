@@ -104,7 +104,7 @@ const Register = () => {
         <label className="card-label">닉네임</label>
         <input
           type="text"
-          value={user.nickname}
+          value={user.nickname || ""}
           onChange={handleNicknameChange}
           className="custom-input"
           maxLength="10" // Use "maxLength" attribute to limit the input length

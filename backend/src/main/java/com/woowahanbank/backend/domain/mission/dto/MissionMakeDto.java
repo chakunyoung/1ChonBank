@@ -18,21 +18,18 @@ public class MissionMakeDto {
 
     private String missionName;
     private Long missionFamilyId;
-    private String childNickname;
-    private String parentNickname;
     private String missionDescription;
     private Integer missionPoint;
-    private Date missionTermivateDate;
+    private Date missionTerminateDate;
 
     public Mission MissiontoEntity(MissionMakeDto missionMakeDto) {
+
+
         return Mission.builder()
                 .missionName(missionName)
-                .missionFamilyId(missionFamilyId)
-                .childNickname(childNickname)
-                .parentNickname(parentNickname)
                 .missionDescription(missionDescription)
                 .missionPoint(missionPoint)
-                .missionTerminateDate(missionTermivateDate)
+                .missionTerminateDate(missionTerminateDate)
                 .build();
     }
 }

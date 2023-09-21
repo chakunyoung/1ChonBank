@@ -1,9 +1,12 @@
 package com.woowahanbank.backend.domain.mission.controller;
 
 import com.woowahanbank.backend.domain.mission.dto.MissionMakeDto;
+import com.woowahanbank.backend.domain.user.domain.User;
+import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 import com.woowahanbank.backend.global.response.BaseResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import com.woowahanbank.backend.domain.mission.service.MissionService;
 import com.woowahanbank.backend.domain.mission.domain.Mission;
@@ -27,30 +30,28 @@ public class MissionController {
 	}
 
 	@GetMapping("/family-id")
-	public ResponseEntity<?> getMissionListByFamilyId(@RequestParam Long missionFamilyId) {
-		List<Optional<Mission>> missionListByFamilyId = missionService.getMissionByFamilyId(missionFamilyId);
+	public ResponseEntity<?> getMissionListByFamilyId(@AuthenticationPrincipal CustomUserDetails customUser) {
+		User customUserUser = customUser.getUser();
+		List<Mission> missionListByFamilyId = missionService.getMissionByFamilyId(customUserUser);
 		return BaseResponse.okWithData(HttpStatus.OK, "가족 전체 미션 리스트", missionListByFamilyId);
 	}
 
 	@GetMapping("/child-nickname")
-	public ResponseEntity<?>getMissionListByChildNickName(@RequestParam String nickname) {
-		List<Optional<Mission>> missionListByChildNickname = missionService.getMissionByChildNickName(nickname);
-		return BaseResponse.okWithData(HttpStatus.OK, "가족 전체 미션 리스트", missionListByChildNickname);
+	public ResponseEntity<?>getMissionListByChildNickName(@AuthenticationPrincipal CustomUserDetails customUser) {
+		String nickname = customUser.getUser().getNickname();
+		List<Mission> missionListByChildNickname = missionService.getMissionByChildNickName(nickname);
+		return BaseResponse.okWithData(HttpStatus.OK, "해당 아이 미션 리스트", missionListByChildNickname);
 	}
 
-	@PutMapping("/{missionId}")
-	public Mission updateMission(@PathVariable Long missionId, @RequestBody Mission updatedMission) {
+	@PutMapping("/{missionName}")
+	public Mission updateMission(@RequestBody MissionMakeDto updatedMission) {
 
 		return missionService.updateMission(updatedMission);
 	}
 
-	@DeleteMapping("/{missionId}")
-	public void deleteMissionById(@PathVariable Long missionId) {
-		missionService.deleteMissionById(missionId);
+	@DeleteMapping("/{missionName}")
+	public void deleteMissionById(@RequestBody MissionMakeDto deletedMission) {
+		missionService.deleteMissionById(deletedMission);
 	}
 
-	@DeleteMapping("/terminate-date/{terminateDate}")
-	public void deleteMissionsByTerminateDateBefore(@PathVariable Date terminateDate) {
-		missionService.deleteMissionsByTerminateDateBefore(terminateDate);
-	}
 }
