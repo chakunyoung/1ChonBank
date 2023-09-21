@@ -48,10 +48,10 @@ const Home = () => {
 
         <button
           onClick={handleGoogleLoginClick}
-          // className="kakao-login-button"
+          className="google-login-button social-button"
           style={{ margin: "5px" }}>
-          <img src={Googleicon} />
-          &nbsp; 구글 로그인
+          <img src={Googleicon} alt="Google" className="social-icon" />
+          &nbsp;
         </button>
         <div></div>
       </div>
