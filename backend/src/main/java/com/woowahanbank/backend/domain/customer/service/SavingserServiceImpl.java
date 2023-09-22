@@ -106,6 +106,17 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 		savingserRepository.deleteById(id);
 	}
 
+	@Override
+	public List<SavingserDto> getDisallowProducts(Long productId) {
+		List<Savingser> list = savingserRepository.findAllByFinancialProduct_IdAndAllowProductIsFalseOrderByIdDesc(
+			productId);
+		List<SavingserDto> res = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			res.add(changeToDto(list.get(i)));
+		}
+		return res;
+	}
+
 	public List<SavingserDto> getSavingList(User user) {
 		return savingserRepository.findByUser(user).stream().map(this::changeToDto)
 			.collect(Collectors.toList());
@@ -117,6 +128,7 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 		return SavingserDto.builder()
 			.id(savingser.getId())
 			.userId(savingser.getUser().getId())
+			.userNickname(savingser.getUser().getNickname())
 			.money(savingser.getMoney())
 			.date(savingser.getDate())
 			.financialProductId(financialProduct.getId())

@@ -101,6 +101,17 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 		depositorRepository.deleteById(id);
 	}
 
+	@Override
+	public List<DepositorDto> getDisallowProducts(Long productId) {
+		List<Depositor> list = depositorRepository.findAllByFinancialProduct_IdAndAllowProductIsFalseOrderByIdDesc(
+			productId);
+		List<DepositorDto> res = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			res.add(changeToDto(list.get(i)));
+		}
+		return res;
+	}
+
 	public List<DepositorDto> getDepositorList(User user) {
 		return depositorRepository.findByUser(user).stream().map(this::changeToDto)
 			.collect(Collectors.toList());
@@ -112,6 +123,7 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 		return DepositorDto.builder()
 			.id(depositor.getId())
 			.userId(depositor.getUser().getId())
+			.userNickname((depositor.getUser().getNickname()))
 			.money(depositor.getMoney())
 			.date(depositor.getDate())
 			.financialProductId(financialProduct.getId())

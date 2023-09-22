@@ -2,8 +2,7 @@ import React from 'react';
 
 const ApplyCard = (props) => {
 
-    const applyHandler = () => {
-        console.log(1);
+    const applyHandler = () => {        
         props.applyItem(props.applys.id);
     };
     const refuseHandler = () => {
@@ -13,8 +12,7 @@ const ApplyCard = (props) => {
         <div>
             {props.applys.grant === null ?
                 <div>
-                    <h3>상품이름 : {props.applys.productName}</h3>
-                    <div>유저 정보들어갈 곳 dto 수정 필요</div>
+                    <h3>유저 이름 : {props.applys.userNickname}</h3>
                     <div>
                         <button onClick={applyHandler}>수락</button>
                         <button onClick={refuseHandler}>거절</button>

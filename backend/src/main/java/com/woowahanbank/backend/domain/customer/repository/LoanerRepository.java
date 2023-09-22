@@ -10,5 +10,7 @@ import com.woowahanbank.backend.domain.user.domain.User;
 public interface LoanerRepository extends JpaRepository<Loaner, Long> {
 	List<Loaner> findAllByUser_FamilyIdAndAllowProductIsFalseOrderByIdDesc(Long familyId);
 
+	List<Loaner> findAllByFinancialProduct_IdAndAllowProductIsFalseOrderByIdDesc(Long productId);
+
 	List<Loaner> findByUser(User user);
 }
