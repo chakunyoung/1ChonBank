@@ -4,6 +4,7 @@ import com.woowahanbank.backend.domain.mission.dto.MissionMakeDto;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 import com.woowahanbank.backend.global.response.BaseResponse;
+import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,6 +27,8 @@ public class MissionController {
 	@PostMapping("/make")
 	public ResponseEntity<?> createMission(@RequestBody MissionMakeDto missionMakeDto) {
 		missionService.createMission(missionMakeDto);
+		System.out.println(missionMakeDto);
+		System.out.println("받았다");
 		return BaseResponse.ok(HttpStatus.OK, "새로운 미션");
 	}
 
@@ -44,14 +47,15 @@ public class MissionController {
 	}
 
 	@PutMapping("/{missionName}")
-	public Mission updateMission(@RequestBody MissionMakeDto updatedMission) {
-
-		return missionService.updateMission(updatedMission);
+	public Mission updateMission(@AuthenticationPrincipal CustomUserDetails user,
+			@RequestBody MissionMakeDto updatedMission) {
+		return missionService.updateMission(user.getUser(), updatedMission);
 	}
 
 	@DeleteMapping("/{missionName}")
-	public void deleteMissionById(@RequestBody MissionMakeDto deletedMission) {
-		missionService.deleteMissionById(deletedMission);
+	public void deleteMissionById(@AuthenticationPrincipal CustomUserDetails user,
+			@RequestBody MissionMakeDto deletedMission) {
+		missionService.deleteMissionById(user.getUser(), deletedMission);
 	}
 
 }
