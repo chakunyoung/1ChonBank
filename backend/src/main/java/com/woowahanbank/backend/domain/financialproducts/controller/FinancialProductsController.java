@@ -25,9 +25,9 @@ public class FinancialProductsController {
 	private final FinancialProductsService financialProductsService;
 
 	@PostMapping
-	public ResponseEntity<?> registerFinancialProducts(@RequestBody FinancialProductsDto dto) {
-		System.out.println("=================================================================");
-		System.out.println(dto);
+	public ResponseEntity<?> registerFinancialProducts(@AuthenticationPrincipal CustomUserDetails customUser,
+		@RequestBody FinancialProductsDto dto) {
+		dto.setFamilyId(customUser.getUser().getFamily().getId());
 		try {
 			financialProductsService.registerFinancialProducts(dto);
 			return BaseResponse.ok(HttpStatus.OK, "금융상품 등록 성공");
@@ -38,7 +38,6 @@ public class FinancialProductsController {
 
 	@GetMapping
 	public ResponseEntity<?> getAllProductList(@AuthenticationPrincipal CustomUserDetails customUser) {
-		System.out.println("----------------------------------------------------------------------------");
 		List<FinancialProductsDto> productDtoList = financialProductsService.getFinancialProductDtoList(customUser);
 		return BaseResponse.okWithData(HttpStatus.OK, "우리 가족의 모든 금융 상품", productDtoList);
 	}
