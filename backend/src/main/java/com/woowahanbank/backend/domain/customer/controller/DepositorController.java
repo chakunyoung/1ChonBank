@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.woowahanbank.backend.domain.customer.dto.DepositorDto;
 import com.woowahanbank.backend.domain.customer.service.CustomerService;
-import com.woowahanbank.backend.domain.customer.service.DepositMoneyService;
-import com.woowahanbank.backend.domain.user.dto.UserDto;
 import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 import com.woowahanbank.backend.global.response.BaseResponse;
 
@@ -27,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/depositor")
 public class DepositorController {
 	private final CustomerService<DepositorDto> customerService;
-	private final DepositMoneyService depositMoneyService;
 
 	@PostMapping
 	public ResponseEntity<?> apply(@AuthenticationPrincipal CustomUserDetails customUser,
@@ -44,6 +41,12 @@ public class DepositorController {
 	@GetMapping("/disallowList")
 	public ResponseEntity<?> getDisallow(@AuthenticationPrincipal CustomUserDetails customUser) {
 		List<DepositorDto> disallowList = customerService.getDisallow(customUser);
+		return BaseResponse.okWithData(HttpStatus.OK, "우리 가족 불허 예금 상품", disallowList);
+	}
+
+	@GetMapping("/disallowCustommer/{productId}")
+	public ResponseEntity<?> getDisallow(@PathVariable Long productId) {
+		List<DepositorDto> disallowList = customerService.getDisallowProducts(productId);
 		return BaseResponse.okWithData(HttpStatus.OK, "우리 가족 불허 예금 상품", disallowList);
 	}
 
@@ -64,17 +67,6 @@ public class DepositorController {
 			return BaseResponse.ok(HttpStatus.OK, "예금 거절 성공");
 		} catch (Exception e) {
 			return BaseResponse.fail("예금 거절 실패", 400);
-		}
-	}
-
-	@PutMapping("/deposit/{depositorId}/{money}")
-	public ResponseEntity<?> depositMoney(@RequestBody UserDto userDto, @PathVariable Long depositorId,
-		@PathVariable int money) {
-		try {
-			depositMoneyService.depositMoney(money, depositorId, userDto.getId());
-			return BaseResponse.ok(HttpStatus.OK, "입/출금 성공");
-		} catch (Exception e) {
-			return BaseResponse.fail("입/출금 실패", 400);
 		}
 	}
 }

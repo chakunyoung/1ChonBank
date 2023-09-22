@@ -5,6 +5,7 @@ const initialState = {
     data: {
         id: '',
         userId: '',
+        userNickname:'',
         financialProductId: '',
         productName: '',
         grant: '',
@@ -29,6 +30,19 @@ export const getLoaner = createAsyncThunk(
     async (data, { rejectWithValue }) => {
         try {
             const res = await apis.get("/api/loaner/disallowList", {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const getLoaCustomer = createAsyncThunk(
+    "loaner/getLoaCustomer",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.get("/api/loaner/disallowCustommer/" + data, {
             });
             return res.data;
         } catch (error) {

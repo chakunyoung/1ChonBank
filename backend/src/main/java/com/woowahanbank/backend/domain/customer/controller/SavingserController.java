@@ -46,6 +46,12 @@ public class SavingserController {
 		return BaseResponse.okWithData(HttpStatus.OK, "우리 가족 불허 적금 상품", disallowList);
 	}
 
+	@GetMapping("/disallowCustommer/{productId}")
+	public ResponseEntity<?> getDisallow(@PathVariable Long productId) {
+		List<SavingserDto> disallowList = customerService.getDisallowProducts(productId);
+		return BaseResponse.okWithData(HttpStatus.OK, "특정 상품의 불허 적금 상품", disallowList);
+	}
+
 	@PutMapping("/allow/{savingsId}")
 	public ResponseEntity<?> allowProduct(@PathVariable Long savingsId) {
 		try {
