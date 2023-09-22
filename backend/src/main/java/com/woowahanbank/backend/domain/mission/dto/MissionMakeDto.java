@@ -17,19 +17,12 @@ import java.util.Date;
 public class MissionMakeDto {
 
     private String missionName;
-    private Long missionFamilyId;
+    private String missionFamilyName;
+    private String selectedChild;
     private String missionDescription;
-    private Integer missionPoint;
+    private int missionPoint;
     private Date missionTerminateDate;
+    private String missionStatus;
 
-    public Mission MissiontoEntity(MissionMakeDto missionMakeDto) {
 
-
-        return Mission.builder()
-                .missionName(missionName)
-                .missionDescription(missionDescription)
-                .missionPoint(missionPoint)
-                .missionTerminateDate(missionTerminateDate)
-                .build();
-    }
 }

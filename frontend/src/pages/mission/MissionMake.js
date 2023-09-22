@@ -36,26 +36,32 @@ const MissionMake = () => {
   let childMembers = null; 
   if (familyMember) {
     childMembers = familyMember.filter((member) => member.role === 'ROLE_CHILD');
-    // 이제 childMembers 배열을 사용할 수 있습니다.
   }
   
   const user = useSelector((state)=>state.auth.user)
   const date = Date.now();
-  const familyId = useSelector((state)=>state.family.familyId);
+
+  const familyName = useSelector((state)=>state.family.familyName);
   const data ={
-    missionTitle : missionTitle,
-    familyId:familyId,
+    missionName : missionTitle,
+    missionFamilyName:familyName,
     selectedChild: selectedChild,
-    parentName:user.nickname,
     missionDescription : missionDescription,
-    points:points,
-    date: date,
+    missionPoint:points,
+    missionTerminateDate:date,
+    missionStatus: "시작전",
   }
+
+  useEffect(() => {
+    if (childMembers && childMembers.length > 0) {
+      setSelectedChild(childMembers[0].nickname);
+    }
+  }, [childMembers]);
 
   const handleMissionAssignClick = () => {
     // 미션 부여 로직을 이곳에 추가하세요.
     // missionTitle, missionDescription, selectedChild, points 변수에 현재 입력된 값이 저장되어 있습니다.
-
+    console.log(data);
     // 포인트 입력값 유효성 검사
     if (points.trim() === '') {
       setValidationMessage('포인트를 입력하세요.');
@@ -105,12 +111,18 @@ const MissionMake = () => {
           onChange={(e) => setSelectedChild(e.target.value)}
           className="selected-child-select"
         >
-          {childMembers &&childMembers.map((member) => (
-          <option key={member.nickname} value={member.nickname}>
-            {member.nickname}
-          </option>
+
+          {childMembers && childMembers.map((member) => (
+            <option
+              key={member.nickname}
+              value={member.nickname}
+            >
+              {member.nickname}
+            </option>
           ))}
         </select>
+
+
       </div>
       <div>
         <label htmlFor="points">포인트 설정</label><br />

@@ -4,7 +4,7 @@ import TokenVerification from "components/auth/TokenVerificationToRoot";
 import Home from "pages/Home";
 import Register from "pages/Register";
 import Mypage from "pages/Mypage";
-import Mission from "pages/mission/MissionList";
+import Mission from "pages/mission/MissionMake";
 import KakaoLoginRedirect from "pages/user/KakaoLoginRedirect";
 import GoogleLoginRedirect from "pages/user/GoogleLoginRedirect";
 import Quiz from "pages/Quiz";
