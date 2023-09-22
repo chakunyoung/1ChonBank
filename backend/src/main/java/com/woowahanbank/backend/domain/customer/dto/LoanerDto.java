@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class LoanerDto {
 	private Long id;
 	private Integer userId;
+	private String userNickname;
 	private Long financialProductId;
 	private String productName;
 	private Boolean grant;

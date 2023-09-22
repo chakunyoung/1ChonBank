@@ -106,6 +106,16 @@ public class LoanerServiceImpl implements CustomerService<LoanerDto> {
 		loanerRepository.deleteById(id);
 	}
 
+	@Override
+	public List<LoanerDto> getDisallowProducts(Long productId) {
+		List<Loaner> list = loanerRepository.findAllByFinancialProduct_IdAndAllowProductIsFalseOrderByIdDesc(productId);
+		List<LoanerDto> res = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			res.add(changeToDto(list.get(i)));
+		}
+		return res;
+	}
+
 	public List<LoanerDto> getLoanerList(User user) {
 		return loanerRepository.findByUser(user).stream().map(this::changeToDto)
 			.collect(Collectors.toList());
@@ -117,6 +127,7 @@ public class LoanerServiceImpl implements CustomerService<LoanerDto> {
 		return LoanerDto.builder()
 			.id(loaner.getId())
 			.userId(loaner.getUser().getId())
+			.userNickname((loaner.getUser().getNickname()))
 			.money(loaner.getMoney())
 			.date(loaner.getDate())
 			.financialProductId(financialProduct.getId())

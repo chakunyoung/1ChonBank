@@ -12,6 +12,7 @@ const initialState = {
         date: '',
     },
 };
+
 export const makeDepositor = createAsyncThunk(
     "depositor/makeDepositor",
     async (data, { rejectWithValue }) => {
@@ -24,6 +25,7 @@ export const makeDepositor = createAsyncThunk(
         }
     }
 );
+
 export const getDepositor = createAsyncThunk(
     "depositor/getDepositor",
     async (data, { rejectWithValue }) => {
@@ -36,6 +38,20 @@ export const getDepositor = createAsyncThunk(
         }
     }
 );
+
+export const getDepCustomer = createAsyncThunk(
+    "depositor/getDepCustomer",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.get("/api/depositor/disallowCustommer/" + data, {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 export const allowDepositor = createAsyncThunk(
     "depositor/allowDepositor",
     async (data, { rejectWithValue }) => {
@@ -48,6 +64,7 @@ export const allowDepositor = createAsyncThunk(
         }
     }
 );
+
 export const refuseDepositor = createAsyncThunk(
     "depositor/refuseDepositor",
     async (data, { rejectWithValue }) => {

@@ -18,7 +18,7 @@ const FinancelistSet = (props) => {
     },[type]);
     const handlerFinanceDetail = (product, applys) => {
         dispatch(setAll({id: product.id, parentId: product.parentId, familyId: product.familyId, name: product.name, rate: product.rate, info: product.info, period: product.period, productType: product.productType}));
-        nav("/financeDetail", {state: applys});
+        nav("/financeDetail");
     }
     const rendering = () => {
         const tester = props.products;

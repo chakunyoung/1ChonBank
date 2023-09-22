@@ -12,4 +12,6 @@ public interface CustomerService<T> {
 	void allow(Long id);
 
 	void refuse(Long id);
+
+	List<T> getDisallowProducts(Long productId);
 }
