@@ -28,6 +28,7 @@ public class FinancialProductsController {
 	public ResponseEntity<?> registerFinancialProducts(@AuthenticationPrincipal CustomUserDetails customUser,
 		@RequestBody FinancialProductsDto dto) {
 		dto.setFamilyId(customUser.getUser().getFamily().getId());
+		dto.setParentId(customUser.getUser().getId());
 		try {
 			financialProductsService.registerFinancialProducts(dto);
 			return BaseResponse.ok(HttpStatus.OK, "금융상품 등록 성공");

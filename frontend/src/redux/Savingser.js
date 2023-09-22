@@ -5,6 +5,7 @@ const initialState = {
     data: {
         id: '',
         userId: '',
+        userNickname:'',
         financialProductId: '',
         productName: '',
         grant: '',
@@ -13,6 +14,7 @@ const initialState = {
         regularMoney: '',
     },
 };
+
 export const makeSavingser = createAsyncThunk(
     "savingser/makeSavingser",
     async (data, { rejectWithValue }) => {
@@ -25,6 +27,7 @@ export const makeSavingser = createAsyncThunk(
         }
     }
 );
+
 export const getSavingser = createAsyncThunk(
     "savingser/getSavingser",
     async (data, { rejectWithValue }) => {
@@ -37,6 +40,21 @@ export const getSavingser = createAsyncThunk(
         }
     }
 );
+
+export const getSavCustomer = createAsyncThunk(
+    "savingser/getSavCustomer",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.get("/api/savingser/disallowCustommer/" + data, {
+            });
+            console.log(res);
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 export const allowSavingser = createAsyncThunk(
     "savingser/allowSavingser",
     async (data, { rejectWithValue }) => {
@@ -49,6 +67,7 @@ export const allowSavingser = createAsyncThunk(
         }
     }
 );
+
 export const refuseSavingser = createAsyncThunk(
     "savingser/refuseSavingser",
     async (data, { rejectWithValue }) => {

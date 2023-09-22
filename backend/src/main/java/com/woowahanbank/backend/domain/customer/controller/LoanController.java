@@ -32,8 +32,6 @@ public class LoanController {
 	public ResponseEntity<?> apply(@AuthenticationPrincipal CustomUserDetails customUser,
 		@RequestBody LoanerDto loanerDto) {
 		loanerDto.setUserId(customUser.getUser().getId());
-		System.out.println("=============================================");
-		System.out.println(loanerDto);
 		try {
 			customerService.apply(loanerDto);
 			return BaseResponse.ok(HttpStatus.OK, "대출 상품 등록 성공");
@@ -45,6 +43,12 @@ public class LoanController {
 	@GetMapping("/disallowList")
 	public ResponseEntity<?> getDisallow(@AuthenticationPrincipal CustomUserDetails customUser) {
 		List<LoanerDto> disallowList = customerService.getDisallow(customUser);
+		return BaseResponse.okWithData(HttpStatus.OK, "우리 가족 불허 대출 상품", disallowList);
+	}
+
+	@GetMapping("/disallowCustommer/{productId}")
+	public ResponseEntity<?> getDisallow(@PathVariable Long productId) {
+		List<LoanerDto> disallowList = customerService.getDisallowProducts(productId);
 		return BaseResponse.okWithData(HttpStatus.OK, "우리 가족 불허 대출 상품", disallowList);
 	}
 

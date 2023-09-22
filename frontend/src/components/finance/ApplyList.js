@@ -6,12 +6,11 @@ import { allowLoaner, refuseLoaner } from "redux/Loaner";
 import { useDispatch } from 'react-redux';
 
 const ApplyList = (props) => {
-    const [applys, setApplays] = useState([]);
+    const [applys, setApplays] = useState(props.applys);
     const dispatch = useDispatch();
-    const setBase = () => {
+    useEffect(() => {
         setApplays(props.applys);
-    }
-    useEffect(setBase, []);
+    }, [props.applys]);
     const applyItem = (num) => {
         switch (props.type) {
             case "DEPOSIT":
