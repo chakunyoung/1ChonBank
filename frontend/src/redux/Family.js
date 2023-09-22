@@ -1,8 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import apis from "services/api/apis";
+import { createSlice } from "@reduxjs/toolkit";
+
 
 const initialState = {
     familyName : '',
+    familyId : '',
+    familyMember:null,
     
 };
 
@@ -10,6 +12,15 @@ const familySlice = createSlice({
     name: "family",
     initialState,
     reducers: {
+      setFamilyMember(state,action){
+        state.familyMember = action.payload;
+      },
+
+
+      setFamilyId(state,action){
+        state.familyId = action.payload;
+      },
+
       setFamilyName(state, action) {
         state.familyName = action.payload;
       },
@@ -20,6 +31,6 @@ const familySlice = createSlice({
     },
   });
 
-export const { setFamilyName,setDeleteFamily } = familySlice.actions;
+export const { setFamilyMember, setFamilyName,setDeleteFamily,setFamilyId } = familySlice.actions;
 
 export default familySlice.reducer;

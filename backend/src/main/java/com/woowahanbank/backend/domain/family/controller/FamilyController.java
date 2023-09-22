@@ -44,9 +44,12 @@ public class FamilyController {
     @ApiResponse(code = 200, message = "가족 생성 성공")
     @PostMapping("{familyName}")
     public ResponseEntity<?> registerFamily(@ApiIgnore @AuthenticationPrincipal CustomUserDetails customUser, @PathVariable String familyName) {
-        familyService.createFamily(customUser.getNickname(), familyName);
+        log.info("{}",familyName);
+        Long familyId = familyService.createFamily(customUser.getNickname(), familyName);
 
-        return BaseResponse.ok(HttpStatus.OK, "가족 생성 성공");
+
+
+        return BaseResponse.okWithData(HttpStatus.OK, "가족 생성 성공",familyId);
     }
 
 

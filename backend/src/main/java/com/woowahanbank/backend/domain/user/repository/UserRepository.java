@@ -14,7 +14,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByNickname(String nickname);
 
-    List<User> findByNicknameContaining(String keyword);
+    List<User> findNicknameByNicknameContaining(String keyword);
 
     List<User> findByFamily(Family family);
 
