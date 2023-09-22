@@ -34,7 +34,7 @@ public class FamilyService {
                 .collect(Collectors.toList());
     }
 
-    public void createFamily(String nickname, String familyName) {
+    public Long createFamily(String nickname, String familyName) {
         User user = userRepository.findByNickname(nickname)
                 .filter(u -> u.getFamily() == null)
                 .orElseThrow(() -> new IllegalArgumentException("가족이 이미 존재하거나 유저를 찾을 수 없습니다"));
@@ -43,7 +43,10 @@ public class FamilyService {
                 .users(new ArrayList<>())
                 .build();
         family.addUser(user);
-        familyRepository.save(family);
+        family = familyRepository.save(family);
+        Long generatedId = family.getId();
+
+        return generatedId;
     }
 
     public void updateFamily(String nickname, String familyName) {

@@ -52,11 +52,10 @@ function MyFamily() {
     };
 
     const searchFamily = () => {
-        console.log(searchNickname)
         apis.get(`/api/user/findFamily/${searchNickname}`)
 
             .then((response) => {
-                console.log(response)
+                console.log(response.data.data)
 
                 if (Array.isArray(response.data.data)) {
                     setSearchResults(response.data.data);
@@ -93,9 +92,10 @@ function MyFamily() {
                         </form>
                         <ul>
                             {searchResults.map((result) => (
-                                <li key={result.id}>
-                                    {result.nickname}
-                                    <button onClick={() => handleSelectFamily(result.nickname)}>선택</button>
+                               
+                                <li key={result}>
+                                    {result}
+                                    <button onClick={() => handleSelectFamily(result)}>선택</button>
                                 </li>
                             ))}
                         </ul>
