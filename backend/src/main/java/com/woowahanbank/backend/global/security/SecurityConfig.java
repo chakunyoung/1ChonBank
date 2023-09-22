@@ -58,6 +58,8 @@ public class SecurityConfig {
 		http.authorizeRequests()
 			.antMatchers("/api/families/**").authenticated()
 			.antMatchers("/api/banking/**").authenticated()
+			.antMatchers("/api/missions/**").authenticated()
+			.antMatchers("/api/quiz/**").authenticated()
 			.antMatchers("/**").permitAll()
 			.and().oauth2Login().permitAll();
 		// 		.antMatchers("/api/users/login").permitAll() //로그인
