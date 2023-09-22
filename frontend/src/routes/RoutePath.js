@@ -19,6 +19,7 @@ import AccountDetail from "pages/account/AccountDetail";
 import CreateFamily from "pages/family/CreateFamily";
 import MyFamily from "pages/family/MyFamily";
 import MissionList from "pages/mission/MissionList";
+import MissionMake from "pages/mission/MissionMake";
 
 const RoutePath = () => {
   return (
@@ -33,7 +34,7 @@ const RoutePath = () => {
           // </TokenVerification>
         }
       />
-      <Route path="/mission" element={<Mission />} />
+      <Route path="/mission" element={<MissionMake />} />
       <Route path="/selectFinance" element={<SelectFinance />} />
       <Route path="/makeFinance" element={<MakeFinance />} />
       <Route path="/financial" element={<FinanceList />} />

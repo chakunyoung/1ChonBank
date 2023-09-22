@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
 import { setFamilyName } from "redux/Family";
+import { setFamilyId } from "redux/Finance";
 import apis from "services/api/apis";
 
 function CreateFamily() {
@@ -21,7 +22,8 @@ function CreateFamily() {
       .then((response) => {
         // 성공적인 응답 처리
         alert("가족 생성을 축하드립니다!");
-        console.log(response.data);
+        dispatch(setFamilyId(response.data.data));
+        console.log(response.data.data);
         navigate("/");
       })
       .catch((error) => {

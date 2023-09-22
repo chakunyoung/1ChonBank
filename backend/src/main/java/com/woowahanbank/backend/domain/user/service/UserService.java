@@ -1,8 +1,11 @@
 package com.woowahanbank.backend.domain.user.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.woowahanbank.backend.domain.family.domain.Family;
 import com.woowahanbank.backend.domain.user.domain.User;
@@ -72,9 +75,14 @@ public class UserService {
 
 	}
 
-	public List<User> findFamily(String keyword) {
-		List<User> users = userRepository.findByNicknameContaining(keyword);
-		return users;
+	@Transactional
+	public List<String> findFamily(String keyword) {
+		List<User> users = userRepository.findNicknameByNicknameContaining(keyword);
+		List<String> userNicknames = new ArrayList<>();
+		for (User list : users) {
+			userNicknames.add(list.getNickname());
+		}
+		return userNicknames;
 	}
 
 }
