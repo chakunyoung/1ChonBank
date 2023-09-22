@@ -73,8 +73,6 @@ const SelectFinance = () => {
             productTypeName = '대출'
             productRateName = '이자'
             break;
-        default:
-            nav("/");
     }
     return (
         <div className='make-product-container'>

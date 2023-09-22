@@ -39,7 +39,7 @@ const FinancelistSet = (props) => {
                 check++;
             }
             else if (tester[i].productType === type) {
-                result.push(<div className='card-product-box' key={tester[i].id} onClick={() => handlerFinanceDetail(p, needarr)}><FinanceCard product={p}></FinanceCard></div>);
+                result.push(<div className='card-product-box' key={tester[i].id} onClick={() => handlerFinanceDetail(p, needarr)}><FinanceCard product={p} cnt={needarr.length}></FinanceCard></div>);
                 check++;
             }
         }
