@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.SignupDto;
 import com.woowahanbank.backend.domain.user.service.UserService;
+import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 import com.woowahanbank.backend.global.response.BaseResponse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/user")
@@ -50,7 +53,7 @@ public class UserController {
 
 	@GetMapping("findFamily/{keyword}")
 	public ResponseEntity<?> findFamilyName(@PathVariable String keyword) {
-		List<User> users = userService.findFamily(keyword);
+		List<String> users = userService.findFamily(keyword);
 		return BaseResponse.okWithData(HttpStatus.OK, "회원 리스트를 성공적으로 불러왔습니다.", users);
 	}
 
@@ -59,6 +62,4 @@ public class UserController {
 		User user = userService.findByNickname(nickname);
 		return BaseResponse.okWithData(HttpStatus.OK, "자식 선택 완료", user);
 	}
-
-
 }

@@ -33,19 +33,23 @@ const MissionMake = () => {
   const [validationMessage, setValidationMessage] = useState('');
 
   const familyMember = useSelector((state)=>state.family.familyMember);
-  const childMembers = familyMember.filter((member) => member.role === 'ROLE_CHILD');
+  let childMembers = null; 
+  if (familyMember) {
+    childMembers = familyMember.filter((member) => member.role === 'ROLE_CHILD');
+    // 이제 childMembers 배열을 사용할 수 있습니다.
+  }
+  
   const user = useSelector((state)=>state.auth.user)
   const date = Date.now();
-
+  const familyId = useSelector((state)=>state.family.familyId);
   const data ={
     missionTitle : missionTitle,
-    missionDescription : missionDescription,
+    familyId:familyId,
     selectedChild: selectedChild,
+    parentName:user.nickname,
+    missionDescription : missionDescription,
     points:points,
     date: date,
-    familyId:user.familyId,
-    parentId:user.userId,
-
   }
 
   const handleMissionAssignClick = () => {
@@ -60,7 +64,10 @@ const MissionMake = () => {
     } else if (parseInt(points) % 100 !== 0) {
       setValidationMessage('100단위로 입력하세요.');
     } else {
-      apis.put("/missions/makeMission",data);
+      apis.post("/api/missions/make",data)
+      .then((response)=>{
+        console.log(response);
+      });
       setValidationMessage('');
     }
 
@@ -98,7 +105,7 @@ const MissionMake = () => {
           onChange={(e) => setSelectedChild(e.target.value)}
           className="selected-child-select"
         >
-          {childMembers.map((member) => (
+          {childMembers &&childMembers.map((member) => (
           <option key={member.nickname} value={member.nickname}>
             {member.nickname}
           </option>
