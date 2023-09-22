@@ -17,7 +17,6 @@ const initialState = {
 export const makeProduct = createAsyncThunk(
     "finance/makeProduct",
     async (data, { rejectWithValue }) => {
-        console.log("jht");
         try {
             console.log(data);
             const res = await apis.post("/api/financial", data, {
