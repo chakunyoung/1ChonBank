@@ -9,6 +9,7 @@ import com.woowahanbank.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -24,8 +25,12 @@ public class MissionService {
     }
 
     public List<Mission> getMissionByFamilyId(User user) {
-        Long missionFamilyId = user.getFamily().getId();
-        return missionRepository.findByFamilyId(missionFamilyId);
+        if(user != null){
+            Long missionFamilyId = user.getFamily().getId();
+            return missionRepository.findByFamilyId(missionFamilyId);
+
+        }
+        return Collections.emptyList();
     }
 
     public List<Mission> getMissionByChildNickName(String nickname) {
