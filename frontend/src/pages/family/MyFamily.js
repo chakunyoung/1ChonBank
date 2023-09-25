@@ -5,6 +5,7 @@ import { setDeleteFamily } from "redux/Family";
 import apis from "services/api/apis";
 import ChangeFamilyName from "./ChangeFamilyName";
 import ShowMyFamily from "./ShowMyFamily";
+import Footer from "components/common/Footer";
 
 function MyFamily() {
 
@@ -107,6 +108,7 @@ function MyFamily() {
                 </div>
             )}
             <ShowMyFamily />
+            <Footer/>
         </div>
     )
 }

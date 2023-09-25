@@ -1,16 +1,18 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setFamilyName } from "redux/Family";
 import { setFamilyId } from "redux/Finance";
 import apis from "services/api/apis";
+import CryIcon from "assets/cry.gif"
+import Footer from "components/common/Footer";
+import "./CreateFamily.css";
 
 function CreateFamily() {
-
   const familyName = useSelector((state) => state.family.familyName);
-  const nickname = useSelector((state) => state.auth.nickname);
+  const role = useSelector((state) => state.auth.user.roles); // 가족 구성원의 역할 정보를 가져옵니다.
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
+
   const handleCreateFamily = (e) => {
     if (familyName === '') {
       alert("한글자 이상 입력하세요.");
@@ -18,7 +20,8 @@ function CreateFamily() {
     }
 
     // familyName 변수를 이용하여 경로를 구성하여 POST 요청을 보냅니다.
-    apis.post(`/api/families/${familyName}`)
+    apis
+      .post(`/api/families/${familyName}`)
       .then((response) => {
         // 성공적인 응답 처리
         alert("가족 생성을 축하드립니다!");
@@ -34,22 +37,44 @@ function CreateFamily() {
 
   const handleSetFamilyName = (e) => {
     dispatch(setFamilyName(e.target.value));
-  }
+  };
 
   return (
-    <div>
-      <input type="text"
-        placeholder="가족명 입력란"
-        value={familyName || ""}
-        onChange={handleSetFamilyName}></input>
-      <button onClick={handleCreateFamily}>생성</button>
-      나<br />
-      {nickname}<br />
-      내 프로필 사진이랑 돈 (리덕스에서 가져올 예정)<br />
-      <br />
+    <div className="CreateFamilyContainer">
+      {role === 'ROLE_CHILD' ? (
 
+        <h1 style={{
+          // 텍스트를 가운데 정렬
+          // 텍스트를 가운데 정렬
+
+          color: '#9370DB',
+          marginTop: '50px',
+          marginBottom: '200px',
+        }}>
+
+          아직 가족이 없습니다
+          <br /><br />
+          <img
+            src={CryIcon}
+            alt="Cry Icon"
+            className="Cry-icon"
+          />
+        </h1>
+
+      ) : (
+        <>
+          <input
+            type="text"
+            placeholder="가족명 입력란"
+            value={familyName || ""}
+            onChange={handleSetFamilyName}
+          />
+          <button onClick={handleCreateFamily}>생성</button>
+        </>
+      )}
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default CreateFamily
+export default CreateFamily;
