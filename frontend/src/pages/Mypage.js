@@ -61,11 +61,11 @@ const Mypage = () => {
 
   return (
     <div className='MypageContainer'> 
-      <Circle color="#E9E9FF"/>
-      <HalfCircleRight color="#E9E9FF"/>
+
       <div className='mypage-profilecontainer'>
       <Profile/>
       </div>
+      
       <div className="button-grid">
         <div className="row">
           <Link to="/account" className="button button-account">

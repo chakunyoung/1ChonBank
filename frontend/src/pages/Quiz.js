@@ -93,13 +93,13 @@ const Quiz = () => {
               {Object.values(quizInfo).slice(1, 6).map((choice, index) => (
                 <div className={`choicearea ${selectedAnswer === index ? 'selectedBox' : ''}`} onClick={() => handleAnswerSelect(index)} key={index}>
                   {choice}
-                  <div className={`circle ${selectedAnswer === index ? 'selected' : ''}`}></div>
                 </div>
               ))}
-              <button onClick={handleSubmit} className="custom-button">
-                정답 제출
-              </button>
+
             </div>
+            <button onClick={handleSubmit} className="quiz-submit">
+                정답 확인
+              </button>
           </div>
         ) : (
           <p>퀴즈 데이터를 불러오는 중...</p>

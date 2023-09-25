@@ -112,12 +112,12 @@ const Register = () => {
       </div>
       {nicknameError && <p className="nickname-error">{nicknameError}</p>}{" "}
       {/* Display error message */}
-      <div className="role-button-container">
-        <button className="role-button" onClick={handleSaveUser}>
+      <div className="register-button-container">
+        <button className="register-button" onClick={handleSaveUser}>
           가입
         </button>
 
-        <div className="background-box"></div>
+        <div className="register-background-box"></div>
       </div>
     </div>
   );

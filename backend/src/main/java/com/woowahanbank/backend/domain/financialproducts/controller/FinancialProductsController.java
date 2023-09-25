@@ -21,12 +21,12 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/financial")
-public class FinancialProductsController {
+public class 	FinancialProductsController {
 	private final FinancialProductsService financialProductsService;
 
 	@PostMapping
 	public ResponseEntity<?> registerFinancialProducts(@AuthenticationPrincipal CustomUserDetails customUser,
-		@RequestBody FinancialProductsDto dto) {
+													   @RequestBody FinancialProductsDto dto) {
 		dto.setFamilyId(customUser.getUser().getFamily().getId());
 		dto.setParentId(customUser.getUser().getId());
 		try {

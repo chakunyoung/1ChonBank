@@ -1,13 +1,19 @@
 .product-detail-container {
+    height: 100vh;
+    max-width: 390px;
+    margin: 0 auto; /* 가운데 정렬 */
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #FAFAFA; 
     width: 100%;
+
 }
+
 
 .product-detail-header {
     width: 100%;
-    background: #52B69A;
+    background: #1FBAB8;
 }
 
 .product-detail-name {
@@ -138,4 +144,13 @@
 }
 .detail-dropdown{
     width: 90%;
+}
+.finance-detail-icon {
+    font-size: 20px;
+    margin: auto 10px;
+}
+
+.finance-detail-footer {
+    position: absolute;
+    bottom:0
 }
