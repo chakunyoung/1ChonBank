@@ -16,6 +16,7 @@ import java.util.Date;
 @Builder
 public class MissionMakeDto {
 
+    private Long missionId;
     private String missionName;
     private String missionFamilyName;
     private String selectedChild;

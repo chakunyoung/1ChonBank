@@ -56,7 +56,9 @@ public class MissionService {
         List<Mission> missionList = missionRepository.findByFamilyId(family);
 
         for (Mission mission : missionList) {
+
             MissionMakeDto missionMakeDto = new MissionMakeDto();
+            missionMakeDto.setMissionId(mission.getId());
             missionMakeDto.setMissionName(mission.getMissionName());
             missionMakeDto.setMissionDescription(mission.getMissionDescription());
             missionMakeDto.setMissionPoint(mission.getMissionPoint());
@@ -77,6 +79,7 @@ public class MissionService {
 
         for (Mission mission : missionList) {
             MissionMakeDto missionMakeDto = new MissionMakeDto();
+            missionMakeDto.setMissionId(mission.getId());
             missionMakeDto.setMissionName(mission.getMissionName());
             missionMakeDto.setMissionDescription(mission.getMissionDescription());
             missionMakeDto.setMissionPoint(mission.getMissionPoint());

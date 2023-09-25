@@ -20,6 +20,7 @@ import CreateFamily from "pages/family/CreateFamily";
 import MyFamily from "pages/family/MyFamily";
 import MissionList from "pages/mission/MissionList";
 import MissionMake from "pages/mission/MissionMake";
+import MissionDetail from "components/common/MissionDetail";
 
 const RoutePath = () => {
   return (
@@ -52,6 +53,7 @@ const RoutePath = () => {
         element={<GoogleLoginRedirect />}
       />
       <Route path="/missionList" element={<MissionList />} />
+      <Route path="/missionDetail/:missionId" element={<MissionDetail />} />
     </Routes>
   );
 };

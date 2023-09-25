@@ -1,4 +1,4 @@
-.missioncard-container {
+.missioncard-container-before {
     display: flex;
     align-items: center; /* 수직 가운데 정렬을 위해 추가 */
     width: 330px;
@@ -11,19 +11,43 @@
     margin-bottom: 20px;
 }
 
-.mission-details {
-    /* 원하는 스타일을 여기에 추가합니다. */
-    /* 예를 들어, 여백, 텍스트 정렬 등을 지정할 수 있습니다. */
-    margin: 0 16px; /* 양 쪽에 16px 여백 추가 */
-    text-align: center; /* 가운데 정렬 */
-  }
-  
-  /* .missioncard-textarea 클래스에 스타일 적용 */
-  .missioncard-textarea {
-    /* 기존 스타일 유지 */
-    /* 예를 들어, 글자색, 글꼴, 텍스트 정렬 등을 지정할 수 있습니다. */
-    color: #333; /* 글자색 지정 */
-    font-family: Arial, sans-serif; /* 글꼴 지정 */
-    text-align: left; /* 왼쪽 정렬 */
-  }
-  
+.missioncard-container-during {
+  display: flex;
+  align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+  width: 330px;
+  height: 75px;
+  border-radius: 16px;
+  background-color: green;
+  position: relative;
+  font-size: 16px;
+  justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
+  margin-bottom: 20px;
+}
+
+
+.missioncard-container {
+  display: flex;
+  align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+  width: 330px;
+  height: 75px;
+  border-radius: 16px;
+  background-color: white;
+  position: relative;
+  font-size: 16px;
+  justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
+  margin-bottom: 20px;
+}
+.margin-box {
+  margin-left: 20px; /* 왼쪽 마진 추가 */
+  margin-right: 20px; /* 오른쪽 마진 추가 */
+}
+
+.missioncard-listcontainer {
+  height: 60vh;
+  overflow-y: scroll;
+}
+.missioncard-listcontainer::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
