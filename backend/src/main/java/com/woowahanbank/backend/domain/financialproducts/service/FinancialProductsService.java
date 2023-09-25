@@ -10,5 +10,5 @@ public interface FinancialProductsService {
 
 	List<FinancialProductsDto> getFinancialProductDtoList(CustomUserDetails customUser);
 
-	List<FinancialProductsDto> getFinancialSubProductDtoList(Long familyId, String productType);
+	FinancialProductsDto getFinancialInfo(Long productId);
 }

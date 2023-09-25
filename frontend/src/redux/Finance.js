@@ -39,6 +39,18 @@ export const getProductList = createAsyncThunk(
         }
     }
 );
+export const getProductInfo = createAsyncThunk(
+    "finance/getProductInfo",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.get("/api/financial/" + data, {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
 
 
 const financeSlice = createSlice({
