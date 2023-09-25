@@ -61,7 +61,7 @@ const MissionMake = () => {
     if (childMembers && childMembers.length > 0) {
       setSelectedChild(childMembers[0].nickname);
     }
-  }, [childMembers]);
+  }, []);
 
   const handleMissionAssignClick = () => {
     // 미션 부여 로직을 이곳에 추가하세요.
