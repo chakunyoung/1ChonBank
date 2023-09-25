@@ -13,4 +13,6 @@ public interface FamilyRepository extends JpaRepository<Family, Long> {
     Optional<Family> findByFamilyName(String familyName);
 
     Optional<Family> findById(long id);
+
+
 }
