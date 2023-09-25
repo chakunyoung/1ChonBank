@@ -13,10 +13,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -32,9 +29,15 @@ public class MissionService {
 
         Family familyId = familyRepository.findByFamilyName(missionMakeDto.getMissionFamilyName()).orElseThrow(() -> new IllegalArgumentException("오류"));
 
+        User parentUser = userRepository.findByUserId(missionMakeDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("오류"));
+
+        User childUser = userRepository.findByNickname(missionMakeDto.getSelectedChild()).orElseThrow(() -> new IllegalArgumentException("오류"));
+
         Mission mission = Mission.builder()
                 .missionName(missionMakeDto.getMissionName())
                 .familyId(familyId)
+                .parentUser(parentUser)
+                .childUser(childUser)
                 .missionDescription(missionMakeDto.getMissionDescription())
                 .missionPoint(missionMakeDto.getMissionPoint())
                 .missionStatus(missionMakeDto.getMissionStatus())
@@ -46,21 +49,43 @@ public class MissionService {
         missionRepository.save(mission);
     }
 
-    public List<Mission> getMissionByFamilyId(User user) {
-        System.out.println(user);
-        System.out.println("유저야유저");
-        if(user != null){
-            Family family = familyRepository.findById(user.getFamily().getId())
-                    .orElseThrow(() -> new IllegalArgumentException(" 오류 "));
-            return missionRepository.findByFamilyId(family);
+    public List<MissionMakeDto> getMissionByFamilyId(User user) {
+
+        List<MissionMakeDto> missionDtoList = new ArrayList<>();
+        Family family = user.getFamily();
+        List<Mission> missionList = missionRepository.findByFamilyId(family);
+
+        for (Mission mission : missionList) {
+            MissionMakeDto missionMakeDto = new MissionMakeDto();
+            missionMakeDto.setMissionName(mission.getMissionName());
+            missionMakeDto.setMissionDescription(mission.getMissionDescription());
+            missionMakeDto.setMissionPoint(mission.getMissionPoint());
+            missionMakeDto.setMissionStatus(mission.getMissionStatus());
+
+            missionDtoList.add(missionMakeDto);
         }
-        return Collections.emptyList();
+
+        return missionDtoList;
     }
 
-    public List<Mission> getMissionByChildNickName(String nickname) {
-        User childUser = userRepository.findByNickname(nickname).
-            orElseThrow(() -> new IllegalArgumentException("아이 닉네임에 해당되는 유저가 없습니다."));
-        return missionRepository.findByChildUser(childUser);
+    public List<MissionMakeDto> getMissionByChildNickName(User user) {
+
+        List<MissionMakeDto> missionDtoList = new ArrayList<>();
+
+        Family family = user.getFamily();
+        List<Mission> missionList = missionRepository.findByFamilyId(family);
+
+        for (Mission mission : missionList) {
+            MissionMakeDto missionMakeDto = new MissionMakeDto();
+            missionMakeDto.setMissionName(mission.getMissionName());
+            missionMakeDto.setMissionDescription(mission.getMissionDescription());
+            missionMakeDto.setMissionPoint(mission.getMissionPoint());
+            missionMakeDto.setMissionStatus(mission.getMissionStatus());
+
+            missionDtoList.add(missionMakeDto);
+        }
+
+        return missionDtoList;
     }
 
     public Mission updateMission(User user, MissionMakeDto updatedMission) {
@@ -80,6 +105,10 @@ public class MissionService {
                 .orElseThrow(() -> new IllegalArgumentException(" 오류 "));
 
         missionRepository.deleteByFamilyIdAndMissionName(family, missionName);
+    }
+
+    public void deleteAll() {
+        missionRepository.deleteAll();
     }
 }
 
