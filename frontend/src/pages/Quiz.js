@@ -25,7 +25,7 @@ const Quiz = () => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const response = await axios.get('/api/quiz/todayQuiz'); 
+        const response = await apis.get('/api/quiz/todayQuiz'); 
         const quizData = response.data; 
         dispatch(setQuizInfo(quizData));
         console.log(quizData);

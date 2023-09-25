@@ -23,6 +23,7 @@ public class MissionMakeDto {
     private int missionPoint;
     private Date missionTerminateDate;
     private String missionStatus;
+    private String userId;
 
 
 }

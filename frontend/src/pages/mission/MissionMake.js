@@ -4,9 +4,12 @@ import Footer from 'components/common/Footer'
 import { useDispatch, useSelector } from 'react-redux';
 import apis from '../../services/api/apis'
 import { setFamilyMember } from 'redux/Family';
+import { useNavigate } from 'react-router-dom';
 
 const MissionMake = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     // 데이터를 가져오는 비동기 함수를 정의합니다.
     const fetchData = async () => {
@@ -39,6 +42,7 @@ const MissionMake = () => {
   }
   
   const user = useSelector((state)=>state.auth.user)
+  console.log(user);
   const date = Date.now();
 
   const familyName = useSelector((state)=>state.family.familyName);
@@ -50,6 +54,7 @@ const MissionMake = () => {
     missionPoint:points,
     missionTerminateDate:date,
     missionStatus: "시작전",
+    userId: user.userId,
   }
 
   useEffect(() => {
@@ -73,9 +78,12 @@ const MissionMake = () => {
       apis.post("/api/missions/make",data)
       .then((response)=>{
         console.log(response);
+        navigate("/");
       });
       setValidationMessage('');
     }
+
+
 
 
   };
