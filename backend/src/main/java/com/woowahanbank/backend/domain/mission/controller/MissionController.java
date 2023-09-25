@@ -25,25 +25,26 @@ public class MissionController {
 	private final MissionService missionService;
 
 	@PostMapping("/make")
-	public ResponseEntity<?> createMission(@RequestBody MissionMakeDto missionMakeDto) {
+	public ResponseEntity<?> createMission(@AuthenticationPrincipal CustomUserDetails customUser, @RequestBody MissionMakeDto missionMakeDto) {
 		missionService.createMission(missionMakeDto);
-		System.out.println(missionMakeDto);
-		System.out.println("받았다");
+
 		return BaseResponse.ok(HttpStatus.OK, "새로운 미션");
 	}
 
 	@GetMapping("/family-id")
 	public ResponseEntity<?> getMissionListByFamilyId(@AuthenticationPrincipal CustomUserDetails customUser) {
 		User customUserUser = customUser.getUser();
-		List<Mission> missionListByFamilyId = missionService.getMissionByFamilyId(customUserUser);
+
+		List<MissionMakeDto> missionListByFamilyId = missionService.getMissionByFamilyId(customUserUser);
 		return BaseResponse.okWithData(HttpStatus.OK, "가족 전체 미션 리스트", missionListByFamilyId);
 	}
 
 	@GetMapping("/child-nickname")
 	public ResponseEntity<?>getMissionListByChildNickName(@AuthenticationPrincipal CustomUserDetails customUser) {
-		String nickname = customUser.getUser().getNickname();
-		List<Mission> missionListByChildNickname = missionService.getMissionByChildNickName(nickname);
-		return BaseResponse.okWithData(HttpStatus.OK, "해당 아이 미션 리스트", missionListByChildNickname);
+		User customUserUser = customUser.getUser();
+
+		List<MissionMakeDto> missionListByChildNickName= missionService.getMissionByChildNickName(customUserUser);
+		return BaseResponse.okWithData(HttpStatus.OK, "가족 전체 미션 리스트", missionListByChildNickName);
 	}
 
 	@PutMapping("/{missionName}")
@@ -56,6 +57,11 @@ public class MissionController {
 	public void deleteMissionById(@AuthenticationPrincipal CustomUserDetails user,
 			@RequestBody MissionMakeDto deletedMission) {
 		missionService.deleteMissionById(user.getUser(), deletedMission);
+	}
+
+	@DeleteMapping("/all")
+	public void deleteAll(@AuthenticationPrincipal CustomUserDetails user) {
+		missionService.deleteAll();
 	}
 
 }

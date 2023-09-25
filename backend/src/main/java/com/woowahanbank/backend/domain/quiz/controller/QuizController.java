@@ -28,7 +28,7 @@ public class QuizController {
 	}
 
 	@GetMapping("/todayQuiz")
-	public ResponseEntity<Quiz> getQuiz() {
+	public ResponseEntity<Quiz> getQuiz(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
 		Optional<Quiz> todayQuiz = quizService.findTodayQuiz();
 		return todayQuiz.map(quiz -> ResponseEntity.ok().body(quiz))
 			.orElseGet(() -> ResponseEntity.notFound().build());
