@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import FinanceCard from './FinanceCard.js';
 import './FinancelistSet.css';
-import { setAll } from "redux/Finance";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,9 +20,8 @@ const FinancelistSet = (props) => {
         setCnt(5);
     }, [activeTab]); // 탭이 변경될 때마다 cnt 초기화
 
-    const handlerFinanceDetail = (product, applys) => {
-        dispatch(setAll({id: product.id, parentId: product.parentId, familyId: product.familyId, name: product.name, rate: product.rate, info: product.info, period: product.period, productType: product.productType}));
-        nav("/financeDetail");
+    const handlerFinanceDetail = (product) => {
+        nav(`/financeDetail/${product.id}`);
     }
 
     const rendering = () => {

@@ -43,14 +43,8 @@ public class FinancialProductsServiceImple implements FinancialProductsService {
 	}
 
 	@Override
-	public List<FinancialProductsDto> getFinancialSubProductDtoList(Long familyId, String productType) {
-		List<FinancialProduct> entityList = financialProductRepository.findAllByFamily_IdAndProductTypeOrderByIdDesc(
-			familyId, productType);
-		List<FinancialProductsDto> dtoList = new ArrayList<>();
-		for (int i = 0; i < entityList.size(); i++) {
-			dtoList.add(changeToDto(entityList.get(i)));
-		}
-		return dtoList;
+	public FinancialProductsDto getFinancialInfo(Long productId) {
+		return changeToDto(financialProductRepository.findById(productId).get());
 	}
 
 	private FinancialProductsDto changeToDto(FinancialProduct financialProduct) {
