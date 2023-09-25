@@ -4,6 +4,7 @@ import './QuizResult.css';
 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Footer from 'components/common/Footer';
 
 const QuizResult = () => {
   const location = useLocation();
@@ -35,9 +36,12 @@ const QuizResult = () => {
         {quizInfo.quizCommentary}     
       </div>
 
-      <button onClick={handleSubmit} className="custom-button">
-        확인
+      <button onClick={handleSubmit} className="okay-button">
+        홈으로
       </button>
+      <div className='quizresultfooter'>
+      <Footer/>
+      </div>
     </div>
   );
 };

@@ -41,7 +41,7 @@
 
 }
 
-.role-button {
+.register-button {
   font-family: 'Pretendard-Regular';
   font-size: 30px;
   color: white;
@@ -54,15 +54,15 @@
   position: relative; /* 버튼을 상위 컨테이너에 상대적으로 위치시킵니다. */
   z-index: 1; /* 버튼을 배경 위에 올리기 위해 z-index 설정 */
 }
-.role-button:hover {
+.register-button:hover {
   cursor: pointer;    
 }
-.role-button-container {
+.register-button-container {
   position: relative;
   display: inline-block;
 }
 
-.background-box {
+.register-background-box {
   position: absolute;
   bottom: 0;
   right:0;
@@ -73,7 +73,7 @@
   filter: blur(18.5px);
   border-radius: 53px;
   z-index: -1; /* 배경을 버튼 뒤로 보내기 위해 z-index 설정 */
-}
+} 
 
 input[type="checkbox"] {
   -webkit-appearance: none;
