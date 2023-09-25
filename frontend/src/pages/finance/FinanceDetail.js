@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineDown, AiOutlineNotification } from 'react-icons/ai';
-import { makeDepositor, setDepositorFinancialProductId, getDepCustomer } from "redux/Depositor";
-import { makeSavingser, setSavingserFinancialProductId, getSavCustomer } from "redux/Savingser";
-import { makeLoaner, setLoanerFinancialProductId, getLoaCustomer } from "redux/Loaner";
+import { getProductInfo } from "redux/Finance";
+import { makeDepositor, setDepositorFinancialProductId, getDepCustomer, setDepositorMoney } from "redux/Depositor";
+import { makeSavingser, setSavingserFinancialProductId, getSavCustomer, setSavingserRegularMoney } from "redux/Savingser";
+import { makeLoaner, setLoanerFinancialProductId, getLoaCustomer, setLoanerMoney } from "redux/Loaner";
 import { MdLabelOutline } from "react-icons/md";
-
 import './FinanceDetail.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Footer from 'components/common/Footer';
 import ApplyList from 'components/finance/ApplyList';
 
@@ -20,12 +20,13 @@ const FinanceDetail = () => {
     const [agreePart2, setAgreePart2] = useState(false);
     const [agreePart3, setAgreePart3] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [regularMoney, setRegularMoney] = useState('');
-    const finance = useSelector((state) => state.finance.data);
+    const [money, setMoney] = useState('');
+    const [finance, setFinance] = useState({});
     const depositor = useSelector((state) => state.depositor.data);
     const savingser = useSelector((state) => state.savingser.data);
     const loaner = useSelector((state) => state.loaner.data);
     const role = useSelector((state) => state.auth.user.roles);
+    const params = useParams();
     const [applys, setApplys] = useState([]);
     const info = {
         'DEPOSIT': '예금은 금융 기관에 돈을 보관하는 금융 제품으로, 안전하게 자금을 보호하고 미래에 사용할 수 있도록 합니다. 예금은 이자를 얻을 수 있고, 금융 기관은 이러한 예금을 활용하여 대출을 제공하며 경제에 기여합니다. 예금은 금융 계획과 금전 관리에서 중요한 역할을 합니다.',
@@ -40,65 +41,71 @@ const FinanceDetail = () => {
     const dispatch = useDispatch();
     const nav = useNavigate();
     const setBase = () => {
-        switch (finance.productType) {
-            case 'DEPOSIT':
-                dispatch(setDepositorFinancialProductId(finance.id));
-                if (role === 'ROLE_PARENT') {
-                    dispatch(getDepCustomer(finance.id))
-                        .then((res) => {
-                            if (getDepCustomer.fulfilled.match(res)) {
-                                // 성공적으로 완료됐을 때
-                                const resList = res.payload; // 액션의 payload에 결과 데이터가 있을 것입니다.
-                                setApplys(resList.data);
-                            } else if (getDepCustomer.rejected.match(res)) {
-                                // 작업이 실패했을 때
-                                const error = res.payload; // 액션의 payload에 오류 데이터가 있을 것입니다.
-                                console.log(error);
-                            }
-                        });
-                }
-                break;
-            case 'SAVINGS':
-                dispatch(setSavingserFinancialProductId(finance.id));
-                if (role === 'ROLE_PARENT') {
-                    dispatch(getSavCustomer(finance.id))
-                        .then((res) => {
-                            if (getSavCustomer.fulfilled.match(res)) {
-                                // 성공적으로 완료됐을 때
-                                const resList = res.payload; // 액션의 payload에 결과 데이터가 있을 것입니다.
-                                setApplys(resList.data);
-                            } else if (getSavCustomer.rejected.match(res)) {
-                                // 작업이 실패했을 때
-                                const error = res.payload; // 액션의 payload에 오류 데이터가 있을 것입니다.
-                                console.log(error);
-                            }
-                        });
-                }
-                break;
-            case 'LOAN':
-                dispatch(setLoanerFinancialProductId(finance.id));
-                if (role === 'ROLE_PARENT') {
-                    dispatch(getLoaCustomer(finance.id))
-                        .then((res) => {
-                            if (getLoaCustomer.fulfilled.match(res)) {
-                                // 성공적으로 완료됐을 때
-                                const resList = res.payload; // 액션의 payload에 결과 데이터가 있을 것입니다.
-                                setApplys(resList.data);
-                            } else if (getLoaCustomer.rejected.match(res)) {
-                                // 작업이 실패했을 때
-                                const error = res.payload; // 액션의 payload에 오류 데이터가 있을 것입니다.
-                                console.log(error);
-                            }
-                        });
-                }
-                break;
-            default:
-                break;
-        }
+        dispatch(getProductInfo(params.id)).then(async (product) => {
+            if (product.payload.data === null)
+                nav("/financial");
+            await setFinance(product.payload.data);
+            switch (product.payload.data === null? '' : product.payload.data.productType) {
+                case 'DEPOSIT':
+                    dispatch(setDepositorFinancialProductId(product.payload.data.id));
+                    if (role === 'ROLE_PARENT') {
+                        dispatch(getDepCustomer(product.payload.data.id))
+                            .then((res) => {
+                                if (getDepCustomer.fulfilled.match(res)) {
+                                    // 성공적으로 완료됐을 때
+                                    const resList = res.payload; // 액션의 payload에 결과 데이터가 있을 것입니다.
+                                    setApplys(resList.data);
+                                } else if (getDepCustomer.rejected.match(res)) {
+                                    // 작업이 실패했을 때
+                                    const error = res.payload; // 액션의 payload에 오류 데이터가 있을 것입니다.
+                                    console.log(error);
+                                }
+                            });
+                    }
+                    break;
+                case 'SAVINGS':
+                    dispatch(setSavingserFinancialProductId(product.payload.data.id));
+                    if (role === 'ROLE_PARENT') {
+                        dispatch(getSavCustomer(product.payload.data.id))
+                            .then((res) => {
+                                if (getSavCustomer.fulfilled.match(res)) {
+                                    // 성공적으로 완료됐을 때
+                                    const resList = res.payload; // 액션의 payload에 결과 데이터가 있을 것입니다.
+                                    setApplys(resList.data);
+                                } else if (getSavCustomer.rejected.match(res)) {
+                                    // 작업이 실패했을 때
+                                    const error = res.payload; // 액션의 payload에 오류 데이터가 있을 것입니다.
+                                    console.log(error);
+                                }
+                            });
+                    }
+                    break;
+                case 'LOAN':
+                    dispatch(setLoanerFinancialProductId(product.payload.data.id));
+                    if (role === 'ROLE_PARENT') {
+                        dispatch(getLoaCustomer(product.payload.data.id))
+                            .then((res) => {
+                                if (getLoaCustomer.fulfilled.match(res)) {
+                                    // 성공적으로 완료됐을 때
+                                    const resList = res.payload; // 액션의 payload에 결과 데이터가 있을 것입니다.
+                                    setApplys(resList.data);
+                                } else if (getLoaCustomer.rejected.match(res)) {
+                                    // 작업이 실패했을 때
+                                    const error = res.payload; // 액션의 payload에 오류 데이터가 있을 것입니다.
+                                    console.log(error);
+                                }
+                            });
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
     }
-    useEffect(setBase, [finance]);
+    useEffect(setBase, []);
     const apply = () => {
-        if (finance.productType === 'SAVINGS' && regularMoney < 1000) {
+        console.log(money)
+        if (finance.productType === 'SAVINGS' && money < 1000) {
             setErrorMessage('금액이 너무 적습니다.');
             setShowDiv4(true);
             return;
@@ -172,11 +179,16 @@ const FinanceDetail = () => {
             });
     }
     const handleRateChange = (event) => {
-        setRegularMoney(Number(event.target.value));
+        setMoney(Number(event.target.value));
+        if (finance.productType === 'DEPOSIT')
+            dispatch(setDepositorMoney(Number(event.target.value)));
+        if (finance.productType === 'LOAN')
+            dispatch(setLoanerMoney(Number(event.target.value)));
+        else
+            dispatch(setSavingserRegularMoney(Number(event.target.value)));
     };
     return (
-        <div className='product-detail-container'>
-            {regularMoney}
+        (finance.name !== undefined) && (<div className='product-detail-container'>
             <div className='product-detail-header'>
                 <div className='product-detail-name'>{finance.name}</div>
                 <div className='product-summary-infomation'>
@@ -215,7 +227,7 @@ const FinanceDetail = () => {
                         </div>
                         <div className='flex-row'>
                             <   MdLabelOutline className='finance-detail-icon' />
-                            <div className="text-label" style={{ width: '40%' }}>상품 이율 :{'    '}</div>
+                            <div className="text-label" style={{ width: '40%' }}>상품 {finance.productType === 'LOAN'? "이자":"이율"} :{'    '}</div>
                             <div className="text-label" style={{ width: '46%' }}>{finance.rate} %</div>
                         </div>
                     </div>
@@ -251,7 +263,7 @@ const FinanceDetail = () => {
                         {info[finance.productType]}
                     </div>
                 )}
-                {role === 'ROLE_PARENT' ? null : (finance.productType === 'SAVINGS') && <div className='product-space-between'>
+                {role === 'ROLE_PARENT' ? null : <div className='product-space-between'>
                     <span className='option-title'>필수 기입 정보</span>
                     <div>
                         <span className='show-info-button' onClick={() => setShowDiv4(!showDiv4)}>
@@ -262,7 +274,8 @@ const FinanceDetail = () => {
                 }
                 {showDiv4 && (
                     <div className='option-input'>
-                        <input type="number" value={regularMoney} onChange={handleRateChange}></input>
+                        <div>{(finance.productType === 'DEPOSIT'? "금액" : finance.productType === 'LOAN'? "빌릴 금액":"정기 금액")}</div>
+                        <input type="number" value={money} onChange={handleRateChange}></input>
                     </div>
                 )}
                 <div className='errorMessage'>{errorMessage}</div>
@@ -274,6 +287,7 @@ const FinanceDetail = () => {
                 <Footer />
             </div>
         </div >
+    )
     );
 };
 

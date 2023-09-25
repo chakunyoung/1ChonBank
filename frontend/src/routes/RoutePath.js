@@ -38,12 +38,9 @@ const RoutePath = () => {
       <Route path="/selectFinance" element={<SelectFinance />} />
       <Route path="/makeFinance" element={<MakeFinance />} />
       <Route path="/financial" element={<FinanceList />} />
-      <Route path="/financeDetail" element={<FinanceDetail />} />
-      <Route path="/financelist" element={<FinanceList />} />
-
+      <Route path="/financeDetail/:id" element={<FinanceDetail />} />
       <Route path="/quiz" element={<Quiz />} />
       <Route path="/quizResult" element={<QuizResult />} />
-      <Route path="/financelist" element={<FinanceList />} />
       <Route path="/account" element={<Account />} />
       <Route path="/accountDetail" element={<AccountDetail />} />
       <Route path="/createFamily" element={<CreateFamily />} />

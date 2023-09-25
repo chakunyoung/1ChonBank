@@ -1,5 +1,6 @@
 package com.woowahanbank.backend.domain.customer.service;
 
+import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ import com.woowahanbank.backend.domain.point.service.PointServiceImpl;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
 import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
+import com.woowahanbank.backend.global.notification.dto.NotificationDto;
+import com.woowahanbank.backend.global.notification.event.NotificationEvent;
+import com.woowahanbank.backend.global.util.NotificationUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,12 +37,15 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 	private final FinancialProductRepository financialProductRepository;
 	private final UserRepository userRepository;
 	private final PointServiceImpl pointService;
+	private final ApplicationEventPublisher eventPublisher;
+	DecimalFormat formatter = new DecimalFormat("###,###");
 
 	@Override
 	public void apply(DepositorDto depositorDto) {
 		User user = userRepository.findById(depositorDto.getUserId()).get();
 		FinancialProduct financialProduct = financialProductRepository.findById(depositorDto.getFinancialProductId())
 			.get();
+		User parent = userRepository.findById(financialProduct.getParent().getId()).get();
 		Depositor depositor = Depositor.builder()
 			.user(user)
 			.financialProduct(financialProduct)
@@ -45,6 +53,15 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 			.money(depositorDto.getMoney())
 			.build();
 		depositorRepository.save(depositor);
+		eventPublisher.publishEvent(new NotificationEvent(
+			this, parent.getNickname(),
+			NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + financialProduct.getId()),
+			NotificationDto.builder()
+				.title("예금 상품 승인 신청")
+				.body(user.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
+					+ "]을 ( " + formatter.format(depositorDto.getMoney()) + " )원 금액에 승인을 신청 했습니다.")
+				.build()
+		));
 	}
 
 	@Override
@@ -59,11 +76,13 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 	}
 
 	@Override
-	public void allow(Long id) {
+	public void allow(Long id, User parent) {
 		Depositor depositor = depositorRepository.findById(id).get();
 		FinancialProduct financialProduct = financialProductRepository.findById(depositor.getFinancialProduct().getId())
 			.get();
 		depositor.allow();
+		if (parent.getFamily().getId() != financialProduct.getFamily().getId())
+			throw new IllegalArgumentException("해당 가족이 아닙니다.");
 		depositor.changeDate();
 		ThreadPoolTaskScheduler tpts = new ThreadPoolTaskScheduler();
 		ThreadPoolTaskScheduler endS = new ThreadPoolTaskScheduler();
@@ -71,8 +90,10 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 		endS.initialize();
 		String dayDate = depositor.getDate().format(DateTimeFormatter.ofPattern("d")).toString();
 		User admin = userRepository.findById(1).get(); // 가상의 admin 유저
-		User parent = userRepository.findById(financialProduct.getParent().getId()).get();
 		User child = userRepository.findById(depositor.getUser().getId()).get();
+		int dMoney = depositor.getMoney();
+		child.moneyTransfer(dMoney);
+		userRepository.save(child);
 		tpts.schedule(() -> {
 			int money = depositor.getMoney() * financialProduct.getRate() / 100; // 이자
 			depositor.depositMoney(money);
@@ -81,7 +102,7 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 			pointService.makePoint(parent, admin, "예금 이자", money);
 		}, new CronTrigger("0 0 0 " + dayDate + " * ?"));
 		String endDate = depositor.getDate()
-			.plus(financialProduct.getPeriod() + 1, ChronoUnit.MONTHS)
+			.plus(financialProduct.getPeriod(), ChronoUnit.MONTHS)
 			.format(DateTimeFormatter.ofPattern("d M e"))
 			.toString();
 		endS.schedule(() -> {
@@ -94,10 +115,34 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 			endS.shutdown();
 		}, new CronTrigger("0 0 0 " + endDate));
 		depositorRepository.save(depositor);
+		eventPublisher.publishEvent(new NotificationEvent(
+			this, child.getNickname(),
+			NotificationUtil.clickUrl("http://localhost:3000/account"),
+			NotificationDto.builder()
+				.title("예금 상품 승인")
+				.body(parent.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
+					+ "] 을 승인했습니다.")
+				.build()
+		));
 	}
 
 	@Override
-	public void refuse(Long id) {
+	public void refuse(Long id, User parent) {
+		Depositor depositor = depositorRepository.findById(id).get();
+		FinancialProduct financialProduct = financialProductRepository.findById(depositor.getFinancialProduct().getId())
+			.get();
+		if (parent.getFamily().getId() != financialProduct.getFamily().getId())
+			throw new IllegalArgumentException("해당 가족이 아닙니다.");
+		User child = userRepository.findById(depositor.getUser().getId()).get();
+		eventPublisher.publishEvent(new NotificationEvent(
+			this, child.getNickname(),
+			NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + id),
+			NotificationDto.builder()
+				.title("예금 상품 거절")
+				.body(parent.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
+					+ "] 을 거절했습니다.")
+				.build()
+		));
 		depositorRepository.deleteById(id);
 	}
 
