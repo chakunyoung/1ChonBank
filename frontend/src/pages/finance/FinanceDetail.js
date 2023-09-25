@@ -4,10 +4,13 @@ import { AiOutlineDown, AiOutlineNotification } from 'react-icons/ai';
 import { makeDepositor, setDepositorFinancialProductId, getDepCustomer } from "redux/Depositor";
 import { makeSavingser, setSavingserFinancialProductId, getSavCustomer } from "redux/Savingser";
 import { makeLoaner, setLoanerFinancialProductId, getLoaCustomer } from "redux/Loaner";
+import { MdLabelOutline } from "react-icons/md";
+
 import './FinanceDetail.css';
 import { useNavigate } from 'react-router-dom';
 import Footer from 'components/common/Footer';
 import ApplyList from 'components/finance/ApplyList';
+
 const FinanceDetail = () => {
     const [showDiv1, setShowDiv1] = useState(false);
     const [showDiv2, setShowDiv2] = useState(false);
@@ -201,17 +204,17 @@ const FinanceDetail = () => {
                 {showDiv1 && (
                     <div className='detail-dropdown'>
                         <div className='flex-row'>
-                            <div className='product-info-label'></div>
+                            <MdLabelOutline className='finance-detail-icon' />
                             <div className="text-label" style={{ width: '40%' }}>상품 종류 :{'    '}</div>
                             <div className="text-label" style={{ width: '46%' }}>{productName[finance.productType]}</div>
                         </div>
                         <div className='flex-row'>
-                            <div className='product-info-label'></div>
+                            <MdLabelOutline className='finance-detail-icon' />
                             <div className="text-label" style={{ width: '40%' }}>계약 기간 :{'    '}</div>
                             <div className="text-label" style={{ width: '46%' }}>{finance.period} 개월</div>
                         </div>
                         <div className='flex-row'>
-                            <div className='product-info-label'></div>
+                            <   MdLabelOutline className='finance-detail-icon' />
                             <div className="text-label" style={{ width: '40%' }}>상품 이율 :{'    '}</div>
                             <div className="text-label" style={{ width: '46%' }}>{finance.rate} %</div>
                         </div>
@@ -229,7 +232,7 @@ const FinanceDetail = () => {
                 {showDiv2 && (
                     <div className='detail-dropdown'>
                         <div className='flex-row'>
-                            <AiOutlineNotification className="icon" />
+                            <AiOutlineNotification className='finance-detail-icon' />
                             <div className="text-label join-essential-info">{finance.info}</div>
                         </div>
                     </div>
@@ -267,8 +270,10 @@ const FinanceDetail = () => {
 
             {role === 'ROLE_PARENT' ? null : <div className='product-apply-button' onClick={apply}>신청 하기</div>}
             {role === 'ROLE_PARENT' ? <ApplyList applys={applys} type={finance.productType} /> : null}
-            <Footer />
-        </div>
+            <div className='finance-detail-footer'>
+                <Footer />
+            </div>
+        </div >
     );
 };
 

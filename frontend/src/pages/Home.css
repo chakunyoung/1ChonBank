@@ -61,46 +61,30 @@ Body {
 
 .kakao-login-button {
   font-family: 'Pretendard-Regular';
-  font-size: 30px;
+  font-size: 25px;
   color: #191919;
-  width: 400px;
+  width: 340px;
   height: 60px;
   background-color: #FEE500;
   border-radius: 16px;
   border-color: transparent;
-
-
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+  transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
 }
 
-.kakao-login-button:hover {
+.kakao-login-button:hover,
+.google-login-button:hover {
   cursor: pointer;
-  /* 마우스 호버 시 커서를 포인터로 변경 */
+  transform: scale(1.05); /* 마우스 오버 시 버튼 크기 확대 */
 }
 
-.kakao-icon {}
-
-.register-buttoncontainer {
-  position: relative;
-  display: inline-block;
+.kakao-icon {
+  width: 30px;
 }
-
-.register-button {
-  font-family: 'Pretendard-Regular';
-  font-size: 30px;
-  color: white;
-  width: 400px;
-  height: 60px;
-  background-color: #E4C9F9;
-  border-radius: 16px;
-  border-color: transparent;
-  /* background: linear-gradient(135.96deg, #8B78FF 0%, #5451D6 101.74%);
-    opacity: 0.7;
-    filter: blur(18.5px); */
-
-}
-
-.register-button:hover {
-  cursor: pointer;
+.google-icon{
+  width: 30px;
 }
 
 .char1-container {
@@ -121,32 +105,20 @@ Body {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.social-button {
+.google-login-button {
+  background-color: white;
   font-family: 'Pretendard-Regular';
-  font-size: 30px;
+  font-size: 25px;
   color: #191919;
-  width: 400px;
+  width: 340px;
   height: 60px;
   border-radius: 16px;
-  border: none;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  padding: 0;
-  margin: 0;
-}
+  border-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+  transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
 
-.social-icon {
-  width: 106%;  /* 1.1배 크기 */
-  height: 150%; /* 1.1배 크기 */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.google-login-button {
-  background-color: #4285F4;
 }
 
 .Buttoncontainer {

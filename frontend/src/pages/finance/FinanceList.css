@@ -1,7 +1,11 @@
-.list-container {
+.finance-list-container {
+    height: 100vh;
+    max-width: 390px; /* 최대 너비를 390px로 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    display: flex;
     flex-direction: column;
     align-items: center;
-    background: #F5F5F5;
+    background-color: #FAFAFA; /* 배경색 추가 */
 }
 .product-button-list{
     padding: 20px;
@@ -21,7 +25,26 @@
     background-color: white;
 }
 
-.product-img {
-    width: 3.1875rem;
-    height: 3.1875rem;
+.make-product-button{
+    bottom: 10vh;
+    font-size: 25px;
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    background: linear-gradient(45deg, rgba(19, 63, 219, 0.5), rgba(183, 0, 77, 0.4));
+    border-radius: 16px;
+    border: none;
+    width: 330px;
+    height: 60px;
+    text-decoration: none;
+    transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+    color: white;
+}
+.make-product-button:hover{
+    cursor: pointer;
+    transform: scale(1.05); /* 마우스 오버 시 버튼 크기 확대 */
+}
+.finance-list-footer{
+    position: absolute;
+    bottom: 0;
 }

@@ -7,8 +7,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getDepositor } from "redux/Depositor";
 import { getSavingser } from "redux/Savingser";
 import { getLoaner } from "redux/Loaner";
+import { IoIosAdd } from "react-icons/io";
+import Footer from "components/common/Footer"
+import Profile from "components/common/Profile"
+
 
 const FinanceList = () => {
+    
     const [products, setProducts] = useState([]);
     const [viewType, setViewType] = useState('');
     const [test, setTest] = useState(0);
@@ -84,23 +89,20 @@ const FinanceList = () => {
             setViewType(data);
     };
     return (
-        <div className='list-container'>
-            <div className='product-button-list'>
-                <button className='productType-button' onClick={() => handleType('DEPOSIT')}>
-                    <img className='product-img' src={require('assets/deposit.jpg')} alt="예금" />예금</button>
-                <button className='productType-button' onClick={() => handleType('SAVINGS')}>
-                    <img className='product-img' src={require('assets/savings.jpg')} alt="적금" />적금</button>
-                <button className='productType-button' onClick={() => handleType('LOAN')}>
-                    <img className='product-img' src={require('assets/loan.jpg')} alt="대출" />대출</button>
+        <div className='finance-list-container'>
+            <div><Profile/></div>
+            <div>
+            <FinancelistSet products={products} dapplys={dapplys} sapplys={sapplys} lapplys={lapplys} viewType={viewType}></FinancelistSet>
+            </div>
+            <div>
                 {role === 'ROLE_PARENT' ? <Link to="/selectFinance"> {/*부모인지 판별 넣어야됨*/}
-                    <button className='productType-button'>
-                        <img className='product-img' src={require('assets/Vector.jpg')} alt="추가" />
-                        생성
+                    <button className='make-product-button'>
+                    <span className="button-text">상품 추가</span>
+                        <IoIosAdd style={{ fontSize: '40px' }} />
                     </button>
                 </Link> : null}
-
-            </div>
-            <FinancelistSet products={products} dapplys={dapplys} sapplys={sapplys} lapplys={lapplys} viewType={viewType}></FinancelistSet>
+                </div>
+        <div className='finance-list-footer'><Footer/></div>
         </div>
     );
 };
