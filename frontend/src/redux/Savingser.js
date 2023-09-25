@@ -19,6 +19,7 @@ export const makeSavingser = createAsyncThunk(
     "savingser/makeSavingser",
     async (data, { rejectWithValue }) => {
         try {
+            console.log(data);
             const res = await apis.post("/api/savingser", data, {
             });
             console.log(res.data);

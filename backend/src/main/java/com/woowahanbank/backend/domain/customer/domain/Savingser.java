@@ -44,6 +44,8 @@ public class Savingser {
 	private int regularMoney;
 
 	public void allow() {
+		if (this.allowProduct)
+			throw new IllegalArgumentException("이미 허가된 상품입니다.");
 		this.allowProduct = true;
 	}
 
