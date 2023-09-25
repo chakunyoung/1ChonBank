@@ -1,100 +1,77 @@
-.QuizContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* 수직 가운데 정렬을 위해 추가 */
-    height: 100vh; /* 화면 높이와 같은 최소 높이 설정 */
+  .QuizContainer{
+    height: 100vh;
+    max-width: 390px; /* 최대 너비를 390px로 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    background-color: #FAFAFA; /* 배경색 추가 */
+    position: relative; /* QuizContainer를 상대적인 위치로 설정합니다. */
+
+  }
+  .choiceContainer{
     font-size: 20px;
-    justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
-    position: relative;
-}
-.choiceContainer{
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 수직 가운데 정렬을 위해 추가 */
-  min-height: 10vh; /* 화면 높이와 같은 최소 높이 설정 */
-  font-size: 20px;
-  justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
-}
-.quizarea{
-    width: 300px;
-    height: 130px;
-    background-color: white;
-    border-radius: 16px;
-    background: #FFFFFF;
-    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.15);
-    margin-bottom: 30px;
-    /* 텍스트 중앙 정렬 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 0 20px;
   }
-  .choicearea{
-    width: 250px;
-    height: 50px;
-    background-color: white;
-    border-radius: 16px;
-    background: #FFFFFF;
-    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.15);
-    margin-bottom: 10px;
-    /* 텍스트 중앙 정렬 */
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    padding: 0 20px;
+  .quizarea{
+      width: 300px;
+      height: 130px;
+      border-radius: 16px;
+      box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
+      /* 텍스트 중앙 정렬 */
+      display: flex;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .choicearea{
+      width: 300px;
+      height: 45px;
+      border-radius: 16px;
+      background-color: white;
+      box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+      cursor: pointer; /* 커서 스타일 설정 */
+      
+      
+    }
+  .choicearea:hover {
+    transform: scale(1.01); /* 마우스 오버 시 버튼 크기 확대 */
   }
 
-.quiz-choice {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .quiz-choice:hover {
-    background-color: #f0f0f0;
-  }
+  .quiz-choice {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .selectedBox {
+      background: linear-gradient(90deg, rgba(19, 63, 219, 0.3), rgba(183, 0, 77, 0.2));
+      color: white;
+    }
 
-  .circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #ccc; /* 그래픽 원의 배경색 */
-    margin-right: 10px; /* 원 사이의 간격 조절 */
-    cursor: pointer; /* 마우스 커서를 포인터로 변경하여 클릭 가능한 것으로 표시 */
-  }
-  
-  .selected {
-    background-color: green; /* 선택된 경우의 배경색 */
-    /* 다른 스타일링을 추가할 수 있습니다. */
-  }
-  .selectedBox {
-    background-color: rgb(52, 222, 52); /* 선택된 경우의 배경색 */
-    /* 다른 스타일링을 추가할 수 있습니다. */
-  }
-
-  .custom-button {
-    margin-top: 30px;
-    background-color: rgba(26, 201, 107, 1); /* 녹색 배경색 */
-    color: #FFFFFF; /* 흰색 텍스트 색상 */
-    padding: 10px 20px; /* 원하는 패딩 값 설정 */
-    border: none; /* 테두리 없음 */
-    cursor: pointer; /* 커서 스타일 설정 */
-    border-radius: 10px; /* 모서리 둥글게 설정 */
-  }
-  
-  .custom-button:hover {
-    background-color: #007700; /* 마우스 호버 시 배경색 변경 */
-  }
-  .quiz-container {
-    position: absolute;
-    bottom: 0;
-  }
-  
-  
-  
+    .quiz-submit {
+      width: 340px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center; /* 수평 가운데 정렬을 위해 추가 */  
+      font-size: 20px;
+      background: linear-gradient(45deg, rgba(19, 63, 219, 0.5), rgba(183, 0, 77, 0.4));
+      color: #FFFFFF; /* 흰색 텍스트 색상 */
+      padding: 10px 20px; /* 원하는 패딩 값 설정 */
+      border: none; /* 테두리 없음 */
+      cursor: pointer; /* 커서 스타일 설정 */
+      border-radius: 16px; /* 모서리 둥글게 설정 */
+    }
+    
+    .quiz-container {
+      position: absolute;
+      bottom: 0;
+    }
+    
+    
+    

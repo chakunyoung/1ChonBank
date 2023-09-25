@@ -2,8 +2,7 @@ import React from "react";
 import "./Home.css";
 import char1 from "assets/char1x4.png";
 import Kakaoicon from "assets/kakao.svg";
-//import Googleicon from "assets/btn_google_signin_light_focus_web@2x.png";
-import Googleicon from "assets/btn_google_signin_dark_pressed_web@2x.png";
+import Googleicon from "assets/google.svg";
 const Home = () => {
 
   const handleKakaoLoginClick = () => {
@@ -22,21 +21,21 @@ const Home = () => {
         </div>
         <img src={char1} alt="char1" style={{ width: "200px" }} />
       </div>
-      <div className="Buttoncontainer">
+      <div className="Buttoncontainer" style={{ position: "fixed", bottom: "15%" }}>
         <button
           onClick={handleKakaoLoginClick}
           className="kakao-login-button"
           style={{ margin: "5px" }}>
-          <img src={Kakaoicon} />
+          <img src={Kakaoicon} className="kakao-icon" />
           &nbsp; 카카오 로그인
         </button>
 
         <button
           onClick={handleGoogleLoginClick}
-          className="google-login-button social-button"
+          className="google-login-button"
           style={{ margin: "5px" }}>
-          <img src={Googleicon} alt="Google" className="social-icon" />
-          &nbsp;
+          <img src={Googleicon} className="google-icon" />
+          &nbsp; 구글 로그인
         </button>
         <div></div>
       </div>
