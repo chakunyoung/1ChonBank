@@ -3,13 +3,14 @@ import './MissionCard.css';
 import { useDispatch, useSelector } from 'react-redux';
 import apis from 'services/api/apis';
 import { setMission } from 'redux/Mission';
+import { useNavigate } from 'react-router-dom';
 
 const MissionCard = () => {
     const [dataExist, setDataExist] = useState(false); 
     const [missionData, setMissionData] = useState([]); 
     const dispatch = useDispatch();
     const userType = useSelector((state) => state.auth.user.roles);
-
+    const navigate = useNavigate(); // useNavigate 훅을 사용하여 페이지 이동을 처리
 
     useEffect(() => {
         const fetchMissions = async () => {
@@ -38,26 +39,29 @@ const MissionCard = () => {
                 }
             }
         };
-    
+
         fetchMissions(); // useEffect 내부에서 호출
-    
+
     }, [dispatch, userType]);
-    
+
+    // 미션 디테일 페이지로 이동하는 함수
+    const handleMissionDetail = (missionId) => {
+        // 미션 디테일 페이지로 이동하면서 missionId를 URL 파라미터로 전달
+        console.log(missionId);
+        navigate(`/missionDetail/${missionId}`);
+    };
+
     return (
         <div>
-            <div>
+            <div className='missioncard-listcontainer'>
                 {dataExist ? (
                     missionData.data.map((mission, index) => (
-                        <div key={index} className='missioncard-container'>
-                            {/* <div className='missioncard-textarea'> */}
-                                <div className='data-container'>
-                                    <h2>미션 이름: {mission.missionName}</h2>
-                                    <div className='mission-details'>
-                                        <p>미션 포인트: {mission.missionPoint}</p>
-                                        <p>미션 상태: {mission.missionStatus}</p>
-                                    </div>
-                                </div>
-                            {/* </div> */}
+                        <div key={index} className={mission.missionStatus === "시작전" ? 'missioncard-container-before' : 'missioncard-container-during'} onClick={() => handleMissionDetail(mission.missionId)}>
+                            <h2 className='margin-box'>{mission.missionName}</h2>
+                            <div className='margin-box'>
+                                <p>{mission.missionPoint}P</p>
+                                <p>{mission.missionStatus}</p>
+                            </div>
                         </div>
                     ))
                 ) : (
@@ -66,8 +70,6 @@ const MissionCard = () => {
             </div>
         </div>
     );
-    
-    
 };
 
 export default MissionCard;
