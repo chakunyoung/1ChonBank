@@ -1,0 +1,133 @@
+/* Mypage.css */
+.MypageContainer {
+  height: 100vh;
+  max-width: 390px; /* 최대 너비를 390px로 설정 */
+  margin: 0 auto; /* 가운데 정렬 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #FAFAFA; /* 배경색 추가 */
+}
+.mypage-profilecontainer{
+  z-index: 1;
+}
+
+.button-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-account,
+.button-family,
+.button-financial,
+.button-mission {
+  width: 150px;
+  height: 135px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.7s ease; /* 버튼에 마우스를 올렸을 때 배경색 변화 효과 추가 */
+  transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+
+}
+.button-account{
+  background-color: rgba(245, 84, 84, 0.48);; /* 계좌정보 - Red */
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  backdrop-filter: blur(2px);
+}
+.button-family
+ {
+  background-color: rgba(199, 143, 243, 0.48);;
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  backdrop-filter: blur(2px);
+}
+.button-financial
+ {
+  background: rgba(78, 226, 146, 0.48);
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  backdrop-filter: blur(2px);}
+.button-mission
+ {
+  background: rgba(255, 210, 51, 0.48);
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  backdrop-filter: blur(2px);
+}
+
+.button-quiz {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease; /* 버튼에 마우스를 올렸을 때 배경색 변화 효과 추가 */
+  transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+  background: rgba(0, 116, 255, 0.24);
+    border: 1px solid rgba(0, 0, 0, 0.09);
+
+  backdrop-filter: blur(2px);
+}
+
+.button-account:hover,
+.button-family:hover,
+.button-financial:hover,
+.button-mission:hover,
+.button-quiz:hover {
+  opacity: 0.7;
+  background-color: #ddd; /* 마우스 오버 시 배경색 변경 */
+  transform: scale(1.05); /* 마우스 오버 시 버튼 크기 확대 */
+}
+
+.button a {
+  color: inherit;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.logo {
+  font-size: 50px;
+  color: white;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.button-account span,
+.button-family span,
+.button-financial span,
+.button-mission span,
+.button-quiz span {
+  color: black;
+  text-decoration: none;
+  padding: 10px;
+}
+.mypage-footer{
+  position: absolute;
+  bottom: 0;
+}

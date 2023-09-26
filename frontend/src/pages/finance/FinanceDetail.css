@@ -1,0 +1,156 @@
+.product-detail-container {
+    height: 100vh;
+    max-width: 390px;
+    margin: 0 auto; /* 가운데 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FAFAFA; 
+    width: 100%;
+
+}
+
+
+.product-detail-header {
+    width: 100%;
+    background: #1FBAB8;
+}
+
+.product-detail-name {
+    padding-top: 19px;
+    padding-left: 24px;
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.product-apply-button {
+    font-family: 'Pretendard-Regular';
+    text-align: center;
+    line-height: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 180px;
+    background: #52B69A;
+    width: 147px;
+    margin-top: 53px;
+}
+
+.product-info-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: white;
+}
+
+.product-space-between {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+}
+
+.agree-button {
+    display: inline-block;
+    width: 57px;
+    height: 28px;
+    border-radius: 180px;
+    border: 2px solid #000;
+    background: #FFF;
+    text-align: center;
+    /* 수평 가운데 정렬 */
+    vertical-align: middle;
+    /* 수직 가운데 정렬 */
+}
+
+.disagree-button {
+    display: inline-block;
+    width: 57px;
+    height: 28px;
+    border-radius: 180px;
+    border: 2px solid #000;
+    background: #52B69A;
+    text-align: center;
+    /* 수평 가운데 정렬 */
+    vertical-align: middle;
+    /* 수직 가운데 정렬 */
+}
+
+.show-info-button {
+    margin-left: 20px;
+    margin-right: 1.5rem;
+}
+
+.product-summary-rate {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: url('assets/rate.png'), #52B69A 50% / cover no-repeat;
+}
+
+.product-summary-period {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: url('assets/period.png'), #52B69A 50% / cover no-repeat;
+}
+
+.product-summary-infomation {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 24px 0px;
+}
+
+.product-common-info {
+    margin: 0px 21px 21px;
+}
+
+.product-info-label {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 1rem;
+    margin-left: 1.2rem;
+    background: url('assets/label.png'), white 50% / cover no-repeat;
+}
+
+.join-essential-info {
+    width: 80%;
+    word-break: break-all;
+    white-space:pre-wrap
+}
+
+.errorMessage {
+    text-align: center;
+    width: 100%;
+    padding-bottom: 1.1rem;
+    color:red;
+}
+
+.option-title {
+    padding-left: 1.5rem;
+    font-size: 1.1rem;
+    color: #808080;
+}
+.option-input{
+    text-align: center;
+    width: 100%;
+    padding-bottom: 1.1rem;
+}
+.detail-dropdown{
+    width: 90%;
+}
+.finance-detail-icon {
+    font-size: 20px;
+    margin: auto 10px;
+}
+
+.finance-detail-footer {
+    position: absolute;
+    bottom:0
+}

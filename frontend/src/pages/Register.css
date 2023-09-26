@@ -1,0 +1,135 @@
+.register-container{    
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+  justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+  min-height: 100vh; /* 화면 높이와 같은 최소 높이 설정 */
+}
+
+.slider-container {
+  max-width: 100px; /* 최대 너비 설정 (원하는 값으로 조정) */
+  margin: 0 auto; /* 가운데 정렬을 위해 필요한 경우 */
+  overflow: hidden; /* 넘치는 내용 숨김 */
+  background-color: white;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 1px;
+
+}
+
+
+
+.char2-text {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 텍스트를 가운데 정렬합니다. */
+  color: black; /* 텍스트 색상 설정 */
+  font-size: 40px; /* 원하는 폰트 크기로 조정하세요. */
+  font-weight: bold; /* 폰트 굵기 설정 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  text-shadow: 
+  2px 2px 4px rgba(0, 0, 0, 0.5); /* 텍스트 그림자 설정 */
+}
+.custom-input{
+  width: 77%;
+  height: 77%;
+  font-size: 25px;
+  outline: none; /* Remove the default focus outline */
+  border: none; /* Remove the border when focused */
+
+
+}
+
+.register-button {
+  font-family: 'Pretendard-Regular';
+  font-size: 30px;
+  color: white;
+  width: 340px;
+  height: 60px;
+  background-color: #E4C9F9;
+  border-radius: 16px;
+  border-color: transparent;
+  margin: 5px;
+  position: relative; /* 버튼을 상위 컨테이너에 상대적으로 위치시킵니다. */
+  z-index: 1; /* 버튼을 배경 위에 올리기 위해 z-index 설정 */
+}
+.register-button:hover {
+  cursor: pointer;    
+}
+.register-button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.register-background-box {
+  position: absolute;
+  bottom: 0;
+  right:0;
+  width: 100%;
+  height: 70%;
+  background: linear-gradient(135.96deg, #8B78FF 0%, #5451D6 101.74%);
+  opacity: 0.7;
+  filter: blur(18.5px);
+  border-radius: 53px;
+  z-index: -1; /* 배경을 버튼 뒤로 보내기 위해 z-index 설정 */
+} 
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #5451D6;
+  transition: background 0.4s; /* 체크 상태 변경 시 애니메이션 적용 */
+  vertical-align: middle; /* 수직 정렬 추가 */
+  margin: 15px;
+
+
+
+}
+input[type="checkbox"]::after {
+  background: #756EF3;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: white;
+
+}
+input[type="checkbox"]:checked {
+  background: #756EF3;
+  border-radius: 50%;
+  border-style: solid;
+
+}
+
+/* Register.css */
+
+/* ... (이전 스타일 코드) */
+
+.register-card {
+font-size: 20px;
+border: 1px solid #ccc;
+border-radius: 10px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin: 10px 0;
+background-color: #fff;
+width: 340px;
+height: 80px;
+
+}
+
+.card-label {
+display: flex;
+align-items: center;
+margin: 15px;
+width: 20%;
+}
+
+/* ... (이전 스타일 코드) */
