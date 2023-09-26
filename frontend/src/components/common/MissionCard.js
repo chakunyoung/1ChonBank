@@ -56,7 +56,7 @@ const MissionCard = () => {
             <div className='missioncard-listcontainer'>
                 {dataExist ? (
                     missionData.data.map((mission, index) => (
-                        <div key={index} className={mission.missionStatus === "시작전" ? 'missioncard-container-before' : 'missioncard-container-during'} onClick={() => handleMissionDetail(mission.missionId)}>
+                        <div key={index} className={mission.missionStatus === "진행중" ? 'missioncard-container-before' : 'missioncard-container-during'} onClick={() => handleMissionDetail(mission.missionId)}>
                             <h2 className='margin-box'>{mission.missionName}</h2>
                             <div className='margin-box'>
                                 <p>{mission.missionPoint}P</p>
