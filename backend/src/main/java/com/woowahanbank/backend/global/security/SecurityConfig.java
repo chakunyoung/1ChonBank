@@ -60,6 +60,10 @@ public class SecurityConfig {
 			.antMatchers("/api/banking/**").authenticated()
 			.antMatchers("/api/missions/**").authenticated()
 			.antMatchers("/api/quiz/**").authenticated()
+			.antMatchers("/api/financial").authenticated()
+			.antMatchers("/api/depositor").authenticated()
+			.antMatchers("/api/savingser").authenticated()
+			.antMatchers("/api/loaner").authenticated()
 			.antMatchers("/**").permitAll()
 			.and().oauth2Login().permitAll();
 		// 		.antMatchers("/api/users/login").permitAll() //로그인
