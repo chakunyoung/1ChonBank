@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import apis from "services/api/apis";
 import './familylist.css';
 import { FaWonSign } from "react-icons/fa";
+import CreateFamily from './CreateFamily';
 
 
 
 
-function ShowMyFamily() {
+function FamilyList() {
   const [familyData, setFamilyData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const familyName = useSelector((state) => state.family.familyName);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,6 +51,11 @@ function ShowMyFamily() {
   });
 
   return (
+    <div>
+    {familyName === null ? 
+    (<div>
+      <CreateFamily/>
+    </div>) : (
     <div className='familylist-container'>
       <ul>
       <div className='parent-text'>부모님</div>
@@ -75,18 +82,23 @@ function ShowMyFamily() {
         {children.map((child, index) => (
           <li key={index}>
             <div className="family-card">
-
-            <p>Nickname: {child.nickname}</p>
-            <p>Role: {child.role}</p>
-            <p>Money: {child.money}</p>
+              <div className='memberinfo'>
+                <div style={{padding:'5px'}}>
+                  이름 {child.nickname}
+                </div>
+                <div style={{padding:'5px', display: 'flex', alignItems: 'center'}}>
+                  보유자산 {child.money}&nbsp;<FaWonSign className='wonicon'/>
+                </div>
+              </div>
             </div>
 
           </li>
         ))}
         </div>
       </ul>
+    </div>)}
     </div>
   );
 }
 
-export default ShowMyFamily;
+export default FamilyList;
