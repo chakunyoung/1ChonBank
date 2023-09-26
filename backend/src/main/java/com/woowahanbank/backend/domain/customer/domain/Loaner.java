@@ -39,6 +39,7 @@ public class Loaner {
 	@Column(nullable = false, columnDefinition = "TINYINT(1)")
 	private boolean allowProduct;
 	private int money;
+	private String cardNumber;
 	@CreationTimestamp
 	private LocalDateTime date;
 
@@ -52,7 +53,7 @@ public class Loaner {
 		this.date = LocalDateTime.now();
 	}
 
-	public void depositMoney(int userMoney) {
-		this.money += userMoney;
+	public void makeCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 }

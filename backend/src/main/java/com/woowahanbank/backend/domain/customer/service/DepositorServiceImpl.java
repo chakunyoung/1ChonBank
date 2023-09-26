@@ -5,11 +5,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
@@ -23,9 +23,6 @@ import com.woowahanbank.backend.domain.point.service.PointServiceImpl;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
 import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
-import com.woowahanbank.backend.global.notification.dto.NotificationDto;
-import com.woowahanbank.backend.global.notification.event.NotificationEvent;
-import com.woowahanbank.backend.global.util.NotificationUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,7 +34,7 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 	private final FinancialProductRepository financialProductRepository;
 	private final UserRepository userRepository;
 	private final PointServiceImpl pointService;
-	private final ApplicationEventPublisher eventPublisher;
+	// private final ApplicationEventPublisher eventPublisher;
 	DecimalFormat formatter = new DecimalFormat("###,###");
 
 	@Override
@@ -53,15 +50,15 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 			.money(depositorDto.getMoney())
 			.build();
 		depositorRepository.save(depositor);
-		eventPublisher.publishEvent(new NotificationEvent(
-			this, parent.getNickname(),
-			NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + financialProduct.getId()),
-			NotificationDto.builder()
-				.title("예금 상품 승인 신청")
-				.body(user.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
-					+ "]을 ( " + formatter.format(depositorDto.getMoney()) + " )원 금액에 승인을 신청 했습니다.")
-				.build()
-		));
+		// eventPublisher.publishEvent(new NotificationEvent(
+		// 	this, parent.getNickname(),
+		// 	NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + financialProduct.getId()),
+		// 	NotificationDto.builder()
+		// 		.title("예금 상품 승인 신청")
+		// 		.body(user.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
+		// 			+ "]을 ( " + formatter.format(depositorDto.getMoney()) + " )원 금액에 승인을 신청 했습니다.")
+		// 		.build()
+		// ));
 	}
 
 	@Override
@@ -80,10 +77,12 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 		Depositor depositor = depositorRepository.findById(id).get();
 		FinancialProduct financialProduct = financialProductRepository.findById(depositor.getFinancialProduct().getId())
 			.get();
-		depositor.allow();
 		if (parent.getFamily().getId() != financialProduct.getFamily().getId())
 			throw new IllegalArgumentException("해당 가족이 아닙니다.");
+		depositor.allow();
 		depositor.changeDate();
+		String cardNum = makeCardNumber(financialProduct.getFamily().getId(), financialProduct.getId(), parent.getId());
+		depositor.makeCardNumber(cardNum);
 		ThreadPoolTaskScheduler tpts = new ThreadPoolTaskScheduler();
 		ThreadPoolTaskScheduler endS = new ThreadPoolTaskScheduler();
 		tpts.initialize();
@@ -115,15 +114,15 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 			endS.shutdown();
 		}, new CronTrigger("0 0 0 " + endDate));
 		depositorRepository.save(depositor);
-		eventPublisher.publishEvent(new NotificationEvent(
-			this, child.getNickname(),
-			NotificationUtil.clickUrl("http://localhost:3000/account"),
-			NotificationDto.builder()
-				.title("예금 상품 승인")
-				.body(parent.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
-					+ "] 을 승인했습니다.")
-				.build()
-		));
+		// eventPublisher.publishEvent(new NotificationEvent(
+		// 	this, child.getNickname(),
+		// 	NotificationUtil.clickUrl("http://localhost:3000/account"),
+		// 	NotificationDto.builder()
+		// 		.title("예금 상품 승인")
+		// 		.body(parent.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
+		// 			+ "] 을 승인했습니다.")
+		// 		.build()
+		// ));
 	}
 
 	@Override
@@ -134,15 +133,15 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 		if (parent.getFamily().getId() != financialProduct.getFamily().getId())
 			throw new IllegalArgumentException("해당 가족이 아닙니다.");
 		User child = userRepository.findById(depositor.getUser().getId()).get();
-		eventPublisher.publishEvent(new NotificationEvent(
-			this, child.getNickname(),
-			NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + id),
-			NotificationDto.builder()
-				.title("예금 상품 거절")
-				.body(parent.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
-					+ "] 을 거절했습니다.")
-				.build()
-		));
+		// eventPublisher.publishEvent(new NotificationEvent(
+		// 	this, child.getNickname(),
+		// 	NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + id),
+		// 	NotificationDto.builder()
+		// 		.title("예금 상품 거절")
+		// 		.body(parent.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
+		// 			+ "] 을 거절했습니다.")
+		// 		.build()
+		// ));
 		depositorRepository.deleteById(id);
 	}
 
@@ -155,6 +154,35 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 			res.add(changeToDto(list.get(i)));
 		}
 		return res;
+	}
+
+	private String makeCardNumber(Long familyId, Long productId, Integer parentId) {
+		Random random = new Random();
+		StringBuilder sb;
+		while (true) {
+			int num = 0;
+			int last = (int)(familyId % 10);
+			while (familyId >= 10) {
+				familyId /= 10;
+				num++;
+			}
+			sb = new StringBuilder();
+			sb.append(num + 1).append(familyId).append(last).append(productId % 10).append(parentId % 10).append(1);
+			int sum = num + 1 + (int)(familyId % 10) * 2 + (int)(productId % 10) + (parentId % 10) * 2 + 1;
+			for (int i = 0; i < 9; i++) {
+				int randNum = random.nextInt(10);
+				sb.append(randNum);
+				if (i % 2 == 0)
+					sum += randNum * 2;
+				else
+					sum += randNum;
+			}
+			sb.append(10 - (sum % 10));
+			Depositor depo = depositorRepository.findByCardNumber(sb.toString());
+			if (depo == null)
+				break;
+		}
+		return sb.toString();
 	}
 
 	public List<DepositorDto> getDepositorList(User user) {
@@ -170,6 +198,7 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 			.userId(depositor.getUser().getId())
 			.userNickname((depositor.getUser().getNickname()))
 			.money(depositor.getMoney())
+			.cardNumber(depositor.getCardNumber())
 			.date(depositor.getDate())
 			.financialProductId(financialProduct.getId())
 			.productName(financialProduct.getName())

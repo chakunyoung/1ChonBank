@@ -13,4 +13,6 @@ public interface SavingserRepository extends JpaRepository<Savingser, Long> {
 	List<Savingser> findAllByFinancialProduct_IdAndAllowProductIsFalseOrderByIdDesc(Long productId);
 
 	List<Savingser> findByUser(User user);
+
+	Savingser findByCardNumber(String cardNumber);
 }

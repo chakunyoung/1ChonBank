@@ -25,11 +25,11 @@ const FinanceList = () => {
     const nav = useNavigate();
     const family = useSelector((state) => state.family.familyName);
     const getListAll = () => {
-        // if (family === ''){
-        //     alert('가족을 먼저 생성하십시오.');
-        //     nav('/');
-        //     return;
-        // }
+        if (family === null){
+            alert('가족을 먼저 생성하십시오.');
+            nav('/createFamily');
+            return;
+        }
         dispatch(getProductList())
             .then((resultAction) => {
                 if (getProductList.fulfilled.match(resultAction)) {
