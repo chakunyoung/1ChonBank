@@ -3,7 +3,7 @@ import Cards from 'react-credit-cards-2';
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import './custom-card.scss'; // SCSS 파일 임포트
 
-const PaymentForm = ({ name, expiry, number }) => {
+const Card = ({ name, expiry, number }) => {
     const [state, setState] = useState({
       number: number || '9999999999999999',
       expiry: expiry || '09/23',
@@ -35,5 +35,5 @@ const PaymentForm = ({ name, expiry, number }) => {
     );
   };
   
-  export default PaymentForm;
+  export default Card;
   
