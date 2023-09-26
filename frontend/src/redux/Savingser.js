@@ -10,6 +10,7 @@ const initialState = {
         productName: '',
         grant: '',
         money: '',
+        cardNumber: '',
         date: '',
         regularMoney: '',
     },
