@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import "./Register.css";
 import char2 from "assets/char2x4.png";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 
 import apis from "services/api/apis";
 import { setUser } from "redux/Auth";
 
 const Register = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [nicknameError, setNicknameError] = useState(""); // State for nickname error message
   const user = useSelector((state) => state.auth.user);
@@ -58,7 +60,7 @@ const Register = () => {
         console.log(user);
         apis.post("/api/user/saveUser", user);
         alert("회원가입 성공");
-        window.location.href = "/mypage";
+        navigate("/mypage");
       } else {
         // 닉네임이 중복된 경우 또는 서버에서 다른 오류가 발생한 경우
         alert("닉네임 중복"); // 서버에서 반환된 메시지를 표시
