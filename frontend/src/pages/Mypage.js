@@ -12,13 +12,13 @@ import Circle from 'components/common/Circle';
 import HalfCircleRight from 'components/common/HarfCircleRight';
 import apis from 'services/api/apis';
 import { getFirebaseToken } from 'services/api/FirebaseAPI';
-import { setUser } from 'redux/Auth';
+import { setFirebaseToken, setUser } from 'redux/Auth';
 
 const Mypage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  const firebaseToken = useSelector((state) => state.auth.user.firebaseToken);
+  const firebaseToken = useSelector((state) => state.auth.firebaseToken);
 
   const checkQuiz = () => {
     if (user.quiz) alert("오늘은 이미 푸셨습니다.");
@@ -37,7 +37,7 @@ const Mypage = () => {
       if (firebaseToken === "" || firebaseToken === undefined) { 
         const token = await getFirebaseToken();
         if (token) {
-          dispatch(setUser({ ...user, firebaseToken: token })); 
+          dispatch(setFirebaseToken(token)); 
         }
       }
     };
