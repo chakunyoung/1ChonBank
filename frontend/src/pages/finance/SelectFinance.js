@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setProductType } from "redux/Finance";
+import Footer from "components/common/Footer"
 import './SelectFinance.css';
 
 const SelectFinance = () => {
@@ -68,8 +69,8 @@ const SelectFinance = () => {
         <button className="select-button" onClick={handleSelectProduct}>
           계속
         </button>
-        <div className="background-box"></div>
       </div>
+      <div className='selectfinance-footer'><Footer/></div>
     </div>
   );
 };
