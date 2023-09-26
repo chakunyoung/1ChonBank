@@ -31,7 +31,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
 @Slf4j
-@Api(tags ={"User API"})
+@Api(tags = {"User API"})
 public class UserController {
 
 	private final UserService userService;
