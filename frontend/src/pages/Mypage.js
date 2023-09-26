@@ -1,18 +1,16 @@
-
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BsBank, BsFillHousesFill } from "react-icons/bs";
-
 import { AiFillDollarCircle } from "react-icons/ai";
 import { TbTargetArrow } from "react-icons/tb";
 import { RiQuestionnaireFill } from "react-icons/ri";
 import Footer from "components/common/Footer";
-import Profile from "components/common/Profile"
+import Profile from "components/common/Profile";
 import './Mypage.css';
 import { useDispatch, useSelector } from 'react-redux';
 import Circle from 'components/common/Circle';
 import HalfCircleRight from 'components/common/HarfCircleRight';
-import apis from 'services/api/apis'
+import apis from 'services/api/apis';
 import { getFirebaseToken } from 'services/api/FirebaseAPI';
 import { setUser } from 'redux/Auth';
 
@@ -31,14 +29,12 @@ const Mypage = () => {
 
   const familyName = useSelector((state) => state.family.familyName);
   const handleCheckHaveFamily = () => {
-      navigate("/myFamily");
-    }
-
+    navigate("/myFamily");
   }
 
   useEffect(() => {
     const handleClick = async (event) => {
-      if (firebaseToken === "") { 
+      if (firebaseToken === "" || firebaseToken === undefined) { 
         const token = await getFirebaseToken();
         if (token) {
           dispatch(setUser({ ...user, firebaseToken: token })); 
@@ -117,4 +113,3 @@ const Mypage = () => {
 };
 
 export default Mypage;
-
