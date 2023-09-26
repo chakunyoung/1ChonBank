@@ -63,47 +63,51 @@ const Account = () => {
       <div className='account-profilecontainer'>
         <Profile />
       </div>
-        <Myaccount />
+      <Myaccount />
       <ul>
-      <li>보유 현금 : {user.money}</li>
-      <li>총 자산 : {(user.money + depMoney + savMoney - loaMoney)}</li>
-      <li>예금 자산 : {depMoney}</li>
-      <li>적금 자산 : {savMoney}</li>
-      <li>대출 자산 : {loaMoney}</li>
+        <li>보유 현금 : {user.money}</li>
+        <li>총 자산 : {(user.money + depMoney + savMoney - loaMoney)}</li>
+        <li>예금 자산 : {depMoney}</li>
+        <li>적금 자산 : {savMoney}</li>
+        <li>대출 자산 : {loaMoney}</li>
       </ul>
       <div>
       </div>
-      <div onClick={goToDetail}>
-        {depositors.length ? (
-          depositors.map((depositor, index) => (
+      {depositors.length ? (
+        depositors.map((depositor, index) => (
+          <div className='card-margin' onClick={goToDetail}>
             <Card
               key={index}
               name={depositor.productName}
               expiry={"2222"}
               number={depositor.cardNumber}
             />
-          ))
-        ) : (
-          <p>No depositors available</p>
-        )}
-      </div>
-      <div className='card-margin' onClick={goToDetail}>
-        {loaners.length ? (
-          loaners.map((loaner, index) => (
+          </div>
+
+        ))
+      ) : (
+        <p>등록한 예금이 없습니다.</p>
+      )}
+
+      {loaners.length ? (
+        loaners.map((loaner, index) => (
+          <div className='card-margin' onClick={goToDetail}>
             <Card
               key={index}
               name={loaner.productName}
               expiry={"2222"}
               number={loaner.cardNumber}
             />
-          ))
-        ) : (
-          <p>No depositors available</p>
-        )}
-      </div>
-      <div className='card-margin' onClick={goToDetail}>
-        {savings.length ? (
-          savings.map((saving, index) => (
+          </div>
+        ))
+      ) : (
+        <p>등록한 대출이 없습니다.</p>
+      )}
+
+
+      {savings.length ? (
+        savings.map((saving, index) => (
+          <div className='card-margin' onClick={goToDetail}>
             <Card
               key={index}
               name={saving.productName
@@ -111,11 +115,12 @@ const Account = () => {
               expiry={"2222"}
               number={saving.cardNumber}
             />
-          ))
-        ) : (
-          <p>No depositors available</p>
-        )}
-      </div>
+          </div>
+        ))
+      ) : (
+        <p>등록한 적금이 없습니다.</p>
+      )}
+
       <div className='account-footer'>
         <Footer />
       </div>
