@@ -6,22 +6,35 @@ import Myaccount from "components/common/Myaccount"
 import AccountDeatil from './AccountDetail';
 import './Account.css';
 import { useSelector } from 'react-redux';
-
+import Card from 'components/banking/Card'
 
 
 const Account = () => {
 
+  const navigate = useNavigate(); // React Router의 useNavigate 훅을 사용
+
+  const goToDetail = () => {
+    navigate("/accountDetail"); // AccountDetail 페이지로 이동
+  };
 
   return (
     <div className='account-container'>
       <div className='account-profilecontainer'>
-      <Profile/>
+        <Profile />
       </div>
       <div>
-        <Myaccount/>
+        <Myaccount />
       </div>
-      <Link to="/accountdetail">detail</Link>
-      <div className='account-footer'><Footer/></div>
+      <div className='card-margin' onClick={goToDetail}> {/* onClick 이벤트 추가 */}
+        <Card />
+      </div>
+      <div className='card-margin' onClick={goToDetail}> {/* onClick 이벤트 추가 */}
+        <Card />
+      </div>
+      <div className='account-footer'>
+        <Footer />
+      </div>
+
     </div>
   );
 };
