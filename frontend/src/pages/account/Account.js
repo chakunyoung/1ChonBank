@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import Card from 'components/banking/Card'
 import apis from 'services/api/apis';
 import { getDepositors, getLoaners, getSavings } from 'services/api/banking/bankingAPI';
+import Amchart from 'components/common/Amcharts'
 
 const Account = () => {
   const navigate = useNavigate();
@@ -124,7 +125,7 @@ const Account = () => {
       <div className='account-footer'>
         <Footer />
       </div>
-
+      <Amchart savings={user.money} depMoney={depMoney} loaMoney={loaMoney} savMoney={savMoney} />
     </div>
   );
 };
