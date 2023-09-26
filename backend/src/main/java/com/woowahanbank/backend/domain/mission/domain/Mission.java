@@ -37,7 +37,7 @@ public class Mission {
 	private Family familyId;
 
 	@ApiModelProperty(notes = "아이 닉네임")
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	private User childUser;
 
 	@ApiModelProperty(notes = "부모님 닉네임")
