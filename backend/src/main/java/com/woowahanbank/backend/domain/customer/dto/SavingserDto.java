@@ -19,6 +19,7 @@ public class SavingserDto {
 	private String productName;
 	private Boolean grant;
 	private int money;
+	private String cardNumber;
 	private LocalDateTime date;
 	private int regularMoney;
 }

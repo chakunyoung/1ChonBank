@@ -13,4 +13,6 @@ public interface LoanerRepository extends JpaRepository<Loaner, Long> {
 	List<Loaner> findAllByFinancialProduct_IdAndAllowProductIsFalseOrderByIdDesc(Long productId);
 
 	List<Loaner> findByUser(User user);
+
+	Loaner findByCardNumber(String str);
 }

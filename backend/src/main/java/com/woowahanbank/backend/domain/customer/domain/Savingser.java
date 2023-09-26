@@ -39,6 +39,7 @@ public class Savingser {
 	@Column(nullable = false, columnDefinition = "TINYINT(1)")
 	private boolean allowProduct;
 	private int money;
+	private String cardNumber;
 	@CreationTimestamp
 	private LocalDateTime date;
 	private int regularMoney;
@@ -55,5 +56,9 @@ public class Savingser {
 
 	public void depositMoney(int userMoney) {
 		this.money += userMoney;
+	}
+
+	public void makeCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 }

@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 import apis from "services/api/apis";
 import { useSelector } from "react-redux";
+import { async } from "q";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -19,15 +20,14 @@ const messaging = getMessaging(firebaseApp);
 
 export const getFirebaseToken = async () => {
   try {
-    const permission = await Notification.requestPermission();
-    if (permission === "granted") {
-      const token = await getToken(messaging);
-      console.log("FIREBASE - Token: ", token);
-      return token;
-    } else {
-      console.log("FIREBASE - get token failed");
-      return null;
-    }
+    Notification.requestPermission().then(async (permission) => {
+      if (permission === "granted") {
+        console.log("Notification permission granted.");
+        const token = await getToken(messaging);
+        console.log("FIREBASE - Token: ", token);
+        return token;
+      }
+    });
   } catch (err) {
     console.log("FIREBASE - Unable to get permission", err);
     return null;

@@ -13,4 +13,6 @@ public interface DepositorRepository extends JpaRepository<Depositor, Long> {
 	List<Depositor> findAllByFinancialProduct_IdAndAllowProductIsFalseOrderByIdDesc(Long productId);
 
 	List<Depositor> findByUser(User user);
+
+	Depositor findByCardNumber(String str);
 }
