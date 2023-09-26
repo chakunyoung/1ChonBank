@@ -95,9 +95,9 @@ const FinanceList = () => {
             <FinancelistSet products={products} dapplys={dapplys} sapplys={sapplys} lapplys={lapplys} viewType={viewType}></FinancelistSet>
             </div>
             <div>
-                {role === 'ROLE_PARENT' ? <Link to="/selectFinance"> {/*부모인지 판별 넣어야됨*/}
+                {role === 'ROLE_PARENT' ? <Link to="/selectFinance" style={{ textDecoration: 'none' }}> {/*부모인지 판별 넣어야됨*/}
                     <button className='make-product-button'>
-                    <span className="button-text">상품 추가</span>
+                    <span className="button-text">상품 만들기</span>
                         <IoIosAdd style={{ fontSize: '40px' }} />
                     </button>
                 </Link> : null}

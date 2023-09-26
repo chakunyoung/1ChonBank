@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { makeProduct, setName, setInfo, setPeriod, setRate } from "redux/Finance";
+import Footer from "components/common/Footer"
 import './MakeFinance.css';
 
 const SelectFinance = () => {
@@ -98,7 +99,7 @@ const SelectFinance = () => {
                 />
             </div>
             <div className='title-info-set'>
-                <label htmlFor="productRate">{productRateName} ( % )</label><br />
+                <label htmlFor="productRate">{productRateName}이자율 ( % )</label><br />
                 <input
                     id="productRate"
                     type="number"
@@ -121,8 +122,8 @@ const SelectFinance = () => {
                 <button className="make-button" onClick={handlemakeProduct}>
                     만들기
                 </button>
-                <div className="background-box"></div>
             </div>
+            <div className='selectfinance-footer'><Footer/></div>
         </div>
     );
 };

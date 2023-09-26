@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import apis from "services/api/apis";
+import './familylist.css';
+import { FaWonSign } from "react-icons/fa";
+
+
+
 
 function ShowMyFamily() {
   const [familyData, setFamilyData] = useState([]);
@@ -44,30 +49,41 @@ function ShowMyFamily() {
   });
 
   return (
-    <div>
-      <h1>가족 목록</h1>
+    <div className='familylist-container'>
       <ul>
-      <h2>부모</h2>
-      <hr/>
+      <div className='parent-text'>부모님</div>
+      <div className='underline'></div>
+      <div className='familylist-parent'>
         {parents.map((parent, index) => (
           <li key={index}>
-            <p>Nickname: {parent.nickname}</p>
-            <p>Role: {parent.role}</p>
-            <p>Money: {parent.money}</p>
-            &nbsp;
+            <div className="family-card">
+              <div className='memberinfo'>
+            <div style={{padding:'5px'}}>
+            이름 {parent.nickname}
+            </div>
+            <div style={{padding:'5px', display: 'flex', alignItems: 'center'}}>
+            보유자산 {parent.money}&nbsp;<FaWonSign className='wonicon'/>
+            </div>
+            </div>
+            </div>
           </li>
         ))}
-        {/* 부모와 자식을 구분하는 구분선 */}
-        <h2>아이</h2>
-        <hr/>
+        </div>
+        <div className='children-text'>자녀</div>
+        <div className='underline'></div>
+        <div className='familylist-children'>
         {children.map((child, index) => (
           <li key={index}>
+            <div className="family-card">
+
             <p>Nickname: {child.nickname}</p>
             <p>Role: {child.role}</p>
             <p>Money: {child.money}</p>
-            &nbsp;
+            </div>
+
           </li>
         ))}
+        </div>
       </ul>
     </div>
   );

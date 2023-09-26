@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFamilyName } from 'redux/Family';
 import apis from 'services/api/apis';
+import { MdModeEdit } from "react-icons/md";
+import { IoTrash } from "react-icons/io5";
+import { BsFillTrash3Fill } from "react-icons/bs";
+
+
+import "./familynamesetting.css"
+
 
 function ChangeFamilyName() {
 
@@ -45,13 +52,14 @@ function ChangeFamilyName() {
                         value={newFamilyName}
                         onChange={(e) => setNewFamilyName(e.target.value)}
                     />
-                    <button onClick={handleSaveFamilyName}>변경</button>
-                    <button onClick={handleCancelEdit}>취소</button>
+                    <button className='edit-button' onClick={handleSaveFamilyName}>수정</button>
+                    <button className='no-button' onClick={handleCancelEdit}>취소</button>
                 </div>
             ) : (
-                <div>
-                    <span>{familyName}</span>
-                    <button onClick={handleModifyFamilyName}>수정</button>
+                <div className='family-name-setting-container'>
+                    <span>{familyName}&nbsp;</span>
+                    <button onClick={handleModifyFamilyName} className='family-setting-button'><MdModeEdit/></button>
+                    <button onClick={handleModifyFamilyName} className='family-setting-button'><IoTrash/></button>
                 </div>
             )}
         </div>
