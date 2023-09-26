@@ -1,6 +1,7 @@
 package com.woowahanbank.backend.domain.quiz.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.woowahanbank.backend.domain.mission.domain.Mission;
 import com.woowahanbank.backend.domain.quiz.domain.Quiz;
 import com.woowahanbank.backend.domain.quiz.dto.GptMessage;
 import com.woowahanbank.backend.domain.quiz.dto.GptRequestDto;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -59,7 +61,7 @@ public class QuizService {
                             + "3번 선지: (3번 선지, 선지는 무조건 숫자로만)\n"
                             + "4번 선지: (4번 선지, 선지는 무조건 숫자로만)\n"
                             + "5번 선지: (5번 선지, 선지는 무조건 숫자로만)n"
-                            + "정답: (선지 번호만 출력해, 앞에 '정답: '를 꼭 넣어줘)\n"
+                            + "정답: (정답 선지 번호만 출력해, 앞에 '정답: '를 꼭 넣어줘)\n"
                             + "해설: (해설, 앞에 '해설: '를 꼭 넣어줘)\n")))
                     .build();
 
@@ -201,7 +203,7 @@ public class QuizService {
         }
     }
 
-    @Scheduled(cron = "0 0 12 * * ?") // 매일 정오 12시에 실행
+    @Scheduled(cron = "0 0/10 * * * ?") // 매일 정오 12시에 실행
     public void scheduleCreateQuestionsBasedOnIntro() {
         deleteQuiz();
         chatGpt(gptKey);
@@ -237,5 +239,12 @@ public class QuizService {
     public void solvedQuiz(User user) {
         user.solvedQuiz(1L);
         userRepository.save(user);
+    }
+
+    @Transactional
+    public void saveQuizPoint(User user, Long score) {
+        User updateUser = userRepository.findByUserId(user.getUserId()).orElseThrow(() -> new IllegalArgumentException("오류"));
+
+        updateUser.updatePoint(score);
     }
 }

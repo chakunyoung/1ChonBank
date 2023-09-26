@@ -31,11 +31,9 @@ const Mypage = () => {
 
   const familyName = useSelector((state) => state.family.familyName);
   const handleCheckHaveFamily = () => {
-    if (familyName === null) {
-      navigate("/createFamily");
-    } else {
       navigate("/myFamily");
     }
+
   }
 
   useEffect(() => {

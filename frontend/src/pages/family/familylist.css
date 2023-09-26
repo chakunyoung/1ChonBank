@@ -2,9 +2,14 @@
     width: 100%;
     display: flex;
     justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
-
+    overflow-y: scroll;
+    height: 70vh;
 }
-
+.familylist-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
 .family-card {
     width: 327px;
     height: 66px;
@@ -15,6 +20,7 @@
     align-items: center; /* 수직 가운데 정렬을 위해 추가 */
     border-radius: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px auto;
   }
 .memberinfo {
     font-weight: bold;
