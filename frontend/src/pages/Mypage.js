@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BsBank, BsFillHousesFill } from "react-icons/bs";
 
@@ -9,21 +9,22 @@ import { RiQuestionnaireFill } from "react-icons/ri";
 import Footer from "components/common/Footer";
 import Profile from "components/common/Profile"
 import './Mypage.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Circle from 'components/common/Circle';
 import HalfCircleRight from 'components/common/HarfCircleRight';
-
 import apis from 'services/api/apis'
-
+import { getFirebaseToken } from 'services/api/FirebaseAPI';
+import { setUser } from 'redux/Auth';
 
 const Mypage = () => {
-
-  const navigate= useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  
-  const checkQuiz = () =>{
-    if(user.quiz) alert("오늘은 이미 푸셨습니다.");
-    else{
+  const firebaseToken = useSelector((state) => state.auth.user.firebaseToken);
+
+  const checkQuiz = () => {
+    if (user.quiz) alert("오늘은 이미 푸셨습니다.");
+    else {
       navigate("/quiz");
     }
   }
@@ -35,8 +36,23 @@ const Mypage = () => {
     } else {
       navigate("/myFamily");
     }
-
   }
+
+  useEffect(() => {
+    const handleClick = async (event) => {
+      if (firebaseToken === "") { 
+        const token = await getFirebaseToken();
+        if (token) {
+          dispatch(setUser({ ...user, firebaseToken: token })); 
+        }
+      }
+    };
+
+    document.body.addEventListener('click', handleClick);
+    return () => {
+      document.body.removeEventListener('click', handleClick);
+    };
+  }, [firebaseToken]);
 
   const sendPinMoneyRequest = async () => {
     try {
@@ -45,7 +61,7 @@ const Mypage = () => {
         pinMoney: 10000,
         receiveTime: '2023-09-20', // 날짜 형식에 따라 변경
       });
-  
+
       if (response.status === 200) {
         console.log('요청 성공:', response.data);
         return response.data;
@@ -60,44 +76,44 @@ const Mypage = () => {
   };
 
   return (
-    <div className='MypageContainer'> 
+    <div className='MypageContainer'>
 
       <div className='mypage-profilecontainer'>
-      <Profile/>
+        <Profile />
       </div>
-      
+
       <div className="button-grid">
         <div className="row">
           <Link to="/account" className="button button-account">
-            <AiFillDollarCircle className='logo'/>
+            <AiFillDollarCircle className='logo' />
             <span>계좌정보</span>
           </Link>
           <div onClick={handleCheckHaveFamily} className="button button-family">
-            <BsFillHousesFill className='logo'/>
+            <BsFillHousesFill className='logo' />
             <span>가족</span>
           </div>
         </div>
         <div className="row">
           <Link to="/financial" className="button button-financial">
-            <BsBank className='logo'/>
+            <BsBank className='logo' />
             <span>금융상품</span>
           </Link>
           <Link to="/missionList" className="button button-mission">
-            <TbTargetArrow className='logo'/>
+            <TbTargetArrow className='logo' />
             <span>미션</span>
           </Link>
         </div>
         <div className="button button-quiz" style={{ width: 340, height: '70px' }} onClick={checkQuiz}>
-          <RiQuestionnaireFill className='logo'/>
+          <RiQuestionnaireFill className='logo' />
           <span>오늘의 퀴즈</span>
         </div>
 
         <div className="button button-quiz" style={{ width: 340, height: '70px' }} onClick={sendPinMoneyRequest}>
-          <RiQuestionnaireFill className='logo'/>
+          <RiQuestionnaireFill className='logo' />
           <span>test</span>
         </div>
       </div>
-      <div className='mypage-footer'><Footer/></div>
+      <div className='mypage-footer'><Footer /></div>
     </div>
   );
 };
