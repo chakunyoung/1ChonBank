@@ -1,0 +1,39 @@
+.myfamily-container {
+    height: 100vh;
+    max-width: 390px; /* 최대 너비를 390px로 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FAFAFA; /* 배경색 추가 */
+
+}
+.myfamily-footer {
+    position: absolute;
+    bottom: 0;
+}
+.family-productbutton,
+.family-missionbutton,
+.family-deletebutton{
+    margin: 5px;
+}
+.family-productbutton {
+    background-color: #AAF1CB; /* 상품 버튼의 배경색 */
+}
+
+.family-missionbutton {
+    background-color: #C2DEFF; /* 미션 버튼의 배경색 */
+}
+
+.family-deletebutton {
+    background-color: #FFB4AB;
+}
+
+.familymenu button {
+    border-radius: 16px; /* 원하는 값으로 조절합니다. */
+    border: none;
+    color: white;
+    width: 56px;
+    height: 21px;
+    cursor: pointer;
+}

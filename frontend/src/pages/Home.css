@@ -1,0 +1,143 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+Body {
+  background-color: #F5F5F5;
+  font-family: 'Pretendard-Regular';
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveLeftRight {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(20px);
+    /* 좌로 이동할 거리를 설정 */
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.Homecontainer {
+  height: 100vh;
+  max-width: 390px; /* 최대 너비를 390px로 설정 */
+  margin: 0 auto; /* 가운데 정렬 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #FAFAFA; /* 배경색 추가 */
+  /* 화면 높이와 같은 최소 높이 설정 */
+}
+
+.kakao-login-button {
+  font-family: 'Pretendard-Regular';
+  font-size: 25px;
+  color: #191919;
+  width: 340px;
+  height: 60px;
+  background-color: #FEE500;
+  border-radius: 16px;
+  border-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+  transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+}
+
+.kakao-login-button:hover,
+.google-login-button:hover {
+  cursor: pointer;
+  transform: scale(1.05); /* 마우스 오버 시 버튼 크기 확대 */
+}
+
+.kakao-icon {
+  width: 30px;
+}
+.google-icon{
+  width: 30px;
+}
+
+.char1-container {
+  position: relative;
+  display: inline-block;
+  animation: floatAnimation 0.5s infinite;
+}
+
+.char1-text {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.google-login-button {
+  background-color: white;
+  font-family: 'Pretendard-Regular';
+  font-size: 25px;
+  color: #191919;
+  width: 340px;
+  height: 60px;
+  border-radius: 16px;
+  border-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+  transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+
+}
+
+.Buttoncontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 1600px) {
+  .Homecontainer {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .Buttoncontainer {
+    flex-direction: column;
+    align-items: center;
+  }
+}

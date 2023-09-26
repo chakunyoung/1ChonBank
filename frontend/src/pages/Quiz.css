@@ -1,0 +1,77 @@
+  .QuizContainer{
+    height: 100vh;
+    max-width: 390px; /* 최대 너비를 390px로 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    background-color: #FAFAFA; /* 배경색 추가 */
+    position: relative; /* QuizContainer를 상대적인 위치로 설정합니다. */
+
+  }
+  .choiceContainer{
+    font-size: 20px;
+  }
+  .quizarea{
+      width: 300px;
+      height: 130px;
+      border-radius: 16px;
+      box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
+      /* 텍스트 중앙 정렬 */
+      display: flex;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .choicearea{
+      width: 300px;
+      height: 45px;
+      border-radius: 16px;
+      background-color: white;
+      box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+      cursor: pointer; /* 커서 스타일 설정 */
+      
+      
+    }
+  .choicearea:hover {
+    transform: scale(1.01); /* 마우스 오버 시 버튼 크기 확대 */
+  }
+
+  .quiz-choice {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .selectedBox {
+      background: linear-gradient(90deg, rgba(19, 63, 219, 0.3), rgba(183, 0, 77, 0.2));
+      color: white;
+    }
+
+    .quiz-submit {
+      width: 340px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center; /* 수평 가운데 정렬을 위해 추가 */  
+      font-size: 20px;
+      background: linear-gradient(45deg, rgba(19, 63, 219, 0.5), rgba(183, 0, 77, 0.4));
+      color: #FFFFFF; /* 흰색 텍스트 색상 */
+      padding: 10px 20px; /* 원하는 패딩 값 설정 */
+      border: none; /* 테두리 없음 */
+      cursor: pointer; /* 커서 스타일 설정 */
+      border-radius: 16px; /* 모서리 둥글게 설정 */
+    }
+    
+    .quiz-container {
+      position: absolute;
+      bottom: 0;
+    }
+    
+    
+    

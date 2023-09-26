@@ -1,9 +1,42 @@
-# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,visualstudiocode,intellij+all,yarn,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,visualstudiocode,intellij+all,yarn,node
+# backend ignore files
 
-### Intellij+all ###
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
-# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+.idea
+.gradle
+woowahan-bank-firebase-adminsdk-v0u7y-a045156f09.json
+application-secret.yml
+application-redis.yml
+backend/out
+backend/build/**
+.class
+backend/src/main/resources/firebase/woowahan-bank-firebase-adminsdk-v0u7y-a045156f09.json
+
+# frontend ignore files
+
+#firebase
+frontend/public/FirebaseConfig.js
+
+# dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
+
+# testing
+frontend/coverage
+
+# production
+frontend/build
+
+# misc
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
 
 # User-specific stuff
 .idea/**/workspace.xml

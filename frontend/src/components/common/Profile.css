@@ -1,0 +1,32 @@
+    .profile-container {
+        display: flex;
+        align-items: center;
+        justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+        font-size: 20px;
+    }
+    .image-area{
+        display: flex;
+        align-items: center;
+        justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+        width: 100px;
+        height: 100px;
+    }
+    .gradient-circle {
+        width: 66px; /* 부모 요소(image-area)의 100% 너비로 설정 */
+        height: 66px;
+        position: absolute;
+    }
+    
+    .profile-image {
+        width: 58px; /* 이미지를 부모 요소(부모 컨테이너)에 맞게 조절 */
+        border-radius: 50%; /* 이미지를 원형으로 만들기 */
+    }
+    
+    .text-container {
+        padding: 5px;
+    }
+    
+    .nickname {
+        font-weight: bold;
+    }
+    

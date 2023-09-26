@@ -1,0 +1,53 @@
+.missioncard-container-before {
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+    width: 330px;
+    height: 75px;
+    border-radius: 16px;
+    background-color: white;
+    position: relative;
+    font-size: 16px;
+    justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
+    margin-bottom: 20px;
+}
+
+.missioncard-container-during {
+  display: flex;
+  align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+  width: 330px;
+  height: 75px;
+  border-radius: 16px;
+  background-color: green;
+  position: relative;
+  font-size: 16px;
+  justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
+  margin-bottom: 20px;
+}
+
+
+.missioncard-container {
+  display: flex;
+  align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+  width: 330px;
+  height: 75px;
+  border-radius: 16px;
+  background-color: white;
+  position: relative;
+  font-size: 16px;
+  justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
+  margin-bottom: 20px;
+}
+.margin-box {
+  margin-left: 20px; /* 왼쪽 마진 추가 */
+  margin-right: 20px; /* 오른쪽 마진 추가 */
+}
+
+.missioncard-listcontainer {
+  height: 60vh;
+  overflow-y: scroll;
+}
+.missioncard-listcontainer::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}

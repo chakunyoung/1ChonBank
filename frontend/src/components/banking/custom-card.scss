@@ -1,0 +1,7 @@
+// custom-card.scss 파일을 먼저 import
+@import 'react-credit-cards-2/dist/lib/styles.scss';
+
+// 그 다음 커스텀 스타일 적용
+.rccs__card--unknown > div {
+    background: linear-gradient(25deg, #df2424, #760606) !important; // !important 를 추가하여 우선순위를 높임
+}
