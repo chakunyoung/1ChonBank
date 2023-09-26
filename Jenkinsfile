@@ -21,7 +21,7 @@ pipeline {
                         if [ ! -d "$HOME/.nvm" ]; then
                             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
                         fi
-                        source ~/.nvm/nvm.sh
+                        . "$HOME/.nvm/nvm.sh"
                         nvm install $NODE_VERSION
                         nvm use $NODE_VERSION
                     '''
@@ -33,11 +33,13 @@ pipeline {
             steps {
                 dir('frontend') {
                     script {
-                        sh "source ~/.nvm/nvm.sh"
-                        sh "nvm use $NODE_VERSION"
-                        sh "npm install -g npm@$NPM_VERSION"
-                        sh 'npm install'
-                        sh 'npm run build'
+                        sh '''
+                            . "$HOME/.nvm/nvm.sh"
+                            nvm use $NODE_VERSION
+                            npm install -g npm@$NPM_VERSION
+                            npm install
+                            npm run build
+                        '''
                         withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIAL_ID, usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
                             sh "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD"
                         }
