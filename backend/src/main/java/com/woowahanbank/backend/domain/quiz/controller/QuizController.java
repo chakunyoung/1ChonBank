@@ -2,14 +2,13 @@ package com.woowahanbank.backend.domain.quiz.controller;
 
 import java.util.Optional;
 
+import com.woowahanbank.backend.domain.quiz.dto.QuizPoint;
+import com.woowahanbank.backend.global.response.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.woowahanbank.backend.domain.quiz.domain.Quiz;
 import com.woowahanbank.backend.domain.quiz.service.QuizService;
@@ -39,6 +38,16 @@ public class QuizController {
 		quizService.makeQuiz();
 		return ResponseEntity.ok("Quiz 생성 요청이 수행되었습니다.");
 	}
+
+	@PutMapping("/updatePoint")
+	public ResponseEntity<?> updatePoint(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody QuizPoint quizPoint){
+		User user = customUserDetails.getUser();
+		Long point = Long.valueOf(quizPoint.getQuizPoint());
+		quizService.saveQuizPoint(user, point);
+		return BaseResponse.ok(HttpStatus.OK, "포인트 업데이트 됨");
+	}
+
+
 
 	@DeleteMapping("/deleteQuiz")
 	public ResponseEntity<String> deleteQuiz() {

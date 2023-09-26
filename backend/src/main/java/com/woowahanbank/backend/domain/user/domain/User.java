@@ -87,4 +87,8 @@ public class User {
 	public void solvedQuiz(Long quiz) {
 		this.quiz = quiz;
 	}
+
+	public void updatePoint(Long plusMoney) {
+		money +=plusMoney;
+	}
 }
