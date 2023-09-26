@@ -1,0 +1,48 @@
+.familylist-container {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+
+}
+
+.family-card {
+    width: 327px;
+    height: 66px;
+    background-color: white;
+    border: none;
+    padding: 10px;
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+.memberinfo {
+    font-weight: bold;
+}
+
+li::marker {
+    content: none; /* 마커를 없애는 스타일 */
+  }
+ul {
+    padding: 0; /* ul 요소의 패딩을 0으로 설정 */
+  }
+.parent-text {
+    font-size: 25px;
+    font-weight: bold;
+    border: none; /* 기본 가로줄 스타일 제거 */
+    border-bottom: 1px solid #000; /* 가로줄 추가 및 스타일 지정 */
+    margin: 19px auto;
+    width: 95%;
+  
+    
+}
+.children-text {
+    font-size: 25px;
+    font-weight: bold;
+    border: none; /* 기본 가로줄 스타일 제거 */
+    border-bottom: 1px solid #000; /* 가로줄 추가 및 스타일 지정 */
+    margin: 19px auto;
+    width: 95%;
+
+
+}

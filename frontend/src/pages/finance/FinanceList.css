@@ -36,9 +36,9 @@
     border: none;
     width: 330px;
     height: 60px;
-    text-decoration: none;
     transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
     color: white;
+    text-decoration: none; /* 밑줄 제거 */
 }
 .make-product-button:hover{
     cursor: pointer;

@@ -1,0 +1,16 @@
+.family-name-setting-container {
+    display: flex;
+    font-size: 20px;
+
+    justify-content: space-between;
+
+}
+.family-setting-button {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 수평 가운데 정렬을 추가합니다. */
+    color: #292D32;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+}

@@ -5,7 +5,11 @@ import { setDeleteFamily } from "redux/Family";
 import apis from "services/api/apis";
 import ChangeFamilyName from "./ChangeFamilyName";
 import ShowMyFamily from "./ShowMyFamily";
+import Profile from "components/common/Profile";
 import Footer from "components/common/Footer";
+import { MdGroupAdd, MdGroupOff } from "react-icons/md";
+import './myfamily.css';
+
 
 function MyFamily() {
 
@@ -70,14 +74,15 @@ function MyFamily() {
     };
 
     return (
-        <div>
+        <div className="myfamily-container">
+            <div><Profile/></div>
             <ChangeFamilyName />
-            <br />
-            <Link to="/financial">상품</Link>
-            <Link to="/mission">미션</Link>
-            <button onClick={handleDeleteFamily}>삭제</button>
-            <button onClick={handleAddFamilyMember}>추가</button>
-
+            <div className="familymenu">
+            <Link to="/financial"><button className="family-productbutton">상품</button></Link>
+            <Link to="/mission"><button className="family-missionbutton">미션</button></Link>
+            <button className="family-deletebutton" onClick={handleDeleteFamily}><MdGroupOff/>삭제</button>
+            <button className="family-invitation" onClick={handleAddFamilyMember}><MdGroupAdd/>초대</button>
+            </div>
             {isModalOpen && (
                 <div className="modal">
                     <div className="modal-content">
@@ -108,7 +113,9 @@ function MyFamily() {
                 </div>
             )}
             <ShowMyFamily />
-            <Footer/>
+            <div className='myfamily-footer'>
+        <Footer/>
+      </div>
         </div>
     )
 }
