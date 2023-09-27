@@ -22,7 +22,7 @@ const Card = ({ name, expiry, number }) => {
     };
   
     return (
-      <div>
+      <div className='card-margin'>
         <Cards
           number={state.number}
           expiry={state.expiry}

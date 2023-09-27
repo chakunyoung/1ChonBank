@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AiOutlineDown, AiOutlineNotification } from 'react-icons/ai';
+import { AiOutlineDown, AiOutlineUp, AiOutlineNotification } from 'react-icons/ai';
 import { getProductInfo } from "redux/Finance";
 import { makeDepositor, setDepositorFinancialProductId, getDepCustomer, setDepositorMoney } from "redux/Depositor";
 import { makeSavingser, setSavingserFinancialProductId, getSavCustomer, setSavingserRegularMoney } from "redux/Savingser";
@@ -10,6 +10,10 @@ import './FinanceDetail.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Footer from 'components/common/Footer';
 import ApplyList from 'components/finance/ApplyList';
+import Deposit from 'assets/deposit.svg';
+import Savings from 'assets/savings.svg';
+import Loan from 'assets/loan.svg';
+import Interest from 'assets/interest-rate.png'
 
 const FinanceDetail = () => {
     const [showDiv1, setShowDiv1] = useState(false);
@@ -192,14 +196,16 @@ const FinanceDetail = () => {
             <div className='product-detail-header'>
                 <div className='product-detail-name'>{finance.name}</div>
                 <div className='product-summary-infomation'>
-                    <img className='card-product-img' src={finance.productType === 'DEPOSIT' ? require('assets/deposit.jpg') : finance.productType === 'SAVINGS' ? require('assets/savings.jpg') : require('assets/loan.jpg')} alt="상품" />
+                    <img className='card-product-img' src={finance.productType === 'DEPOSIT' ? Deposit : finance.productType === 'SAVINGS' ? Savings : Loan} alt="상품" />
                     <div style={{ 'textAlign': 'center' }}>
-                        <div className='product-summary-rate'></div>
-                        <div>{finance.rate} % </div>
+                        <div className='product-summary-rate'>                        
+                        <div>{finance.rate}% </div>
+                        </div>
                     </div>
                     <div style={{ 'textAlign': 'center' }}>
-                        <div className='product-summary-period'></div>
-                        <div>{finance.period} 개월 </div>
+                        <div className='product-summary-period'>                        
+                        <div>{finance.period}개월 </div></div>
+
                     </div>
                 </div>
             </div>
@@ -223,12 +229,12 @@ const FinanceDetail = () => {
                         <div className='flex-row'>
                             <MdLabelOutline className='finance-detail-icon' />
                             <div className="text-label" style={{ width: '40%' }}>계약 기간 :{'    '}</div>
-                            <div className="text-label" style={{ width: '46%' }}>{finance.period} 개월</div>
+                            <div className="text-label" style={{ width: '46%' }}>{finance.period}개월</div>
                         </div>
                         <div className='flex-row'>
                             <   MdLabelOutline className='finance-detail-icon' />
                             <div className="text-label" style={{ width: '40%' }}>상품 {finance.productType === 'LOAN'? "이자":"이율"} :{'    '}</div>
-                            <div className="text-label" style={{ width: '46%' }}>{finance.rate} %</div>
+                            <div className="text-label" style={{ width: '46%' }}>{finance.rate}%</div>
                         </div>
                     </div>
                 )}

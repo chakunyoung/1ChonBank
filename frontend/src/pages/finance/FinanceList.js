@@ -13,7 +13,7 @@ import Profile from "components/common/Profile"
 
 
 const FinanceList = () => {
-    
+
     const [products, setProducts] = useState([]);
     const [viewType, setViewType] = useState('');
     const [test, setTest] = useState(0);
@@ -25,11 +25,11 @@ const FinanceList = () => {
     const nav = useNavigate();
     const family = useSelector((state) => state.family.familyName);
     const getListAll = () => {
-        // if (family === ''){
-        //     alert('가족을 먼저 생성하십시오.');
-        //     nav('/');
-        //     return;
-        // }
+        if (family === null) {
+            alert('가족을 먼저 생성하십시오.');
+            nav('/familyList');
+            return;
+        }
         dispatch(getProductList())
             .then((resultAction) => {
                 if (getProductList.fulfilled.match(resultAction)) {
@@ -90,19 +90,19 @@ const FinanceList = () => {
     };
     return (
         <div className='finance-list-container'>
-            <div><Profile/></div>
+            <div><Profile /></div>
             <div>
-            <FinancelistSet products={products} dapplys={dapplys} sapplys={sapplys} lapplys={lapplys} viewType={viewType}></FinancelistSet>
+                <FinancelistSet products={products} dapplys={dapplys} sapplys={sapplys} lapplys={lapplys} viewType={viewType}></FinancelistSet>
             </div>
             <div>
                 {role === 'ROLE_PARENT' ? <Link to="/selectFinance" style={{ textDecoration: 'none' }}> {/*부모인지 판별 넣어야됨*/}
                     <button className='make-product-button'>
-                    <span className="button-text">상품 만들기</span>
+                        <span className="button-text">상품 만들기</span>
                         <IoIosAdd style={{ fontSize: '40px' }} />
                     </button>
                 </Link> : null}
-                </div>
-        <div className='finance-list-footer'><Footer/></div>
+            </div>
+            <div className='finance-list-footer'><Footer /></div>
         </div>
     );
 };

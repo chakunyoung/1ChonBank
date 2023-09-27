@@ -83,7 +83,9 @@ const AccountDeatil = () => {
                     </div>
                 </div>
             )}
+            <div className='accountdetail-footer'>
             <Footer/>
+            </div>
 
         </div>
     );

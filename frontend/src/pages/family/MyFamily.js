@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { setDeleteFamily } from "redux/Family";
 import apis from "services/api/apis";
 import ChangeFamilyName from "./ChangeFamilyName";
-import ShowMyFamily from "./ShowMyFamily";
+import FamilyList from "./FamilyList";
 import Profile from "components/common/Profile";
 import Footer from "components/common/Footer";
 import { MdGroupAdd, MdGroupOff } from "react-icons/md";
@@ -112,7 +112,7 @@ function MyFamily() {
                     </div>
                 </div>
             )}
-            <ShowMyFamily />
+            <FamilyList />
             <div className='myfamily-footer'>
         <Footer/>
       </div>

@@ -3,8 +3,6 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIAL_ID = 'dockerhub-at'
-        NODE_VERSION = '16'
-        NPM_VERSION = '8'
     }
 
     stages {
@@ -14,29 +12,11 @@ pipeline {
             }
         }
 
-        stage('Setup NVM and Node') {
-            steps {
-                script {
-                    sh '''
-                        if [ ! -d "$HOME/.nvm" ]; then
-                            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-                        fi
-                        . "$HOME/.nvm/nvm.sh"
-                        nvm install $NODE_VERSION
-                        nvm use $NODE_VERSION
-                    '''
-                }
-            }
-        }
-
         stage('Build and Push Frontend') {
             steps {
                 dir('frontend') {
                     script {
                         sh '''
-                            . "$HOME/.nvm/nvm.sh"
-                            nvm use $NODE_VERSION
-                            npm install -g npm@$NPM_VERSION
                             npm install
                             npm run build
                         '''

@@ -19,5 +19,6 @@ public class LoanerDto {
 	private String productName;
 	private Boolean grant;
 	private int money;
+	private String cardNumber;
 	private LocalDateTime date;
 }

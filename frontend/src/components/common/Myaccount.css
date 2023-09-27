@@ -1,13 +1,15 @@
 .myaccount-container {
     display: flex;
     align-items: center; /* 수직 가운데 정렬을 위해 추가 */
-    width: 330px;
-    height: 75px;
+    width: 327px;
+    height: 65px;
     border-radius: 16px;
     background-color: white;
     position: relative;
     font-size: 16px;
     justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
 
 }
 .myaccount-total,
