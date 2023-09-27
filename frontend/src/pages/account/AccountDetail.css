@@ -26,12 +26,13 @@
 
 
 .deposit-withdrawal-button-div {
-    position: relative;
-    width: 20.4375rem;
+    /* position: relative; */
+    
+    width: 100%;
     height: 4.9375rem;
     display: flex;
     justify-content: space-between;
-    padding: 1.3rem;
+    background: linear-gradient(45deg, #75C5A8, #6BAED6); 
 }
 
 .btn {
@@ -113,4 +114,8 @@
 .accountdetail-footer {
     position: absolute;
     bottom: 0;
+}
+
+.accountdetail-card {
+    margin-bottom: 30px; /* Adjust this value to your preference */
 }
