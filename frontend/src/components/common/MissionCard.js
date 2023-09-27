@@ -6,11 +6,11 @@ import { setMission } from 'redux/Mission';
 import { useNavigate } from 'react-router-dom';
 
 const MissionCard = () => {
-    const [dataExist, setDataExist] = useState(false); 
-    const [missionData, setMissionData] = useState([]); 
+    const [dataExist, setDataExist] = useState(false);
     const dispatch = useDispatch();
     const userType = useSelector((state) => state.auth.user.roles);
     const navigate = useNavigate(); // useNavigate 훅을 사용하여 페이지 이동을 처리
+    const mission = useSelector((state)=>state.mission.mission)
 
     useEffect(() => {
         const fetchMissions = async () => {
@@ -20,8 +20,9 @@ const MissionCard = () => {
                     const missionData = response.data;
                     console.log(missionData);
                     dispatch(setMission(missionData));
-                    setDataExist(true); 
-                    setMissionData(missionData);
+                    if (missionData !== null) {
+                        setDataExist(true);
+                    }
                     console.log(missionData);
                 } catch (error) {
                     console.error('미션 정보를 가져오는 데 실패했습니다. ', error);
@@ -32,16 +33,17 @@ const MissionCard = () => {
                     const missionData = response.data;
                     console.log(missionData);
                     dispatch(setMission(missionData));
-                    setDataExist(true); // 데이터가 로드됐음을 표시
-                    setMissionData(missionData);
+                    if (missionData !== null) {
+                        setDataExist(true);
+                    } // 데이터가 로드됐음을 표시
                 } catch (error) {
                     console.error('미션 정보를 가져오는 데 실패했습니다. ', error);
                 }
             }
         };
-
+    
         fetchMissions(); // useEffect 내부에서 호출
-
+    
     }, [dispatch, userType]);
 
     // 미션 디테일 페이지로 이동하는 함수
@@ -55,8 +57,18 @@ const MissionCard = () => {
         <div>
             <div className='missioncard-listcontainer'>
                 {dataExist ? (
-                    missionData.data.map((mission, index) => (
-                        <div key={index} className={mission.missionStatus === "진행중" ? 'missioncard-container-before' : 'missioncard-container-during'} onClick={() => handleMissionDetail(mission.missionId)}>
+                    mission.data.map((mission, index) => (
+                        <div key={index}
+                            className={
+                                mission.missionStatus === "진행중"
+                                    ? "missioncard-container-before"
+                                    : mission.missionStatus === "완료"
+                                        ? "missioncard-container-during"
+                                        : mission.missionStatus === "거절"
+                                            ? "missioncard-container-rejected"
+                                            : ""
+                            }
+                            onClick={() => handleMissionDetail(mission.missionId)}>
                             <h2 className='margin-box'>{mission.missionName}</h2>
                             <div className='margin-box'>
                                 <p>{mission.missionPoint}P</p>

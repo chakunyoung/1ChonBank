@@ -17,7 +17,20 @@
   width: 330px;
   height: 75px;
   border-radius: 16px;
-  background-color: green;
+  background-color: #77DD77;
+  position: relative;
+  font-size: 16px;
+  justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
+  margin-bottom: 20px;
+}
+
+.missioncard-container-rejected {
+  display: flex;
+  align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+  width: 330px;
+  height: 75px;
+  border-radius: 16px;
+  background-color: #FF6B6B;
   position: relative;
   font-size: 16px;
   justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
