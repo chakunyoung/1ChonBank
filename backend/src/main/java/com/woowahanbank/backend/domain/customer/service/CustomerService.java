@@ -15,4 +15,8 @@ public interface CustomerService<T> {
 	void refuse(Long id, User parent);
 
 	List<T> getDisallowProducts(Long productId);
+
+	void calculateRates();
+
+	void removeProduct();
 }
