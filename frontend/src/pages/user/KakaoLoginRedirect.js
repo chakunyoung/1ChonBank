@@ -69,18 +69,18 @@ const KakaoLoginRedirect = () => {
             return userData;
           })
           .then(async (userData) => {
-            const firebaseToken = await getFirebaseToken();
-            if (firebaseToken) {
-              dispatch(setFirebaseToken(firebaseToken));
-              console.log("FIREBASE - token updated successfully");
-            }
+            // const firebaseToken = await getFirebaseToken();
+            // if (firebaseToken) {
+            //   dispatch(setFirebaseToken(firebaseToken));
+            //   console.log("FIREBASE - token updated successfully");
+            // }
 
-            if (userData.nickname && data.token) {
-              await sendWebPushInfomation(userData.nickname, data.token);
-              console.log(
-                "FIREBASE - send backend firebase token successfully"
-              );
-            }
+            // if (userData.nickname && data.token) {
+            //   await sendWebPushInfomation(userData.nickname, data.token);
+            //   console.log(
+            //     "FIREBASE - send backend firebase token successfully"
+            //   );
+            // }
           })
           .catch((error) => {
             console.error("API 오류:", error);

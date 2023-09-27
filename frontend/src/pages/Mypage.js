@@ -20,43 +20,37 @@ const Mypage = () => {
   const user = useSelector((state) => state.auth.user);
   const firebaseToken = useSelector((state) => state.auth.firebaseToken);
 
-  const checkQuiz = () => {
+  const checkToken = async () => {
+    if (firebaseToken === "" || firebaseToken === undefined) { 
+      const token = await getFirebaseToken();
+      if (token) {
+        dispatch(setFirebaseToken(token)); 
+        await sendWebPushInfomation(user.nickname, token);
+        console.log("백에 토큰 정보 제공");
+      }
+    }
+  };
+
+  const checkQuiz = async () => {
+    await checkToken();
     if (user.quiz) alert("오늘은 이미 푸셨습니다.");
     else {
       navigate("/quiz");
     }
   }
 
-  const familyName = useSelector((state) => state.family.familyName);
-  const handleCheckHaveFamily = () => {
+  const handleCheckHaveFamily = async () => {
+    await checkToken();
     navigate("/myFamily");
   }
 
-  useEffect(() => {
-    const handleClick = async (event) => {
-      if (firebaseToken === "" || firebaseToken === undefined) { 
-        const token = await getFirebaseToken();
-        if (token) {
-          dispatch(setFirebaseToken(token)); 
-        }
-      }
-
-      await sendWebPushInfomation(user.nickname, firebaseToken);
-      console.log("백에 토큰 정보 제공");
-    };
-
-    document.body.addEventListener('click', handleClick);
-    return () => {
-      document.body.removeEventListener('click', handleClick);
-    };
-  }, [firebaseToken]);
-
   const sendPinMoneyRequest = async () => {
+    await checkToken();
     try {
       const response = await apis.post('/api/banking/pinmoney', {
         childNickname: user.nickname,
         pinMoney: 10000,
-        receiveTime: '2023-09-20', // 날짜 형식에 따라 변경
+        receiveTime: '2023-09-20',
       });
 
       if (response.status === 200) {
@@ -74,21 +68,19 @@ const Mypage = () => {
 
   return (
     <div className='MypageContainer'>
-
       <div className='mypage-profilecontainer'>
         <Profile />
       </div>
-
       <div className="button-grid">
         <div className="row">
           <Link to="/account" className="button button-account">
             <AiFillDollarCircle className='logo' />
             <span>계좌정보</span>
           </Link>
-          <div onClick={handleCheckHaveFamily} className="button button-family">
+          <Link to="/myFamily" onClick={handleCheckHaveFamily} className="button button-family">
             <BsFillHousesFill className='logo' />
             <span>가족</span>
-          </div>
+          </Link>
         </div>
         <div className="row">
           <Link to="/financial" className="button button-financial">
@@ -104,7 +96,6 @@ const Mypage = () => {
           <RiQuestionnaireFill className='logo' />
           <span>오늘의 퀴즈</span>
         </div>
-
         <div className="button button-quiz" style={{ width: 340, height: '70px' }} onClick={sendPinMoneyRequest}>
           <RiQuestionnaireFill className='logo' />
           <span>test</span>
