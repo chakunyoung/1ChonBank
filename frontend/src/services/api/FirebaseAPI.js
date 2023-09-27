@@ -35,6 +35,7 @@ export const getFirebaseToken = async () => {
 
 
 export const sendWebPushInfomation = async (nickname, token) => {
+  console.log(nickname, token);
   try {
     if (token) {
       // 2. 백엔드에 웹 푸시 알림 요청 보내기

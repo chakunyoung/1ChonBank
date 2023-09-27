@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Circle from 'components/common/Circle';
 import HalfCircleRight from 'components/common/HarfCircleRight';
 import apis from 'services/api/apis';
-import { getFirebaseToken } from 'services/api/FirebaseAPI';
+import { getFirebaseToken, sendWebPushInfomation } from 'services/api/FirebaseAPI';
 import { setFirebaseToken, setUser } from 'redux/Auth';
 
 const Mypage = () => {
@@ -40,6 +40,9 @@ const Mypage = () => {
           dispatch(setFirebaseToken(token)); 
         }
       }
+
+      await sendWebPushInfomation(user.nickname, firebaseToken);
+      console.log("백에 토큰 정보 제공");
     };
 
     document.body.addEventListener('click', handleClick);
