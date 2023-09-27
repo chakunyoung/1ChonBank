@@ -1,0 +1,19 @@
+.charactercard-container {
+    display: flex;
+    margin: 20px auto;
+    }
+  
+.left-button,
+.right-button{
+    border: none;
+    background-color: transparent;
+    font-size: 45px;
+}
+
+  .charctercard-imagearea {
+    width: 250px;
+    height: 250px;
+  }
+
+  
+  
