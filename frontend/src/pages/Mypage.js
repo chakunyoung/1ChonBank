@@ -73,7 +73,7 @@ const Mypage = () => {
       </div>
       <div className="button-grid">
         <div className="row">
-          <Link to="/account" className="button button-account">
+          <Link to="/account" onClick={checkToken}  className="button button-account">
             <AiFillDollarCircle className='logo' />
             <span>계좌정보</span>
           </Link>
@@ -83,11 +83,11 @@ const Mypage = () => {
           </Link>
         </div>
         <div className="row">
-          <Link to="/financial" className="button button-financial">
+          <Link to="/financial" onClick={checkToken}  className="button button-financial">
             <BsBank className='logo' />
             <span>금융상품</span>
           </Link>
-          <Link to="/missionList" className="button button-mission">
+          <Link to="/missionList" onClick={checkToken}  className="button button-mission">
             <TbTargetArrow className='logo' />
             <span>미션</span>
           </Link>
