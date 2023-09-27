@@ -21,4 +21,5 @@ public class LoanerDto {
 	private int money;
 	private String cardNumber;
 	private LocalDateTime date;
+	private String expiry;
 }
