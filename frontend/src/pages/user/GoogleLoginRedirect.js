@@ -56,7 +56,7 @@ function GoogleLoginRedirect() {
         nickname,
         token
       );
-      await performFirebaseTokenTask(userData, dispatch);
+      //await performFirebaseTokenTask(userData, dispatch);
     } catch (error) {
       console.error("구글 로그인 에러:", error);
       navigate("/");
