@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import "./CharacterCard.css";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 
@@ -58,6 +61,7 @@ function CharacterCard() {
       return (prevIndex + 1) % characters.length;
     });
   };
+  
 
   return (
     <div className="charactercard-container">

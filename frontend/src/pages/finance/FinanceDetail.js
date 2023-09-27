@@ -13,6 +13,8 @@ import ApplyList from 'components/finance/ApplyList';
 import Deposit from 'assets/deposit.svg';
 import Savings from 'assets/savings.svg';
 import Loan from 'assets/loan.svg';
+import { FaWonSign } from "react-icons/fa";
+
 import Interest from 'assets/interest-rate.png'
 
 const FinanceDetail = () => {
@@ -32,6 +34,44 @@ const FinanceDetail = () => {
     const role = useSelector((state) => state.auth.user.roles);
     const params = useParams();
     const [applys, setApplys] = useState([]);
+    const [agreements, setAgreements] = useState([false, false, false]); // 각 약관에 대한 동의 상태
+    
+    const toggleAgreement = (index) => {
+        const newAgreements = [...agreements];
+        newAgreements[index] = !newAgreements[index];
+        setAgreements(newAgreements);
+      };
+    const isAllAgreed = agreements.every((agreed) => agreed);
+    const apply = () => {
+        console.log(money)
+        if (finance.productType === 'SAVINGS' && money < 1000) {
+            setErrorMessage('금액이 너무 적습니다.');
+            setShowDiv4(true);
+            return;
+        }
+        if (isAllAgreed) {
+          // 모든 약관에 동의한 경우에만 처리
+          console.log('신청 처리');
+          switch (finance.productType) {
+            case 'DEPOSIT':
+                makeD()
+                break;
+            case 'SAVINGS':
+                makeS();
+                break;
+            case 'LOAN':
+                makeL();
+                break;
+            default:
+                break;
+        }
+        } else {
+          // 동의하지 않은 약관이 있는 경우
+          setErrorMessage('약관에 모두 동의해야 합니다.');
+          console.log('약관에 동의해야 합니다.');
+        }
+      };
+  
     const info = {
         'DEPOSIT': '예금은 금융 기관에 돈을 보관하는 금융 제품으로, 안전하게 자금을 보호하고 미래에 사용할 수 있도록 합니다. 예금은 이자를 얻을 수 있고, 금융 기관은 이러한 예금을 활용하여 대출을 제공하며 경제에 기여합니다. 예금은 금융 계획과 금전 관리에서 중요한 역할을 합니다.',
         'SAVINGS': '적금은 정기적으로 일정 금액을 저축하는 금융 상품으로, 목표 금액을 달성하거나 일정 기간 후에 원금과 이자를 받을 수 있습니다. 이는 금전 관리와 재무 목표 달성을 위한 효과적인 방법으로 사용되며, 안정적인 이자 수입을 제공하여 금융 안전성을 높입니다. 적금은 금융 계획과 금전 관리에서 중요한 역할을 합니다.',
@@ -107,35 +147,7 @@ const FinanceDetail = () => {
         });
     }
     useEffect(setBase, []);
-    const apply = () => {
-        console.log(money)
-        if (finance.productType === 'SAVINGS' && money < 1000) {
-            setErrorMessage('금액이 너무 적습니다.');
-            setShowDiv4(true);
-            return;
-        }
-        if (agreePart1 && agreePart2 && agreePart3) {
-            console.log('감사합니다. 호갱님');
-            setErrorMessage('');
-            switch (finance.productType) {
-                case 'DEPOSIT':
-                    makeD()
-                    break;
-                case 'SAVINGS':
-                    makeS();
-                    break;
-                case 'LOAN':
-                    makeL();
-                    break;
-                default:
-                    break;
-            }
 
-        } else {
-            setErrorMessage('약관의 동의해라 이 자식아!');
-            console.log('약관의 동의해라 이 자식아!');
-        }
-    };
     const makeD = () => {
         dispatch(makeDepositor(depositor))
             .then((resultAction) => {
@@ -213,7 +225,15 @@ const FinanceDetail = () => {
                 <div className='product-space-between'>
                     <span className='option-title'>상품 안내</span>
                     <div className='option-buttons'>
-                        {role === 'ROLE_PARENT' ? null : agreePart1 ? <span className='disagree-button' onClick={() => setAgreePart1(!agreePart1)}>동의</span> : <span className='agree-button' onClick={() => setAgreePart1(!agreePart1)}>동의</span>}
+                    {role === 'ROLE_PARENT' ? null :(<>
+                    <label className='agreementask'>이용약관에 동의합니다.</label>
+                    <input
+                            type="checkbox"
+                            className="agreement-checkbox" 
+                            checked={agreements[0]}
+                            onChange={() => toggleAgreement(0)}
+                            />
+                          </>)}
                         <span className='show-info-button' onClick={() => setShowDiv1(!showDiv1)}>
                             <AiOutlineDown />
                         </span>
@@ -241,7 +261,16 @@ const FinanceDetail = () => {
                 <div className='product-space-between'>
                     <span className='option-title'>가입 정보</span>
                     <div className='option-buttons'>
-                        {role === 'ROLE_PARENT' ? null : agreePart2 ? <span className='disagree-button' onClick={() => setAgreePart2(!agreePart2)}>동의</span> : <span className='agree-button' onClick={() => setAgreePart2(!agreePart2)}>동의</span>}
+                    {role === 'ROLE_PARENT' ? null :(<>
+                    <label className='agreementask'>이용약관에 동의합니다.</label>
+                    <input
+                            type="checkbox"
+                            className="agreement-checkbox" 
+
+                            checked={agreements[1]}
+                            onChange={() => toggleAgreement(1)}
+                            />
+                            </>)}
                         <span className='show-info-button' onClick={() => setShowDiv2(!showDiv2)}>
                             <AiOutlineDown />
                         </span>
@@ -258,7 +287,16 @@ const FinanceDetail = () => {
                 <div className='product-space-between'>
                     <span className='option-title'>{productName[finance.productType]} 설명서 확인</span>
                     <div className='option-buttons'>
-                        {role === 'ROLE_PARENT' ? null : agreePart3 ? <span className='disagree-button' onClick={() => setAgreePart3(!agreePart3)}>동의</span> : <span className='agree-button' onClick={() => setAgreePart3(!agreePart3)}>동의</span>}
+                    {role === 'ROLE_PARENT' ? null :(<>
+                    <label className='agreementask'>이용약관에 동의합니다.</label>
+                    <input
+                            type="checkbox"
+                            className="agreement-checkbox" 
+
+                            checked={agreements[2]}
+                            onChange={() => toggleAgreement(2)}
+                            />
+                            </>)}
                         <span className='show-info-button' onClick={() => setShowDiv3(!showDiv3)}>
                             <AiOutlineDown />
                         </span>
@@ -280,14 +318,22 @@ const FinanceDetail = () => {
                 }
                 {showDiv4 && (
                     <div className='option-input'>
-                        <div>{(finance.productType === 'DEPOSIT'? "금액" : finance.productType === 'LOAN'? "빌릴 금액":"정기 금액")}</div>
-                        <input type="number" value={money} onChange={handleRateChange}></input>
-                    </div>
+                    <label className='custom-label'>
+                      {(finance.productType === 'DEPOSIT'? "납입 금액" : finance.productType === 'LOAN'? "대출 신청 금액":"(매월)납입 금액")}
+                    </label>
+                    <input
+                      type="number"
+                      className='finance-inputfield custom-cursor'
+                      value={money}
+                      onChange={handleRateChange}
+                    />
+                    <FaWonSign />
+                  </div>
                 )}
                 <div className='errorMessage'>{errorMessage}</div>
             </div>
 
-            {role === 'ROLE_PARENT' ? null : <div className='product-apply-button' onClick={apply}>신청 하기</div>}
+            {role === 'ROLE_PARENT' ? null : <div className='product-apply-button' onClick={apply}>상품 신청</div>}
             {role === 'ROLE_PARENT' ? <ApplyList applys={applys} type={finance.productType} /> : null}
             <div className='finance-detail-footer'>
                 <Footer />
