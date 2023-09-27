@@ -1,6 +1,7 @@
 package com.woowahanbank.backend.domain.customer.domain;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,6 +43,8 @@ public class Savingser {
 	private String cardNumber;
 	@CreationTimestamp
 	private LocalDateTime date;
+	@CreationTimestamp
+	private LocalDateTime expiry;
 	private int regularMoney;
 
 	public void allow() {
@@ -50,8 +53,9 @@ public class Savingser {
 		this.allowProduct = true;
 	}
 
-	public void changeDate() {
+	public void changeDate(int period) {
 		this.date = LocalDateTime.now();
+		this.expiry = this.date.plus(period, ChronoUnit.MONTHS);
 	}
 
 	public void depositMoney(int userMoney) {

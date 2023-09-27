@@ -21,5 +21,6 @@ public class SavingserDto {
 	private int money;
 	private String cardNumber;
 	private LocalDateTime date;
+	private String expiry;
 	private int regularMoney;
 }

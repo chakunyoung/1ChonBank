@@ -11,6 +11,7 @@ const initialState = {
         money: '',
         cardNumber: '',
         date: '',
+        expiry: '',
     },
 };
 
