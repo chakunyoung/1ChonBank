@@ -37,7 +37,7 @@ const SelectFinance = () => {
         </label>
         <input
           type="checkbox"
-          className="custom-checkbox"
+          className="selectfinance-checkbox"
           checked={finance === "DEPOSIT"}
           onChange={() => handleCheckboxChange("DEPOSIT")}
         />
@@ -49,6 +49,7 @@ const SelectFinance = () => {
         </label>
         <input
           type="checkbox"
+          className="selectfinance-checkbox"
           checked={finance === "SAVINGS"}
           onChange={() => handleCheckboxChange("SAVINGS")}
         />
@@ -60,6 +61,7 @@ const SelectFinance = () => {
         </label>
         <input
           type="checkbox"
+          className="selectfinance-checkbox"
           checked={finance === "LOAN"}
           onChange={() => handleCheckboxChange("LOAN")}
         />

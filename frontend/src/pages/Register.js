@@ -82,7 +82,7 @@ const Register = () => {
         <label className="card-label">부모</label>
         <input
           type="checkbox"
-          className="custom-checkbox"
+          className="register-checkbox"
           checked={user.roles === "ROLE_PARENT"}
           onChange={() => handleCheckboxChange("ROLE_PARENT")}
         />
@@ -93,6 +93,7 @@ const Register = () => {
         <label className="card-label">자녀</label>
         <input
           type="checkbox"
+          className="register-checkbox"
           checked={user.roles === "ROLE_CHILD"}
           onChange={() => handleCheckboxChange("ROLE_CHILD")}
         />

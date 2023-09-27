@@ -83,7 +83,7 @@
   z-index: -1; /* 배경을 버튼 뒤로 보내기 위해 z-index 설정 */
 } 
 
-input[type="checkbox"] {
+.register-checkbox {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -97,23 +97,21 @@ input[type="checkbox"] {
   transition: background 0.4s; /* 체크 상태 변경 시 애니메이션 적용 */
   vertical-align: middle; /* 수직 정렬 추가 */
   margin: 15px;
-
-
-
 }
-input[type="checkbox"]::after {
+
+.register-checkbox::after {
   background: #756EF3;
   border-radius: 50%;
   border-style: solid;
   border-color: white;
-
 }
-input[type="checkbox"]:checked {
+
+.register-checkbox:checked {
   background: #756EF3;
   border-radius: 50%;
   border-style: solid;
-
 }
+
 
 /* Register.css */
 

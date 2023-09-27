@@ -2,12 +2,17 @@
     display: flex;
     margin: 20px auto;
     }
-  
+.character-image {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
 .left-button,
 .right-button{
     border: none;
     background-color: transparent;
     font-size: 45px;
+    color: #5451D6;
+    cursor: pointer;
 }
 
   .charctercard-imagearea {

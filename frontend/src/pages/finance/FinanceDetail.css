@@ -7,6 +7,7 @@
     align-items: center;
     background-color: #FAFAFA; 
     width: 100%;
+    position: relative;
 }
 
 
@@ -24,31 +25,40 @@
 }
 
 .product-apply-button {
-    font-family: 'Pretendard-Regular';
-    text-align: center;
-    line-height: 30px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 180px;
-    background: #52B69A;
-    width: 147px;
-    margin-top: 53px;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+    align-items: center;
+    font-size: 20px;
+    border-radius: 16px;
+    background: linear-gradient(45deg, #75C5A8, #6BAED6);
+    width: 330px;
+    height: 50px;
+    position: absolute;
+    bottom: 10vh;
+    cursor: pointer;
+    color: white;
 }
 
 .product-info-container {
     display: flex;
+    height: 60vh;
     width: 100%;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
     background-color: white;
-}
+    overflow-y: scroll;
 
+}
+.product-info-container::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
 .product-space-between {
     display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
+
     padding: 0.8rem 0;
 }
 
@@ -56,8 +66,8 @@
     display: inline-block;
     width: 57px;
     height: 28px;
-    border-radius: 180px;
-    border: 2px solid #000;
+    border-radius: 16px;
+    border: 1px solid #000;
     background: #FFF;
     text-align: center;
     /* 수평 가운데 정렬 */
@@ -70,8 +80,8 @@
     width: 57px;
     height: 28px;
     border-radius: 180px;
-    border: 2px solid #000;
-    background: #52B69A;
+    border: 1px solid black;
+    background: linear-gradient(45deg, #75C5A8, #6BAED6);
     text-align: center;
     /* 수평 가운데 정렬 */
     vertical-align: middle;
@@ -139,12 +149,29 @@
     color: #808080;
 }
 .option-input{
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     padding-bottom: 1.1rem;
 }
 .detail-dropdown{
     width: 90%;
+}
+
+.agreementask {
+    align-items: center; /* 수직 가운데 정렬 */
+  
+    font-size: 5px;
+    color: #808080;
+}
+.option-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 수평 가운데 정렬을 위해 추가 */
+  
+
+
 }
 .finance-detail-icon {
     font-size: 20px;
@@ -155,3 +182,27 @@
     position: absolute;
     bottom:0
 }
+
+.agreement-checkbox {
+    position: relative;
+    border-radius: 1px;
+    cursor: pointer;
+
+  }
+.finance-inputfield {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 10px 0;
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    border-style: solid;
+    text-align: center;
+}
+.finance-inputfield[type="number"]::-webkit-inner-spin-button,
+.finance-inputfield[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* 웹킷 기본 스타일 제거 */
+    appearance: none; /* 기본 스타일 제거 */
+    display: none; /* 화살표 숨기기 */
+}
+
