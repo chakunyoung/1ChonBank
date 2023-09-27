@@ -1,6 +1,7 @@
 package com.woowahanbank.backend.domain.mission.controller;
 
 import com.woowahanbank.backend.domain.mission.dto.MissionDetailDto;
+import com.woowahanbank.backend.domain.mission.dto.MissionGiveMoneyDto;
 import com.woowahanbank.backend.domain.mission.dto.MissionMakeDto;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
@@ -60,14 +61,14 @@ public class MissionController {
 
 	@PutMapping("/{missionId}")
 	public ResponseEntity<?> updateMission(@PathVariable Long missionId) {
-		missionService.updateMissionStatus(missionId);
-		return BaseResponse.ok(HttpStatus.OK,"상태 변경 완료");
+		MissionDetailDto missionDetailDto = missionService.updateMissionStatus(missionId);
+		return BaseResponse.okWithData(HttpStatus.OK,"상태 변경 완료", missionDetailDto);
 	}
 
 	@PutMapping("/refuse/{missionId}")
 	public ResponseEntity<?> refuseMission(@PathVariable Long missionId) {
-		missionService.refuseMission(missionId);
-		return BaseResponse.ok(HttpStatus.OK,"미션 거절 완료");
+		MissionDetailDto missionDetailDto = missionService.refuseMission(missionId);
+		return BaseResponse.okWithData(HttpStatus.OK,"미션 거절 완료", missionDetailDto);
 	}
 
 	@DeleteMapping("/{missionId}")
@@ -75,9 +76,9 @@ public class MissionController {
 		missionService.deleteMissionById(missionId);
 	}
 
-	@PutMapping("/give-money/{missionId}")
-	public ResponseEntity<?> giveMoneyTochild(@PathVariable Long missionId, Long money){
-
+	@PutMapping("/give-money")
+	public ResponseEntity<?> giveMoneyTochild(@RequestBody MissionGiveMoneyDto missionGiveMoneyDto){
+		missionService.missionClearMoney(missionGiveMoneyDto);
 		return BaseResponse.ok(HttpStatus.OK, "돈 지급 완료");
 	}
 
@@ -87,3 +88,4 @@ public class MissionController {
 	}
 
 }
+
