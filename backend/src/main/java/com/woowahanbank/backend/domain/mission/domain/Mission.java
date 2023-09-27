@@ -64,4 +64,8 @@ public class Mission {
 		this.missionStatus = "완료";
 	}
 
+	public void refuse(){
+		this.missionStatus = "거절";
+	}
+
 }

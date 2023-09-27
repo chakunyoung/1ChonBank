@@ -7,6 +7,7 @@ axios.defaults.withCredentials = true;
 
 const initialState = {
     mission: null,
+    missionData : null,
   
 };
 
@@ -18,9 +19,16 @@ const authSlice = createSlice({
     setMission(state, action) {
       state.mission = action.payload;
     },
+    setMissionData(state,action){
+      state.missionData= action.payload;
+    },
+
+    setMissionDataClear(state){
+      state.missionData = null;
+    }
   },
 });
 
-export const { setMission } = authSlice.actions;
+export const { setMission,setMissionData, setMissionDataClear } = authSlice.actions;
 
 export default authSlice.reducer;

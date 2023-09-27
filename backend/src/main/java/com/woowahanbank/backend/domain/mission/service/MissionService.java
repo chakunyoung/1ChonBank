@@ -4,6 +4,7 @@ import com.woowahanbank.backend.domain.family.domain.Family;
 import com.woowahanbank.backend.domain.family.repository.FamilyRepository;
 import com.woowahanbank.backend.domain.mission.domain.Mission;
 import com.woowahanbank.backend.domain.mission.dto.MissionDetailDto;
+import com.woowahanbank.backend.domain.mission.dto.MissionGiveMoneyDto;
 import com.woowahanbank.backend.domain.mission.dto.MissionMakeDto;
 import com.woowahanbank.backend.domain.mission.repository.MissionRepository;
 import com.woowahanbank.backend.domain.user.domain.User;
@@ -111,24 +112,43 @@ public class MissionService {
 	}
 
 	@Transactional
-	public void updateMissionStatus(Long missionId) {
+	public MissionDetailDto updateMissionStatus(Long missionId) {
 		Mission mission = missionRepository.findById(missionId)
 			.orElseThrow(() -> new IllegalArgumentException(" 미션 정보 없음"));
 		mission.solved();
+		return MissionDetailDto.builder()
+			.missionId(mission.getId())
+			.missionName(mission.getMissionName())
+			.childName(mission.getChildUser().getNickname())
+			.missionDescription(mission.getMissionDescription())
+			.missionPoint(mission.getMissionPoint())
+			.missionStatus(mission.getMissionStatus())
+			.missionTerminateDate(mission.getMissionTerminateDate())
+			.build();
+	}
+
+	@Transactional
+	public MissionDetailDto refuseMission(Long missionId) {
+		Mission mission = missionRepository.findById(missionId)
+			.orElseThrow(() -> new IllegalArgumentException(" 미션 정보 없음"));
+		mission.refuse();
+		return MissionDetailDto.builder()
+			.missionId(mission.getId())
+			.missionName(mission.getMissionName())
+			.childName(mission.getChildUser().getNickname())
+			.missionDescription(mission.getMissionDescription())
+			.missionPoint(mission.getMissionPoint())
+			.missionStatus(mission.getMissionStatus())
+			.missionTerminateDate(mission.getMissionTerminateDate())
+			.build();
 
 	}
 
 	@Transactional
-	public void refuseMission(Long missionId) {
-		Mission mission = missionRepository.findById(missionId)
-			.orElseThrow(() -> new IllegalArgumentException(" 미션 정보 없음"));
-		mission.start();
-
-	}
-
-	public void missionClearMoney(Long missionId, Long money){
-		Mission mission = missionRepository.findById(missionId).orElseThrow(() -> new IllegalArgumentException("미션 정보 없음"));
-		User user = userRepository.findByUserId(mission.getChildUser().getUserId()).orElseThrow(()-> new IllegalArgumentException("회원 정보 없ㅇ므"));
+	public void missionClearMoney(MissionGiveMoneyDto missionGiveMoneyDto){
+		Mission mission = missionRepository.findById(missionGiveMoneyDto.getMissionId()).orElseThrow(() -> new IllegalArgumentException("미션 정보 없음"));
+		User user = userRepository.findByUserId(mission.getChildUser().getUserId()).orElseThrow(()-> new IllegalArgumentException("회원 정보 없음"));
+		user.updatePoint(missionGiveMoneyDto.getMoney());
 
 	}
 
