@@ -3,115 +3,141 @@ package com.woowahanbank.backend.domain.mission.service;
 import com.woowahanbank.backend.domain.family.domain.Family;
 import com.woowahanbank.backend.domain.family.repository.FamilyRepository;
 import com.woowahanbank.backend.domain.mission.domain.Mission;
+import com.woowahanbank.backend.domain.mission.dto.MissionDetailDto;
 import com.woowahanbank.backend.domain.mission.dto.MissionMakeDto;
 import com.woowahanbank.backend.domain.mission.repository.MissionRepository;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+
+import org.checkerframework.checker.nullness.Opt;
 import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-
 @Service
 @RequiredArgsConstructor
 public class MissionService {
 
-    private final MissionRepository missionRepository;
-    private final UserRepository userRepository;
-    private final FamilyRepository familyRepository;
+	private final MissionRepository missionRepository;
+	private final UserRepository userRepository;
+	private final FamilyRepository familyRepository;
 
-    @Transactional
-    public void createMission(MissionMakeDto missionMakeDto) {
+	@Transactional
+	public void createMission(MissionMakeDto missionMakeDto) {
 
-        Family familyId = familyRepository.findByFamilyName(missionMakeDto.getMissionFamilyName()).orElseThrow(() -> new IllegalArgumentException("오류"));
+		Family familyId = familyRepository.findByFamilyName(missionMakeDto.getMissionFamilyName())
+			.orElseThrow(() -> new IllegalArgumentException("오류"));
 
-        User parentUser = userRepository.findByUserId(missionMakeDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("오류"));
+		User parentUser = userRepository.findByUserId(missionMakeDto.getUserId())
+			.orElseThrow(() -> new IllegalArgumentException("오류"));
 
-        User childUser = userRepository.findByNickname(missionMakeDto.getSelectedChild()).orElseThrow(() -> new IllegalArgumentException("오류"));
+		User childUser = userRepository.findByNickname(missionMakeDto.getSelectedChild())
+			.orElseThrow(() -> new IllegalArgumentException("오류"));
 
-        Mission mission = Mission.builder()
-                .missionName(missionMakeDto.getMissionName())
-                .familyId(familyId)
-                .parentUser(parentUser)
-                .childUser(childUser)
-                .missionDescription(missionMakeDto.getMissionDescription())
-                .missionPoint(missionMakeDto.getMissionPoint())
-                .missionStatus(missionMakeDto.getMissionStatus())
-                .missionTerminateDate(missionMakeDto.getMissionTerminateDate())
-                .build();
+		Mission mission = Mission.builder()
+			.missionName(missionMakeDto.getMissionName())
+			.familyId(familyId)
+			.parentUser(parentUser)
+			.childUser(childUser)
+			.missionDescription(missionMakeDto.getMissionDescription())
+			.missionPoint(missionMakeDto.getMissionPoint())
+			.missionStatus(missionMakeDto.getMissionStatus())
+			.missionTerminateDate(missionMakeDto.getMissionTerminateDate())
+			.build();
 
-        System.out.println(mission);
+		System.out.println(mission);
 
-        missionRepository.save(mission);
-    }
+		missionRepository.save(mission);
+	}
 
-    public List<MissionMakeDto> getMissionByFamilyId(User user) {
+	public List<MissionMakeDto> getMissionByFamilyId(User user) {
 
-        List<MissionMakeDto> missionDtoList = new ArrayList<>();
-        Family family = user.getFamily();
-        List<Mission> missionList = missionRepository.findByFamilyId(family);
+		List<MissionMakeDto> missionDtoList = new ArrayList<>();
+		Family family = user.getFamily();
+		List<Mission> missionList = missionRepository.findByFamilyId(family);
 
-        for (Mission mission : missionList) {
+		for (Mission mission : missionList) {
 
-            MissionMakeDto missionMakeDto = new MissionMakeDto();
-            missionMakeDto.setMissionId(mission.getId());
-            missionMakeDto.setMissionName(mission.getMissionName());
-            missionMakeDto.setMissionDescription(mission.getMissionDescription());
-            missionMakeDto.setMissionPoint(mission.getMissionPoint());
-            missionMakeDto.setMissionStatus(mission.getMissionStatus());
+			MissionMakeDto missionMakeDto = new MissionMakeDto();
+			missionMakeDto.setMissionId(mission.getId());
+			missionMakeDto.setMissionName(mission.getMissionName());
+			missionMakeDto.setMissionDescription(mission.getMissionDescription());
+			missionMakeDto.setMissionPoint(mission.getMissionPoint());
+			missionMakeDto.setMissionStatus(mission.getMissionStatus());
 
-            missionDtoList.add(missionMakeDto);
-        }
+			missionDtoList.add(missionMakeDto);
+		}
 
-        return missionDtoList;
-    }
+		return missionDtoList;
+	}
 
-    public List<MissionMakeDto> getMissionByChildNickName(User user) {
+	public List<MissionMakeDto> getMissionByChildNickName(User user) {
 
-        List<MissionMakeDto> missionDtoList = new ArrayList<>();
+		List<MissionMakeDto> missionDtoList = new ArrayList<>();
 
-        Family family = user.getFamily();
-        List<Mission> missionList = missionRepository.findByFamilyId(family);
+		Family family = user.getFamily();
+		List<Mission> missionList = missionRepository.findByFamilyId(family);
 
-        for (Mission mission : missionList) {
-            MissionMakeDto missionMakeDto = new MissionMakeDto();
-            missionMakeDto.setMissionId(mission.getId());
-            missionMakeDto.setMissionName(mission.getMissionName());
-            missionMakeDto.setMissionDescription(mission.getMissionDescription());
-            missionMakeDto.setMissionPoint(mission.getMissionPoint());
-            missionMakeDto.setMissionStatus(mission.getMissionStatus());
+		for (Mission mission : missionList) {
+			MissionMakeDto missionMakeDto = new MissionMakeDto();
+			missionMakeDto.setMissionId(mission.getId());
+			missionMakeDto.setMissionName(mission.getMissionName());
+			missionMakeDto.setMissionDescription(mission.getMissionDescription());
+			missionMakeDto.setMissionPoint(mission.getMissionPoint());
+			missionMakeDto.setMissionStatus(mission.getMissionStatus());
 
-            missionDtoList.add(missionMakeDto);
-        }
+			missionDtoList.add(missionMakeDto);
+		}
 
-        return missionDtoList;
-    }
+		return missionDtoList;
+	}
 
-    public Mission updateMission(User user, MissionMakeDto updatedMission) {
-        String missionName = updatedMission.getMissionName();
-        Family family = familyRepository.findById(user.getFamily().getId())
-                .orElseThrow(() -> new IllegalArgumentException(" 오류 "));
+	public MissionDetailDto getDetail(Long id) {
+		Mission mission = missionRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("Mission 아이디 없음"));
+		return MissionDetailDto.builder()
+			.missionId(mission.getId())
+			.missionName(mission.getMissionName())
+			.childName(mission.getChildUser().getNickname())
+			.missionDescription(mission.getMissionDescription())
+			.missionPoint(mission.getMissionPoint())
+			.missionStatus(mission.getMissionStatus())
+			.missionTerminateDate(mission.getMissionTerminateDate())
+			.build();
+	}
 
-        Mission missionUpdated = missionRepository.findByFamilyIdAndMissionName(family, missionName)
-            .orElseThrow(() -> new IllegalArgumentException("해당되는 미션이 없습니다."));
-        missionUpdated.solved();
-        return missionRepository.save(missionUpdated);
-    }
+	@Transactional
+	public void updateMissionStatus(Long missionId) {
+		Mission mission = missionRepository.findById(missionId)
+			.orElseThrow(() -> new IllegalArgumentException(" 미션 정보 없음"));
+		mission.solved();
 
-    public void deleteMissionById(User user, MissionMakeDto deletedMission) {
-        String missionName = deletedMission.getMissionName();
-        Family family = familyRepository.findById(user.getFamily().getId())
-                .orElseThrow(() -> new IllegalArgumentException(" 오류 "));
+	}
 
-        missionRepository.deleteByFamilyIdAndMissionName(family, missionName);
-    }
+	@Transactional
+	public void refuseMission(Long missionId) {
+		Mission mission = missionRepository.findById(missionId)
+			.orElseThrow(() -> new IllegalArgumentException(" 미션 정보 없음"));
+		mission.start();
 
-    public void deleteAll() {
-        missionRepository.deleteAll();
-    }
+	}
+
+	public void missionClearMoney(Long missionId, Long money){
+		Mission mission = missionRepository.findById(missionId).orElseThrow(() -> new IllegalArgumentException("미션 정보 없음"));
+		User user = userRepository.findByUserId(mission.getChildUser().getUserId()).orElseThrow(()-> new IllegalArgumentException("회원 정보 없ㅇ므"));
+
+	}
+
+	public void deleteMissionById(Long missionId) {
+		missionRepository.deleteById(missionId);
+	}
+
+	public void deleteAll() {
+		missionRepository.deleteAll();
+	}
 }
 

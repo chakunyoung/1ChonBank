@@ -18,8 +18,8 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
 
     void deleteByMissionName(String missionName);
 
-    Optional<Mission> findByFamilyIdAndMissionName(Family family, String missionName);
+    Optional<Mission> findById(Long id);
 
-    void deleteByFamilyIdAndMissionName(Family missionFamilyId, String missionName);
+    void deleteById(Long missionId);
 
 }
