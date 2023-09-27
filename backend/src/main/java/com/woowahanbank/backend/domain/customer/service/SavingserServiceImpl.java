@@ -1,8 +1,8 @@
 package com.woowahanbank.backend.domain.customer.service;
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,8 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-import org.springframework.scheduling.support.CronTrigger;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import com.woowahanbank.backend.domain.customer.domain.Savingser;
@@ -23,6 +22,9 @@ import com.woowahanbank.backend.domain.point.service.PointServiceImpl;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
 import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
+import com.woowahanbank.backend.global.notification.dto.NotificationDto;
+import com.woowahanbank.backend.global.notification.event.NotificationEvent;
+import com.woowahanbank.backend.global.util.NotificationUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,7 +36,7 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 	private final FinancialProductRepository financialProductRepository;
 	private final UserRepository userRepository;
 	private final PointServiceImpl pointService;
-	// private final ApplicationEventPublisher eventPublisher;
+	private final ApplicationEventPublisher eventPublisher;
 	DecimalFormat formatter = new DecimalFormat("###,###");
 
 	@Override
@@ -51,15 +53,15 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 			.regularMoney(savingserDto.getRegularMoney())
 			.build();
 		savingserRepository.save(savingser);
-		// eventPublisher.publishEvent(new NotificationEvent(
-		// 	this, parent.getNickname(),
-		// 	NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + financialProduct.getId()),
-		// 	NotificationDto.builder()
-		// 		.title("적금 상품 승인 신청")
-		// 		.body(user.getNickname() + "님이 적금 상품 [" + financialProduct.getName()
-		// 			+ "]을 금액 ( " + formatter.format(savingserDto.getMoney()) + " )원 에 승인을 신청 했습니다.")
-		// 		.build()
-		// ));
+		eventPublisher.publishEvent(new NotificationEvent(
+			this, parent.getNickname(),
+			NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + financialProduct.getId()),
+			NotificationDto.builder()
+				.title("적금 상품 승인 신청")
+				.body(user.getNickname() + "님이 적금 상품 [" + financialProduct.getName()
+					+ "]을 금액 ( " + formatter.format(savingserDto.getMoney()) + " )원 에 승인을 신청 했습니다.")
+				.build()
+		));
 	}
 
 	@Override
@@ -81,50 +83,25 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 		if (parent.getFamily().getId() != financialProduct.getFamily().getId())
 			throw new IllegalArgumentException("해당 가족이 아닙니다.");
 		savingser.allow();
-		savingser.changeDate();
+		savingser.changeDate(financialProduct.getPeriod());
 		String cardNum = makeCardNumber(financialProduct.getFamily().getId(), financialProduct.getId(), parent.getId());
 		savingser.makeCardNumber(cardNum);
-		ThreadPoolTaskScheduler tpts = new ThreadPoolTaskScheduler();
-		ThreadPoolTaskScheduler endS = new ThreadPoolTaskScheduler();
-		tpts.initialize();
-		endS.initialize();
-		String dayDate = savingser.getDate().format(DateTimeFormatter.ofPattern("d")).toString();
 		User admin = userRepository.findById(1).get(); // 가상의 admin 유저
 		User child = userRepository.findById(savingser.getUser().getId()).get();
-		tpts.schedule(() -> {
-			int regMoney = savingser.getRegularMoney();
-			child.moneyTransfer(-regMoney);
-			userRepository.save(child);
-			pointService.makePoint(child, admin, "정기 적금", regMoney);
-			savingser.depositMoney(regMoney);
-		}, new CronTrigger("0 0 0 " + dayDate + " * ?"));
-		String endDate = savingser.getDate()
-			.plus(financialProduct.getPeriod(), ChronoUnit.MONTHS)
-			.format(DateTimeFormatter.ofPattern("d M e"))
-			.toString();
-		endS.schedule(() -> {
-			int money = savingser.getMoney();
-			money = money + money * financialProduct.getRate() / 100;
-			parent.moneyTransfer(-money);
-			userRepository.save(parent);
-			pointService.makePoint(parent, admin, "자녀의 만기 적금", money);
-			child.moneyTransfer(money);
-			userRepository.save(child);
-			pointService.makePoint(admin, child, "적금 만기 금액", money);
-			savingserRepository.delete(savingser);
-			tpts.shutdown();
-			endS.shutdown();
-		}, new CronTrigger("0 0 0 " + endDate));
+		int money = savingser.getRegularMoney();
+		child.moneyTransfer(-money);
+		userRepository.save(child);
 		savingserRepository.save(savingser);
-		// eventPublisher.publishEvent(new NotificationEvent(
-		// 	this, child.getNickname(),
-		// 	NotificationUtil.clickUrl("http://localhost:3000/account"),
-		// 	NotificationDto.builder()
-		// 		.title("예금 상품 승인")
-		// 		.body(parent.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
-		// 			+ "] 을 승인했습니다.")
-		// 		.build()
-		// ));
+		pointService.makePoint(child, admin, "정기 적금", money);
+		eventPublisher.publishEvent(new NotificationEvent(
+			this, child.getNickname(),
+			NotificationUtil.clickUrl("http://localhost:3000/account"),
+			NotificationDto.builder()
+				.title("예금 상품 승인")
+				.body(parent.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
+					+ "] 을 승인했습니다.")
+				.build()
+		));
 	}
 
 	@Override
@@ -135,15 +112,15 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 		if (parent.getFamily().getId() != financialProduct.getFamily().getId())
 			throw new IllegalArgumentException("해당 가족이 아닙니다.");
 		User child = userRepository.findById(savingser.getUser().getId()).get();
-		// eventPublisher.publishEvent(new NotificationEvent(
-		// 	this, child.getNickname(),
-		// 	NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + id),
-		// 	NotificationDto.builder()
-		// 		.title("적금 상품 거절")
-		// 		.body(parent.getNickname() + "님이 적금 상품 [" + financialProduct.getName()
-		// 			+ "] 을 거절했습니다.")
-		// 		.build()
-		// ));
+		eventPublisher.publishEvent(new NotificationEvent(
+			this, child.getNickname(),
+			NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + id),
+			NotificationDto.builder()
+				.title("적금 상품 거절")
+				.body(parent.getNickname() + "님이 적금 상품 [" + financialProduct.getName()
+					+ "] 을 거절했습니다.")
+				.build()
+		));
 		savingserRepository.deleteById(id);
 	}
 
@@ -156,6 +133,41 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 			res.add(changeToDto(list.get(i)));
 		}
 		return res;
+	}
+
+	@Override
+	public void calculateRates() {
+		int today = LocalDateTime.now().getDayOfMonth();
+		List<Savingser> list = savingserRepository.findByDate_Date(today);
+		User admin = userRepository.findById(2).get(); // 가상의 적금 유저
+		for (int i = 0; i < list.size(); i++) {
+			Savingser savingser = list.get(i);
+			User child = userRepository.findById(savingser.getUser().getId()).get();
+			int regMoney = savingser.getRegularMoney();
+			child.moneyTransfer(-regMoney);
+			savingser.depositMoney(regMoney);
+			userRepository.save(child);
+			savingserRepository.save(savingser);
+			pointService.makePoint(child, admin, "정기 적금", regMoney);
+		}
+	}
+
+	@Override
+	public void removeProduct() {
+		List<Savingser> list = savingserRepository.findByExpiryAfter(LocalDateTime.now());
+		User admin = userRepository.findById(2).get(); // 가상의 적금 유저
+		for (int i = 0; i < list.size(); i++) {
+			Savingser savi = list.get(i);
+			FinancialProduct financialProduct = financialProductRepository.findById(savi.getFinancialProduct().getId())
+				.get();
+			int money = savi.getMoney();
+			money += (money * financialProduct.getRate()) / 100;
+			User child = userRepository.findById(savi.getUser().getId()).get();
+			child.moneyTransfer(money);
+			userRepository.save(child);
+			savingserRepository.delete(savi);
+			pointService.makePoint(admin, child, "적금 만기", money);
+		}
 	}
 
 	private String makeCardNumber(Long familyId, Long productId, Integer parentId) {
@@ -202,6 +214,8 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 			.money(savingser.getMoney())
 			.cardNumber(savingser.getCardNumber())
 			.date(savingser.getDate())
+			.expiry(savingser.getExpiry() == null ? "" :
+				savingser.getExpiry().format(DateTimeFormatter.ofPattern("YMMdd")).toString())
 			.financialProductId(financialProduct.getId())
 			.productName(financialProduct.getName())
 			.regularMoney(savingser.getRegularMoney())
