@@ -5,8 +5,8 @@ pipeline {
         DOCKER_CREDENTIAL_ID = 'dockerhub-at'
         NODE_VERSION = '16'
         NPM_VERSION = '8'
-        NVM_DIR = "/root/.nvm"
-        JAVA_HOME = "/opt/zulu11"
+        NVM_DIR = "/var/jenkins_home/.nvm"
+        JAVA_HOME = "/var/jenkins_home/zulu11"
     }
 
     stages {
