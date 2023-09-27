@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import apis from "services/api/apis";
 import { setUser } from "redux/Auth";
+import CharacterCard from "components/common/CharacterCard";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -73,12 +74,8 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <div className="char2-container">
-        <div className="char2-text">
-          <p>회원가입</p>
-        </div>
-        <img src={char2} alt="char2" style={{ width: "200px" }} />
-      </div>
+      <div className="register-title">회원가입</div>
+      <CharacterCard/>
       <div
         className="register-card"
         onClick={() => handleCardClick("ROLE_PARENT")}>
