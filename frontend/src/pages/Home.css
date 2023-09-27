@@ -56,7 +56,9 @@ Body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #FAFAFA; /* 배경색 추가 */
+  background: linear-gradient(135deg, rgba(19, 63, 219, 0.5), rgba(183, 0, 77, 0.35));
+  position: relative;
+  
   /* 화면 높이와 같은 최소 높이 설정 */
 }
 
@@ -88,22 +90,15 @@ Body {
   width: 30px;
 }
 
-.char1-container {
-  position: relative;
-  display: inline-block;
-  animation: floatAnimation 0.5s infinite;
-}
+
 
 .char1-text {
-  position: absolute;
-  top: 44%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   color: black;
   font-size: 40px;
   font-weight: bold;
-  text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  position: absolute;
+
 }
 
 .google-login-button {
@@ -126,6 +121,9 @@ Body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+  bottom: 10vh;
+  z-index: 1;
 }
 
 @media (min-width: 1600px) {
@@ -140,4 +138,10 @@ Body {
     flex-direction: column;
     align-items: center;
   }
+}
+.bubble {
+  animation: floatAnimation 1s ease-in-out infinite; /* 애니메이션 적용 */
+  animation-delay: calc(1s * var(--delay)); /* delay 변수를 사용하여 설정 */
+  filter: grayscale(100%);
+  opacity: 0.5;
 }

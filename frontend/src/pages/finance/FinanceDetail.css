@@ -7,23 +7,20 @@
     align-items: center;
     background-color: #FAFAFA; 
     width: 100%;
-
 }
 
 
 .product-detail-header {
     width: 100%;
-    background: #1FBAB8;
+    background: linear-gradient(45deg, #75C5A8, #6BAED6);
 }
 
 .product-detail-name {
-    padding-top: 19px;
-    padding-left: 24px;
+    padding-top: 25px;
+    padding-left: 25px;
     color: #FFF;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .product-apply-button {
@@ -86,20 +83,25 @@
     margin-right: 1.5rem;
 }
 
-.product-summary-rate {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    background: url('assets/rate.png'), #52B69A 50% / cover no-repeat;
-}
-
+.product-summary-rate,
 .product-summary-period {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    background: url('assets/period.png'), #52B69A 50% / cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    color: white;
+    font-size: 18px;
 }
+.product-summary-rate {
+    background: linear-gradient(180deg, #FFD3B6, #A4C0F9);
+}
+.product-summary-period {
+    background: linear-gradient(180deg, #FFA69E, #A2DED0);
 
+}
 .product-summary-infomation {
     display: flex;
     justify-content: space-evenly;
@@ -128,7 +130,6 @@
 .errorMessage {
     text-align: center;
     width: 100%;
-    padding-bottom: 1.1rem;
     color:red;
 }
 

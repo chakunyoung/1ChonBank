@@ -3,6 +3,10 @@ import "./Home.css";
 import char1 from "assets/char1x4.png";
 import Kakaoicon from "assets/kakao.svg";
 import Googleicon from "assets/google.svg";
+import Bubble from "assets/bubble.png";
+
+const NUM_BUBBLES = 20; // 원하는 Bubble 개수
+
 const Home = () => {
 
   const handleKakaoLoginClick = () => {
@@ -12,16 +16,42 @@ const Home = () => {
   const handleGoogleLoginClick = () => {
     window.location.href = `${process.env.REACT_APP_API_BASE_URL}/oauth2/authorization/google`;
   };
+  const renderBubbles = () => {
+    const bubbles = [];
+    for (let i = 0; i < NUM_BUBBLES; i++) {
+      const left = `${Math.random() * 83}%`; // 상대적인 위치 (0%에서 100% 사이에서 랜덤)
+      const top = `${Math.random() * 90}%`; // 상대적인 위치 (0%에서 100% 사이에서 랜덤)
+      const size = `${Math.random() * 50 + 20}px`;
+
+      const bubbleStyle = {
+        position: "absolute",
+        left: left,
+        top: top,
+        width: size,
+        height: size,
+      };
+      bubbleStyle["--delay"] = Math.random();
+
+      bubbles.push(
+        <img
+          key={i}
+          className="bubble"
+          style={bubbleStyle}
+          src={Bubble}
+          alt={`Bubble ${i + 1}`}
+        />
+      );
+    }
+    return bubbles;
+  };
 
   return (
     <div className="Homecontainer">
-      <div className="char1-container">
         <div className="char1-text">
-          <p>일촌페이</p>
+          일촌페이
         </div>
-        <img src={char1} alt="char1" style={{ width: "200px" }} />
-      </div>
-      <div className="Buttoncontainer" style={{ position: "fixed", bottom: "15%" }}>
+      <div className="Buttoncontainer">
+
         <button
           onClick={handleKakaoLoginClick}
           className="kakao-login-button"
@@ -39,6 +69,8 @@ const Home = () => {
         </button>
         <div></div>
       </div>
+      {renderBubbles()} {/* 여러 개의 Bubble 이미지 렌더링 */}
+
     </div>
   );
 };
