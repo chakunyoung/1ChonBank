@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -15,18 +15,21 @@ import Char5 from 'assets/char5x4.png';
 import Char6 from 'assets/char6x4.png';
 import Char7 from 'assets/char7x4.png';
 import Char8 from 'assets/char8x4.png';
+import { setCharacterNum } from 'redux/Auth';
 
 
 function CharacterCard() {
+  const user = useSelector((state)=>state.auth.user);
+  console.log(user);
   const userNickname = useSelector((state) => state.auth.user.nickname);
   const [characterImage, setCharacterImage] = useState(null);
   const characters = [Char1, Char2, Char3, Char4, Char5, Char6, Char7, Char8];
-  const [selectedCharacterIndex, setSelectedCharacterIndex] = useState(0);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // 이미지 로드
     const image = new Image();
-    image.src = characters[selectedCharacterIndex];
+    image.src = characters[user.characterNum];
 
     // 이미지가 로드되면 실행할 함수
     image.onload = () => {
@@ -47,19 +50,17 @@ function CharacterCard() {
       // 상태 업데이트
       setCharacterImage(croppedImage);
     };
-  }, [characters, selectedCharacterIndex]);
+  }, [characters, user.characterNum]);
 
   // 이전 버튼 핸들러
   const handlePrevCharacter = () => {
-    setSelectedCharacterIndex((prevIndex) => {
-      return (prevIndex - 1 + characters.length) % characters.length;
-    });
+    const newCharacterNum = (user.characterNum - 1 + characters.length) % characters.length;
+    dispatch(setCharacterNum(newCharacterNum));
   };
   // 다음 버튼 핸들러
   const handleNextCharacter = () => {
-    setSelectedCharacterIndex((prevIndex) => {
-      return (prevIndex + 1) % characters.length;
-    });
+    const newCharacterNum = (user.characterNum + 1) % characters.length;
+    dispatch(setCharacterNum(newCharacterNum));
   };
   
 
@@ -67,7 +68,7 @@ function CharacterCard() {
     <div className="charactercard-container">
         <button className='left-button' onClick={handlePrevCharacter}><IoIosArrowDropleft/></button>
       <div className="character-image">
-        <img className='charctercard-imagearea' src={characterImage} alt={`Character ${selectedCharacterIndex + 1}`} />
+        <img className='charctercard-imagearea' src={characterImage} alt={`Character ${user.characterNum + 1}`} />
       </div>
       <button className='right-button'onClick={handleNextCharacter}><IoIosArrowDropright/></button>
 

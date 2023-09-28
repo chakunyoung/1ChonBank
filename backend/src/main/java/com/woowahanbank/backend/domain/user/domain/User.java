@@ -55,6 +55,8 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role roles;
 
+	private Long characterNum;
+
 	public void authorizeRole(Role role) {
 		this.roles = role;
 	}
@@ -74,6 +76,7 @@ public class User {
 	public void setUser(SignupDto signupDto) {
 		this.nickname = signupDto.getNickname();
 		this.roles = signupDto.getRoles();
+		this.characterNum=signupDto.getCharacterNum();
 	}
 
 	public FamilyUserDto toFamilyUserDto() {

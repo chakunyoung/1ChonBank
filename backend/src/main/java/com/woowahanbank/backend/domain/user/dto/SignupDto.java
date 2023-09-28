@@ -31,4 +31,6 @@ public class SignupDto {
 	private Integer score;
 
 	private String familyName;
+
+	private Long characterNum;
 }
