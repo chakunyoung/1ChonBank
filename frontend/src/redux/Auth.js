@@ -6,7 +6,7 @@ axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const initialState = {
-  user: null,
+  user: {},
   firebaseToken: "",
   accessToken: "", // 카카오 로그인 이외에 사용하지 않음
   refreshToken: "", // 카카오 로그인 이외에 사용하지 않음
@@ -61,6 +61,9 @@ const authSlice = createSlice({
     setFirebaseToken: (state, action) => {
       state.firebaseToken = action.payload;
     },
+    setCharacterNum(state,action){
+      state.user.characterNum = action.payload;
+    },
 
     // logout: (state, action) => {
     //   state.refreshToken = '';
@@ -91,6 +94,6 @@ const authSlice = createSlice({
 });
 
 // export const { setAccessToken, setMoney,setScore, setRoles, setType, setUserId, setIsLogin,setRefreshToken,setNickname,setServerNickname, logout,setQuiz} = authSlice.actions;
-export const { setUser, setFirebaseToken } = authSlice.actions;
+export const { setUser, setFirebaseToken, setCharacterNum } = authSlice.actions;
 
 export default authSlice.reducer;

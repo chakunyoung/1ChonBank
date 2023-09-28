@@ -14,10 +14,12 @@
   function Profile() {
     const userNickname = useSelector((state) => state.auth.user.nickname);
     const [characterImage, setCharacterImage] = useState(null);
+    const characters = [Char1, Char2, Char3, Char4, Char5, Char6, Char7, Char8];
+    const user = useSelector((state)=>state.auth.user);
     useEffect(() => {
       // 이미지 로드
       const image = new Image();
-      image.src = Char1; // 원하는 캐릭터 이미지 경로로 설정
+      image.src = characters[user.characterNum]; // 원하는 캐릭터 이미지 경로로 설정
     
       // 이미지가 로드되면 실행할 함수
       image.onload = () => {
