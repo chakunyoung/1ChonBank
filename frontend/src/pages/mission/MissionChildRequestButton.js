@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { setMissionData, setMissionDataClear } from 'redux/Mission';
 import apis from 'services/api/apis';
+import { fetchMissions, useFetchMissions } from './MissionFetchMission';
 
 function MissionChildRequestButton() {
 
@@ -9,18 +10,19 @@ function MissionChildRequestButton() {
     const navigate = useNavigate();
     const missionData = useSelector((state) => state.mission.missionData);
     const dispatch = useDispatch();
-
+    const fetchMissions = useFetchMissions();
     // 자식이 요청 보내기
-    const handleChildRequest = () => {
+    const handleChildRequest =async () => {
         try {
             const userConfirmed = window.confirm("정말 다 했어요??");
 
             if (userConfirmed) {
-                const response = apis.put(`api/missions/${missionId}`);
+                const response = await apis.put(`api/missions/${missionId}`);
                 console.log(response.data);
                 dispatch(setMissionData(response.data));
                 alert("엄마에게 다 했다고 보냈습니다!!");
-                navigate("/mypage");
+                fetchMissions();
+                navigate("/missionList");
             }
 
         } catch (error) {
@@ -29,16 +31,17 @@ function MissionChildRequestButton() {
     }
 
     // 자식이 미션 포기하기
-    const handleGiveup = () => {
+    const handleGiveup = async () => {
         try {
             const userConfirmed = window.confirm("정말 다 포기하시겠어요??");
 
             if (userConfirmed) {
-                const response = apis.delete(`api/missions/${missionId}`);
+                const response = await apis.delete(`api/missions/${missionId}`);
                 dispatch(setMissionDataClear());
                 // dispatch(setMissionData(...missionData, missionData.missionStatus=''));
                 alert("포기 완료 ㅠ^ㅠ");
-                navigate("/mypage");
+                fetchMissions();
+                navigate("/missionList");
             }
 
         } catch (error) {

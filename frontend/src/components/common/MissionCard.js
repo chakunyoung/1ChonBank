@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './MissionCard.css';
 import { useDispatch, useSelector } from 'react-redux';
-import apis from 'services/api/apis';
-import { setMission } from 'redux/Mission';
 import { useNavigate } from 'react-router-dom';
+import { fetchMissions, useFetchMissions } from 'pages/mission/MissionFetchMission';
 
 const MissionCard = () => {
     const [dataExist, setDataExist] = useState(false);
@@ -12,39 +11,23 @@ const MissionCard = () => {
     const navigate = useNavigate(); // useNavigate 훅을 사용하여 페이지 이동을 처리
     const mission = useSelector((state)=>state.mission.mission)
 
+    const fetchMissions = useFetchMissions();
+
     useEffect(() => {
-        const fetchMissions = async () => {
-            if (userType === "ROLE_PARENT") {
-                try {
-                    const response = await apis.get('/api/missions/family-id');
-                    const missionData = response.data;
-                    console.log(missionData);
-                    dispatch(setMission(missionData));
-                    if (missionData !== null) {
-                        setDataExist(true);
-                    }
-                    console.log(missionData);
-                } catch (error) {
-                    console.error('미션 정보를 가져오는 데 실패했습니다. ', error);
-                }
-            } else {
-                try {
-                    const response = await apis.get('/api/missions/child-nickname');
-                    const missionData = response.data;
-                    console.log(missionData);
-                    dispatch(setMission(missionData));
-                    if (missionData !== null) {
-                        setDataExist(true);
-                    } // 데이터가 로드됐음을 표시
-                } catch (error) {
-                    console.error('미션 정보를 가져오는 데 실패했습니다. ', error);
-                }
+        const fetchData = async () => {
+          try {
+            const missionData = await fetchMissions(userType); // fetchMissions 함수 호출
+            if (missionData !== null) {
+              setDataExist(true);
             }
+            console.log(missionData);
+          } catch (error) {
+            console.error('데이터 로딩 중 또는 미안해', error);
+          }
         };
     
-        fetchMissions(); // useEffect 내부에서 호출
-    
-    }, [dispatch, userType]);
+        fetchData();
+      }, [userType]);
 
     // 미션 디테일 페이지로 이동하는 함수
     const handleMissionDetail = (missionId) => {
