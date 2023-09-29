@@ -27,7 +27,7 @@ const FinanceList = () => {
     const getListAll = () => {
         if (family === null) {
             alert('가족을 먼저 생성하십시오.');
-            nav('/familyList');
+            nav("/myFamily");
             return;
         }
         dispatch(getProductList())
