@@ -27,6 +27,7 @@ before_script:
 
   # Change permission for frontend directory to avoid EACCES error
   - sudo chown -R $(whoami) $FRONTEND_DIR
+  - sudo chown -R $(whoami) $BACKEND_DIR
 
 build-frontend:
   stage: build
