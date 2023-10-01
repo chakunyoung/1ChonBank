@@ -61,8 +61,8 @@ deploy:
   stage: deploy
   image: ubuntu:latest
   before_script:
-    - apt-get update -y
-    - apt-get install -y sshpass
+    - sudo apt-get update -y
+    - sudo apt-get install -y sshpass
   script:
     - scp -i deploy_key.pem -o StrictHostKeyChecking=no docker-compose.yml $EC2_USERNAME@$EC2_IP:/home/ubuntu/S09P22A609/
     - ssh -i deploy_key.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP 'docker-compose pull && docker-compose up -d'
