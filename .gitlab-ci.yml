@@ -8,10 +8,25 @@ variables:
   EC2_USERNAME: "ubuntu"
 
 before_script:
+  # Docker Login
   - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+  # Setup SSH Key
   - echo "$SSH_PRIVATE_KEY" > deploy_key.pem
   - chmod 600 deploy_key.pem
+
+  # Set JAVA_HOME for backend
+  - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+  # Give execution permission for Gradle wrapper
   - chmod +x $BACKEND_DIR/gradlew
+
+  # Change to frontend directory and install npm if it doesn't exist
+  - cd $FRONTEND_DIR
+  - which npm || curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - && sudo apt-get install -y nodejs
+
+  # Change permission for frontend directory to avoid EACCES error
+  - sudo chown -R $(whoami) $FRONTEND_DIR
 
 build-frontend:
   stage: build
