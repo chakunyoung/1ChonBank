@@ -15,6 +15,9 @@ before_script:
   - echo "$SSH_PRIVATE_KEY" > deploy_key.pem
   - chmod 600 deploy_key.pem
 
+  # Explicitly update the codebase on EC2
+  - ssh -i deploy_key.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP 'cd /home/ubuntu/S09P22A609 && git pull origin master'
+
   # Set JAVA_HOME for backend
   - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
