@@ -59,6 +59,9 @@ build-backend:
 
 deploy:
   stage: deploy
+  before_script:
+    - echo "$SSH_PRIVATE_KEY" > deploy_key.pem
+    - chmod 600 deploy_key.pem
   script:
     - ssh -i deploy_key.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP 'cd /home/ubuntu/S09P22A609 && docker-compose pull && docker-compose up -d'
   only:
