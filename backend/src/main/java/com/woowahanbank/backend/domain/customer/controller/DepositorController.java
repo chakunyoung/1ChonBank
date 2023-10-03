@@ -95,4 +95,13 @@ public class DepositorController {
 			return BaseResponse.fail("예금 고객 거절 실패", 400);
 		}
 	}
+
+	@ApiOperation(value = "닉네임으로 예금상품 조회")
+	@ApiImplicitParam(name = "nickname", value = "닉네임", required = true, dataType = "String", paramType = "path")
+	@ApiResponse(code = 200, message = "~의 예금 상품 목록")
+	@GetMapping("/Custommer/{nickname}")
+	public ResponseEntity<?> getDisallow(@PathVariable String nickname) {
+		List<DepositorDto> disallowList = customerService.getProductsByNickname(nickname);
+		return BaseResponse.okWithData(HttpStatus.OK, nickname + "의 예금 상품 목록", disallowList);
+	}
 }

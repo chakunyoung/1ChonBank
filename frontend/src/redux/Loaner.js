@@ -39,7 +39,18 @@ export const getLoaner = createAsyncThunk(
         }
     }
 );
-
+export const getLoanerByNickname = createAsyncThunk(
+    "loaner/getLoanerByNickname",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.get("/api/loaner/Custommer/" + data, {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
 export const getLoaCustomer = createAsyncThunk(
     "loaner/getLoaCustomer",
     async (data, { rejectWithValue }) => {

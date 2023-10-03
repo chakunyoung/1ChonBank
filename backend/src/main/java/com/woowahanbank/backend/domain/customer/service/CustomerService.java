@@ -19,4 +19,6 @@ public interface CustomerService<T> {
 	void calculateRates();
 
 	void removeProduct();
+
+	List<T> getProductsByNickname(String nickname);
 }

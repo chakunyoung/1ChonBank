@@ -41,6 +41,21 @@ export const getDepositor = createAsyncThunk(
     }
 );
 
+export const getDepositorByNickname = createAsyncThunk(
+    "depositor/getDepositorByNickname",
+    async (data, { rejectWithValue }) => {
+        try {
+            console.log(data);
+            const res = await apis.get("/api/depositor/Custommer/" + data, {
+            });
+            console.log(res.data);
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 export const getDepCustomer = createAsyncThunk(
     "depositor/getDepCustomer",
     async (data, { rejectWithValue }) => {

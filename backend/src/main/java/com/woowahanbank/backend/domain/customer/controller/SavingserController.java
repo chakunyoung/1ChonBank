@@ -95,4 +95,13 @@ public class SavingserController {
 			return BaseResponse.fail("적금 고객 거절 실패", 400);
 		}
 	}
+
+	@ApiOperation(value = "닉네임으로 적금 상품 조회")
+	@ApiImplicitParam(name = "nickname", value = "닉네임", required = true, dataType = "String", paramType = "path")
+	@ApiResponse(code = 200, message = "~의 적금 상품 목록")
+	@GetMapping("/Custommer/{nickname}")
+	public ResponseEntity<?> getDisallow(@PathVariable String nickname) {
+		List<SavingserDto> disallowList = customerService.getProductsByNickname(nickname);
+		return BaseResponse.okWithData(HttpStatus.OK, nickname + "의 적금 상품 목록", disallowList);
+	}
 }
