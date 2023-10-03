@@ -7,11 +7,6 @@ import { setFamilyName } from "redux/Family";
 
 import axios from "axios";
 
-import {
-  getFirebaseToken,
-  sendWebPushInfomation,
-} from "services/api/FirebaseAPI";
-
 const KakaoLoginRedirect = () => {
   const { search } = useLocation();
 
@@ -67,20 +62,6 @@ const KakaoLoginRedirect = () => {
               navigate("/mypage");
             }
             return userData;
-          })
-          .then(async (userData) => {
-            // const firebaseToken = await getFirebaseToken();
-            // if (firebaseToken) {
-            //   dispatch(setFirebaseToken(firebaseToken));
-            //   console.log("FIREBASE - token updated successfully");
-            // }
-
-            // if (userData.nickname && data.token) {
-            //   await sendWebPushInfomation(userData.nickname, data.token);
-            //   console.log(
-            //     "FIREBASE - send backend firebase token successfully"
-            //   );
-            // }
           })
           .catch((error) => {
             console.error("API 오류:", error);
