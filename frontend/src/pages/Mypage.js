@@ -11,8 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Circle from 'components/common/Circle';
 import HalfCircleRight from 'components/common/HarfCircleRight';
 import apis from 'services/api/apis';
-import { getFirebaseToken } from 'services/api/FirebaseAPI';
-import { setFirebaseToken, setUser } from 'redux/Auth';
 import Wrapper from 'components/common/Wrapper';
 import { motion } from "framer-motion";
 import {
@@ -73,10 +71,6 @@ const Mypage = () => {
   };
 
   return (
-<<<<<<< HEAD
-    <div className="MypageContainer">
-      <div className="mypage-profilecontainer">
-=======
     // <motion.div
     //   initial="initial"
     //   animate="in"
@@ -92,7 +86,6 @@ const Mypage = () => {
     <div className='MypageContainer'>
 
       <div className='mypage-profilecontainer'>
->>>>>>> 8c7e331 (feat:front 화면전환, 가족)
         <Profile />
       </div>
       <div className="button-grid">

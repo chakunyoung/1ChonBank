@@ -1,43 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const TokenVerificationToMyPage = ({ children }) => {
-    const [isVerified, setIsVerified] = useState(null);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const accessToken = localStorage.getItem("access-token");
 
-    const accessToken = JSON.parse(localStorage.getItem("access-token"));
-
-    useEffect(() => {
-        const verifyToken = async () => {
-            if (!accessToken) {
-                console.log("토큰이 없습니다. 루트로 리다이렉트합니다.");
-                navigate('/');
-                return;
-            }
-            
-            try {
-                const response = await axios.post('/api/users/verify-token', null, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${accessToken}`,
-                    },
-                });
-                setIsVerified(true);
-                navigate('/mypage');
-            } catch (error) {
-                console.log("서버에 유저 정보가 없거나, 토큰이 유효하지 않습니다.");
-                setIsVerified(false);
-                navigate('/');
-            }
-        };
-
-        if (isVerified === null) {
-            verifyToken();
+  useEffect(() => {
+    const verifyToken = async () => {
+      if (accessToken) {
+        try {
+          await axios.post("/api/users/verify-token", null, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+          console.log("토큰이 유효합니다. 접근할 수 없습니다.");
+          navigate("/mypage");
+        } catch (error) {
+          console.log("토큰이 유효하지 않습니다. 로그인으로 이동합니다.");
         }
-    }, [accessToken, navigate, isVerified]);
+      }
+    };
 
-    return isVerified === null ? <div>Loading...</div> : <>{children}</>;
+    verifyToken();
+  }, [accessToken, navigate]);
+
+  return <>{children}</>;
 };
 
 export default TokenVerificationToMyPage;
