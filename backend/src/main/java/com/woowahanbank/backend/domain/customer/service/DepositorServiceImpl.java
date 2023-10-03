@@ -168,6 +168,17 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 		}
 	}
 
+	@Override
+	public List<DepositorDto> getProductsByNickname(String nickname) {
+		User user = userRepository.findByNickname(nickname).get();
+		List<Depositor> list = depositorRepository.findByUser(user);
+		List<DepositorDto> res = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			res.add(changeToDto(list.get(i)));
+		}
+		return res;
+	}
+
 	private String makeCardNumber(Long familyId, Long productId, Integer parentId) {
 		Random random = new Random();
 		StringBuilder sb;
