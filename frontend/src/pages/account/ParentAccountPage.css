@@ -1,0 +1,31 @@
+.accountChildSelect{
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    font-size: large;
+    height: 50px;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    margin: 10px 5% 0px;
+}
+
+.leftchildSelectButton{
+    background: inherit ; 
+    border:none; 
+    box-shadow:none; 
+    border-radius:0; 
+    padding:0; 
+    overflow:visible; 
+    cursor:pointer;
+}
+
+.rightchildSelectButton{
+    background: inherit ; 
+    border:none; 
+    box-shadow:none; 
+    border-radius:0; 
+    padding:0; 
+    overflow:visible; 
+    cursor:pointer;
+}
