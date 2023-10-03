@@ -43,7 +43,18 @@ export const getSavingser = createAsyncThunk(
         }
     }
 );
-
+export const getSavingserByNickname = createAsyncThunk(
+    "savingser/getSavingserByNickname",
+    async (data, { rejectWithValue }) => {
+        try {
+            const res = await apis.get("/api/savingser/Custommer/" + data, {
+            });
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
 export const getSavCustomer = createAsyncThunk(
     "savingser/getSavCustomer",
     async (data, { rejectWithValue }) => {

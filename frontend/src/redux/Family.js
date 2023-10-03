@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import apis from "services/api/apis";
 
 const initialState = {
     familyName : '',
@@ -7,7 +7,10 @@ const initialState = {
     familyMember:null,
     
 };
-
+export const getFamilyMembers = async () => {
+  const response = await apis.get('/api/families');
+  return response.data.data;
+};
 const familySlice = createSlice({
     name: "family",
     initialState,
