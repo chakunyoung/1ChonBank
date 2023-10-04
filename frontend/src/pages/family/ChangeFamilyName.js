@@ -14,6 +14,7 @@ function ChangeFamilyName() {
 
 
     const familyName = useSelector((state) => state.family.familyName);
+    console.log(familyName);
 
     const [editing, setEditing] = useState(false);
     const [newFamilyName, setNewFamilyName] = useState(familyName);

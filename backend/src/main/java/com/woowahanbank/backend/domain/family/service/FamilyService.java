@@ -2,6 +2,7 @@ package com.woowahanbank.backend.domain.family.service;
 
 import com.woowahanbank.backend.domain.family.domain.Family;
 import com.woowahanbank.backend.domain.family.domain.Invitation;
+import com.woowahanbank.backend.domain.family.dto.FamilyInvitationDto;
 import com.woowahanbank.backend.domain.family.dto.FamilyUserDto;
 import com.woowahanbank.backend.domain.family.repository.FamilyRepository;
 import com.woowahanbank.backend.domain.family.repository.InvitationRepository;
@@ -115,5 +116,35 @@ public class FamilyService {
     private User findUserOrElseThrow(String nickname) {
         return userRepository.findByNickname(nickname)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다"));
+    }
+
+    public FamilyInvitationDto findInvitationUser(String toUserNickname) {
+        User toUser = userRepository.findByNickname(toUserNickname).orElseThrow(() -> new IllegalArgumentException("유저가 없습니다."));
+
+        Invitation invitationUser = invitationRepository.findByToUser(toUser).orElseThrow(() -> new IllegalArgumentException("초대가 없습니다."));
+
+        String familyName = invitationUser.getFamily().getFamilyName();
+        String fromUserNickname = invitationUser.getFromUser().getNickname();
+
+        FamilyInvitationDto familyInvitationDto = new FamilyInvitationDto();
+        familyInvitationDto.setFamilyNickname(familyName);
+        familyInvitationDto.setFromNickname(fromUserNickname);
+
+        return familyInvitationDto;
+    }
+
+    public void acceptInv (String familyName, String userNickName) {
+
+        Family byFamilyName = familyRepository.findByFamilyName(familyName).orElseThrow(() -> new IllegalArgumentException("가족을 찾을 수 없습니다."));
+        User byNickname = userRepository.findByNickname(userNickName).orElseThrow(() -> new IllegalArgumentException("유저가 없습니다."));
+        byNickname.setFamily(byFamilyName);
+    }
+
+    public void deleteInv (String familyName, String userNickName) {
+        System.out.println(userNickName+"이건 서비스 닉네임");
+        Family byFamilyName = familyRepository.findByFamilyName(familyName).orElseThrow(() -> new IllegalArgumentException("가족이 없습니다."));
+        User user = userRepository.findByNickname(userNickName).orElseThrow(() -> new IllegalArgumentException("유저가 없습니다."));
+        System.out.println(user+"이건 서비스 유저 마지막");
+        invitationRepository.deleteByToUserAndFamily(user, byFamilyName);
     }
 }

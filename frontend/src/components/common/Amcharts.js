@@ -3,13 +3,10 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4themes_dark from "@amcharts/amcharts4/themes/dark";
-import './Amcharts.css'; // CSS 파일을 import
+import './Amcharts.css'; 
 
 const Amcharts = ({ savings, depMoney, loaMoney, savMoney }) => {
-  console.log(savings);
-  console.log(depMoney);
-  console.log(loaMoney);
-  console.log(savMoney);
+
   useEffect(() => {
     // AmCharts 테마 설정
     am4core.useTheme(am4themes_dark);
@@ -18,6 +15,7 @@ const Amcharts = ({ savings, depMoney, loaMoney, savMoney }) => {
     // 차트 생성
     let chart = am4core.create("chartdiv", am4charts.PieChart3D);
     chart.hiddenState.properties.opacity = 0; // 초기 페이드 인 설정
+    chart.labels.template.fill = am4core.color("black");
 
     chart.legend = new am4charts.Legend();
 
