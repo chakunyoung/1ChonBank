@@ -48,7 +48,7 @@ public class Mission {
 	private String missionDescription;
 
 	@ApiModelProperty(notes = "미션 상황")
-	@Column(columnDefinition = "VARCHAR(255) DEFAULT '시작전'")
+	@Column(name = "mission_status", columnDefinition = "VARCHAR(255) DEFAULT '진행중'")
 	private String missionStatus;
 
 	@ApiModelProperty(notes = "미션 포인트")
