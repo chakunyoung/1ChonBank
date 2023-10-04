@@ -1,0 +1,56 @@
+.apply-product-container{
+    width: 90%;
+    overflow: scroll;
+    margin-bottom: 60px;
+}
+.apply-product-container::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+.card-apply-box{
+    margin: 5%;
+}
+.applyCardMenu button {
+    border-radius: 16px; /* 원하는 값으로 조절합니다. */
+    border: none;
+    color: white;
+    width: 56px;
+    height: 21px;
+    cursor: pointer;
+}
+.applyCardMenu{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    
+}
+.apply-allowbutton,
+.apply-deletebutton{
+    margin: 5px;
+}
+.apply-allowbutton {
+    background-color: #AAF1CB;
+}
+.apply-deletebutton {
+    background-color: #FFB4AB;
+}
+.applyCardInfo{
+    text-align: center;
+    padding-bottom: 5%;
+}
+.applyRealCard{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    width: 100%;
+    margin: 10px;
+}
+.applyMenuSet{
+    display: flex;
+    margin: 0px 10%;
+    justify-content: space-between;
+}
+.applyMenuSet h3{
+    display: inline-block;
+}
