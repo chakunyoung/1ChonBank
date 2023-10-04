@@ -23,6 +23,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class MissionService {
 
+
 	private final MissionRepository missionRepository;
 	private final UserRepository userRepository;
 	private final FamilyRepository familyRepository;
