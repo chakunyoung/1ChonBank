@@ -125,7 +125,7 @@ public class FamilyController {
         return BaseResponse.ok(HttpStatus.OK, "유저 추방 성공");
     }
 
-
+    @ApiOperation(value = "가족 초대")
     @GetMapping("/invitationUser")
     public ResponseEntity<?> checkInvitation (@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         String userNickName = customUserDetails.getNickname();
@@ -134,37 +134,26 @@ public class FamilyController {
         return BaseResponse.okWithData(HttpStatus.OK, "초대 확인 성공", familyInvitationDto);
     }
 
+    @ApiOperation(value = "가족 초대 수락")
     @PutMapping("/acceptInvitation")
-    public ResponseEntity acceptInvitation (@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody FamilyInvitationDto familyInvitationDto) {
+    public ResponseEntity<?> acceptInvitation (@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody FamilyInvitationDto familyInvitationDto) {
         String familyNickname = familyInvitationDto.getFamilyNickname();
         String nickname = customUserDetails.getNickname();
         familyService.acceptInv(familyNickname, nickname);
         return BaseResponse.ok(HttpStatus.OK, "가입 승낙 성공");
     }
 
-//    @DeleteMapping("/deleteInvitation")
-//    public ResponseEntity deleteInvitation(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody FamilyInvitationDto familyInvitationDto) {
-//        System.out.println(familyInvitationDto+"디티오야 이건");
-//        String familyNickname = familyInvitationDto.getFamilyNickname();
-//        String nickname = customUserDetails.getNickname();
-//        familyService.deleteInv(familyNickname, nickname);
-//        System.out.println("작업 완료");
-//
-//        return BaseResponse.ok(HttpStatus.OK, "가입 거절 성공");
-//    }
 
+    @ApiOperation(value = "가족 초대 거절")
     @DeleteMapping("/deleteInvitation")
-    public ResponseEntity deleteInvitation(
+    public ResponseEntity<?> deleteInvitation(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam(name = "familyNickname") String familyNickname
     ) {
-        System.out.println("familyNickname: " + familyNickname);
         String nickname = customUserDetails.getNickname();
         familyService.deleteInv(familyNickname, nickname);
-        System.out.println("작업 완료");
 
         return BaseResponse.ok(HttpStatus.OK, "가입 거절 성공");
     }
-
 
 }
