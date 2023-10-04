@@ -4,8 +4,9 @@ import char1 from "assets/char1x4.png";
 import Kakaoicon from "assets/kakao.svg";
 import Googleicon from "assets/google.svg";
 import Bubble from "assets/bubble.png";
+import Logo from "assets/1chonbank.png";
 
-const NUM_BUBBLES = 20; // 원하는 Bubble 개수
+const NUM_BUBBLES = 15; // 원하는 Bubble 개수
 
 const Home = () => {
 
@@ -46,9 +47,9 @@ const Home = () => {
   };
 
   return (
-    <div className="Homecontainer">
+    <div className="Homecontainer"> 
         <div className="char1-text">
-          일촌페이
+          <img src={Logo} className="homelogo"/>
         </div>
       <div className="Buttoncontainer">
 
