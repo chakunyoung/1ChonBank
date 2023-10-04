@@ -13,12 +13,14 @@ import com.woowahanbank.backend.global.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -56,11 +58,11 @@ public class QuizService {
                             + " 항상 아래와 같은 형식을 맞추어서 대답해줘 그리고 각 형식은 한 줄로 만 답 해주고 한국말로 답해줘"
                             + "시작: (오늘 날짜)\n"
                             + "문제: (문제, 글자수는 30글자 이하로)\n"
-                            + "1번 선지: (1번 선지, 선지는 무조건 숫자로만)\n"
-                            + "2번 선지: (2번 선지, 선지는 무조건 숫자로만)\n"
-                            + "3번 선지: (3번 선지, 선지는 무조건 숫자로만)\n"
-                            + "4번 선지: (4번 선지, 선지는 무조건 숫자로만)\n"
-                            + "5번 선지: (5번 선지, 선지는 무조건 숫자로만)n"
+                            + "1번 선지: (1번 선지, 선지는 무조건 숫자로만, 글자수는 15자 이내로 해줘)\n"
+                            + "2번 선지: (2번 선지, 선지는 무조건 숫자로만, 글자수는 15자 이내로 해줘)\n"
+                            + "3번 선지: (3번 선지, 선지는 무조건 숫자로만, 글자수는 15자 이내로 해줘)\n"
+                            + "4번 선지: (4번 선지, 선지는 무조건 숫자로만, 글자수는 15자 이내로 해줘)\n"
+                            + "5번 선지: (5번 선지, 선지는 무조건 숫자로만, 글자수는 15자 이내로 해줘)n"
                             + "정답: (무조건 정답 선지 번호만 출력해, 앞에 '정답: '를 꼭 넣어줘)\n"
                             + "해설: (해설, 앞에 '해설: '를 꼭 넣어줘)\n")))
                     .build();
@@ -246,5 +248,12 @@ public class QuizService {
         User updateUser = userRepository.findByUserId(user.getUserId()).orElseThrow(() -> new IllegalArgumentException("오류"));
 
         updateUser.updatePoint(score);
+    }
+
+    @PostConstruct
+    public void initialize() {
+        deleteQuiz();
+        chatGpt(gptKey);
+        createQuestionsBasedOnIntro(null);
     }
 }

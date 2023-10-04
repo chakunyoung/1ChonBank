@@ -17,7 +17,7 @@ function CreateFamily() {
   const isFamilyNameExist = useSelector((state) => state.auth.user.familyName);
   const [isInvitationExist, setIsInvitationExist] = useState(null);
   const userNickname = useSelector((state) => state.auth.user.userNickname);
-
+  
   const handleCreateFamily = () => {
     if (inputFamilyName === '') {
       alert("한글자 이상 입력하세요.");
@@ -77,6 +77,7 @@ function CreateFamily() {
   
       if (response) {
         alert("가족 초대를 수락했습니다!");
+        navigate("/");
       } else {
         console.error('요청 실패:', response.statusText);
       }
@@ -95,6 +96,7 @@ function CreateFamily() {
   
       if (response.status === 200) {
         alert("가족 거절완료");
+        navigate("/");
       } else {
         console.error('요청 실패:', response.statusText);
       }
