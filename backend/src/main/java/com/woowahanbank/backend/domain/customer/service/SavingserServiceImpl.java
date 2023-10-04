@@ -91,6 +91,7 @@ public class SavingserServiceImpl implements CustomerService<SavingserDto> {
 		int money = savingser.getRegularMoney();
 		child.moneyTransfer(-money);
 		userRepository.save(child);
+		savingser.depositMoney(money);
 		savingserRepository.save(savingser);
 		pointService.makePoint(child, admin, "정기 적금", money);
 		eventPublisher.publishEvent(new NotificationEvent(

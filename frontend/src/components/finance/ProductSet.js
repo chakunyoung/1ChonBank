@@ -2,6 +2,7 @@ import React from 'react';
 import './FinancelistSet.css';
 import ProductCard from './ProductCard';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const ProductSet = (props) => {
     const navigate = useNavigate();
@@ -9,11 +10,10 @@ const ProductSet = (props) => {
     const handleCardClick = (data) => {
         navigate('/accountDetail', { state: { data } });
     };
-
+    const user = useSelector((state) => state.auth.user); // Redux store에서 user 정보를 가져옵니다.
     const rendering = () => {
         let result = [];
         const depositors = props.depositors;
-        console.log(depositors);
         for (let i = 0; i < depositors.length; i++) {
             const p = depositors[i];
             result.push(
@@ -35,7 +35,7 @@ const ProductSet = (props) => {
                     key={loaners[i].id + ' ' + loaners[i].financialProductId}
                     onClick={() => handleCardClick(p)}
                 >
-                    <ProductCard product={p} pType='LOANERS'></ProductCard>
+                    <ProductCard product={p} pType='LOAN'></ProductCard>
                 </div>
             );
         }
@@ -56,7 +56,7 @@ const ProductSet = (props) => {
     };
 
     return (
-        <div className='list-set-container'>
+        <div className='list-set-container' style={user.roles === 'ROLE_PARENT'?{"height":"20vh"}:{"height":"30vh"}}>
             <div className='tab-productlist'>
                 {rendering()}
             </div>
