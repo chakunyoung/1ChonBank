@@ -76,7 +76,7 @@ public class User {
 	public void setUser(SignupDto signupDto) {
 		this.nickname = signupDto.getNickname();
 		this.roles = signupDto.getRoles();
-		this.characterNum=signupDto.getCharacterNum();
+		this.characterNum = signupDto.getCharacterNum();
 	}
 
 	public FamilyUserDto toFamilyUserDto() {
@@ -92,7 +92,11 @@ public class User {
 	}
 
 	public void updatePoint(Long plusMoney) {
-		this.money +=plusMoney;
+		this.money += plusMoney;
+	}
+
+	public void minusPoint(Long plusMoney) {
+		this.money -= plusMoney;
 	}
 
 }

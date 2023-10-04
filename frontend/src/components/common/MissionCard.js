@@ -17,10 +17,10 @@ const MissionCard = () => {
         const fetchData = async () => {
           try {
             const missionData = await fetchMissions(userType); // fetchMissions 함수 호출
-            if (missionData !== null) {
+            if (missionData.data.length !== 0) {
               setDataExist(true);
             }
-            console.log(missionData);
+            console.log(missionData.data.length);
           } catch (error) {
             console.error('데이터 로딩 중 또는 미안해', error);
           }
@@ -60,7 +60,11 @@ const MissionCard = () => {
                         </div>
                     ))
                 ) : (
-                    <div>데이터 로딩 중 또는 미안해</div>
+                    <h2>
+                        <br/><br/><br/>
+                        진행중인 미션이 없습니다.
+                        </h2>
+
                 )}
             </div>
         </div>

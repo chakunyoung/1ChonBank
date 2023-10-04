@@ -145,10 +145,16 @@ public class MissionService {
 	}
 
 	@Transactional
-	public void missionClearMoney(MissionGiveMoneyDto missionGiveMoneyDto){
-		Mission mission = missionRepository.findById(missionGiveMoneyDto.getMissionId()).orElseThrow(() -> new IllegalArgumentException("미션 정보 없음"));
-		User user = userRepository.findByUserId(mission.getChildUser().getUserId()).orElseThrow(()-> new IllegalArgumentException("회원 정보 없음"));
+	public void missionClearMoney(MissionGiveMoneyDto missionGiveMoneyDto) {
+		Mission mission = missionRepository.findById(missionGiveMoneyDto.getMissionId())
+			.orElseThrow(() -> new IllegalArgumentException("미션 정보 없음"));
+		User user = userRepository.findByUserId(mission.getChildUser().getUserId())
+			.orElseThrow(() -> new IllegalArgumentException("회원 정보 없음"));
+		User parent = userRepository.findByUserId(mission.getParentUser().getUserId())
+			.orElseThrow(() -> new IllegalArgumentException("부모 정보 없음"));
+		// 부모 정보도 얻어서 돈 빼야함
 		user.updatePoint(missionGiveMoneyDto.getMoney());
+		parent.minusPoint(missionGiveMoneyDto.getMoney());
 
 	}
 
