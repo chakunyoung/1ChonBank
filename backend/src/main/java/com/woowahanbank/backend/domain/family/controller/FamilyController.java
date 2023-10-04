@@ -1,7 +1,11 @@
 package com.woowahanbank.backend.domain.family.controller;
 
+import com.woowahanbank.backend.domain.family.domain.Invitation;
+import com.woowahanbank.backend.domain.family.dto.FamilyInvitationDto;
 import com.woowahanbank.backend.domain.family.dto.FamilyUserDto;
 import com.woowahanbank.backend.domain.family.service.FamilyService;
+import com.woowahanbank.backend.domain.user.domain.User;
+import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 import com.woowahanbank.backend.global.notification.dto.NotificationDto;
 import com.woowahanbank.backend.global.notification.event.NotificationEvent;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +35,7 @@ import java.util.List;
 public class FamilyController {
     private final FamilyService familyService;
     private final ApplicationEventPublisher eventPublisher;
+    private final UserService userService;
 
     @ApiOperation(value = "가족 구성원 조회")
     @ApiResponse(code = 200, message = "가족 구성원 조회 성공")
@@ -118,4 +124,47 @@ public class FamilyController {
 
         return BaseResponse.ok(HttpStatus.OK, "유저 추방 성공");
     }
+
+
+    @GetMapping("/invitationUser")
+    public ResponseEntity<?> checkInvitation (@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        String userNickName = customUserDetails.getNickname();
+        FamilyInvitationDto familyInvitationDto = new FamilyInvitationDto();
+        familyInvitationDto = familyService.findInvitationUser(userNickName);
+        return BaseResponse.okWithData(HttpStatus.OK, "초대 확인 성공", familyInvitationDto);
+    }
+
+    @PutMapping("/acceptInvitation")
+    public ResponseEntity acceptInvitation (@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody FamilyInvitationDto familyInvitationDto) {
+        String familyNickname = familyInvitationDto.getFamilyNickname();
+        String nickname = customUserDetails.getNickname();
+        familyService.acceptInv(familyNickname, nickname);
+        return BaseResponse.ok(HttpStatus.OK, "가입 승낙 성공");
+    }
+
+//    @DeleteMapping("/deleteInvitation")
+//    public ResponseEntity deleteInvitation(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody FamilyInvitationDto familyInvitationDto) {
+//        System.out.println(familyInvitationDto+"디티오야 이건");
+//        String familyNickname = familyInvitationDto.getFamilyNickname();
+//        String nickname = customUserDetails.getNickname();
+//        familyService.deleteInv(familyNickname, nickname);
+//        System.out.println("작업 완료");
+//
+//        return BaseResponse.ok(HttpStatus.OK, "가입 거절 성공");
+//    }
+
+    @DeleteMapping("/deleteInvitation")
+    public ResponseEntity deleteInvitation(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestParam(name = "familyNickname") String familyNickname
+    ) {
+        System.out.println("familyNickname: " + familyNickname);
+        String nickname = customUserDetails.getNickname();
+        familyService.deleteInv(familyNickname, nickname);
+        System.out.println("작업 완료");
+
+        return BaseResponse.ok(HttpStatus.OK, "가입 거절 성공");
+    }
+
+
 }

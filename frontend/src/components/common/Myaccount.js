@@ -4,7 +4,7 @@ import './Myaccount.css';
 import { useSelector } from 'react-redux';
 
 const Myaccount = () => {
-
+  const money = useSelector((state) => state.auth.user.money)
 
     return (
       <div className='myaccount-container'>
@@ -13,7 +13,7 @@ const Myaccount = () => {
             <div className='myaccount-date'>Transaction date</div>
         </div>
         <div className='myaccount-balance'>
-            3000$ {/* 잔액넣으셈 */}
+            {money}
         </div>
         <></>
 
