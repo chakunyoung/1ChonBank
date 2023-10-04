@@ -93,13 +93,18 @@ Body {
 
 
 .char1-text {
-  color: black;
-  font-size: 40px;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   position: absolute;
+  transform: translate(-50%,-50%);
+  top: 40%;
+  left: 50%;
 
 }
+.homelogo {
+  width: 350px;
+  animation: floatAnimation 3s ease-in-out infinite; /* 애니메이션 적용 */
+}
+
+
 
 .google-login-button {
   background-color: white;
@@ -140,8 +145,10 @@ Body {
   }
 }
 .bubble {
-  animation: floatAnimation 1s ease-in-out infinite; /* 애니메이션 적용 */
+  animation: floatAnimation 2s ease-in-out infinite; /* 애니메이션 적용 */
   animation-delay: calc(1s * var(--delay)); /* delay 변수를 사용하여 설정 */
   filter: grayscale(100%);
   opacity: 0.5;
 }
+
+

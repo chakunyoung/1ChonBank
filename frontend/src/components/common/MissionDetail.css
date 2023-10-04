@@ -1,0 +1,15 @@
+.missiondetail-container {
+    height: 100vh;
+    max-width: 390px;
+    margin: 0 auto; /* 가운데 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FAFAFA; 
+    width: 100%;
+    position: relative;
+}
+.missiondetail-footer {
+    position: absolute;
+    bottom: 0;
+}

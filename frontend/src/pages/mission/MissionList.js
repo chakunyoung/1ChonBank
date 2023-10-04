@@ -17,7 +17,6 @@ const MissionList = () => {
       <Profile />
       <div className='mission-title'>
         미션 목록
-        <img src={MissionIcon} alt="Mission Icon" className="mission-icon" />
       </div>
       <div className='mission-card-list'>
         <MissionCard />
