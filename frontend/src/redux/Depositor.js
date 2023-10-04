@@ -18,10 +18,12 @@ const initialState = {
 export const makeDepositor = createAsyncThunk(
     "depositor/makeDepositor",
     async (data, { rejectWithValue }) => {
+        console.log(data);
         try {
             const res = await apis.post("/api/depositor", data, {
             });
             console.log(res.data);
+            return res.data;
         } catch (error) {
             rejectWithValue(error.response.data);
         }
