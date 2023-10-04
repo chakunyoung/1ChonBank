@@ -20,10 +20,10 @@ const Account = () => {
   const [childIdx, setChildIdx] = useState(0);
   const [childs, setChilds] = useState([]);
   const user = useSelector((state) => state.auth.user); // Redux store에서 user 정보를 가져옵니다.
-  const handlerLeftClick = () =>{
+  const handlerLeftClick = () => {
     setChildIdx((childIdx + childs.length - 1) % childs.length);
   }
-  const handlerRightClick = () =>{
+  const handlerRightClick = () => {
     setChildIdx((childIdx + 1) % childs.length);
   }
   useEffect(() => {
@@ -66,14 +66,24 @@ const Account = () => {
       fetchData();
   }, []);
 
+  let componentToRender = null;
+
+  if (user.roles === 'ROLE_PARENT') {
+    if (childs.length !== 0) {
+      componentToRender = <ParentAccountPage child={childs[childIdx]} handlerLeftClick={handlerLeftClick} handlerRightClick={handlerRightClick} />;
+    }
+    // 'childs.length === 0' 경우에는 componentToRender가 null로 유지되므로 아무 것도 렌더링되지 않습니다.
+  } else {
+    componentToRender = <ProductSet depositors={depositors} loaners={loaners} savings={savings} />;
+  }
+
   return (
     <div className='account-container'>
       <div className='account-profilecontainer'>
         <Profile />
       </div>
       <Myaccount />
-      {user.roles === 'ROLE_PARENT' ? childs.length !== 0 ? <ParentAccountPage child={childs[childIdx]} handlerLeftClick={handlerLeftClick} handlerRightClick={handlerRightClick} /> : null : <ProductSet depositors={depositors} loaners={loaners} savings={savings} />}
-
+      {componentToRender}
       <div className='account-footer'>
         <Footer />
       </div>
