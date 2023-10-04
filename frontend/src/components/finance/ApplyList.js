@@ -4,6 +4,7 @@ import { allowDepositor, refuseDepositor } from "redux/Depositor";
 import { allowSavingser, refuseSavingser } from "redux/Savingser";
 import { allowLoaner, refuseLoaner } from "redux/Loaner";
 import { useDispatch } from 'react-redux';
+import './ApplyCard.css';
 
 const ApplyList = (props) => {
     const [applys, setApplays] = useState(props.applys);
@@ -135,7 +136,7 @@ const ApplyList = (props) => {
         const result = [];
         for (let i = 0; i < applys.length; i++) {
             const p = applys[i];
-            result.push(<div className='card-apply-box' key={applys[i].id}><ApplyCard applyItem={applyItem} refuseItem={refuseItem} applys={p}></ApplyCard></div>);
+            result.push(<div className='card-apply-box' key={applys[i].id}><ApplyCard applyItem={applyItem} refuseItem={refuseItem} applys={p} proType={props.type}></ApplyCard></div>);
         }
         return result;
     };
