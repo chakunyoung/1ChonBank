@@ -2,13 +2,16 @@
     display: flex;
     align-items: center; /* 수직 가운데 정렬을 위해 추가 */
     width: 330px;
-    height: 75px;
+    height: 60px;
     border-radius: 16px;
     background-color: white;
     position: relative;
-    font-size: 16px;
     justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
-    margin-bottom: 20px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+
 }
 
 .missioncard-container-during {
@@ -17,7 +20,7 @@
   width: 330px;
   height: 75px;
   border-radius: 16px;
-  background-color: #77DD77;
+  background-color: rgba(78, 226, 146, 0.48);
   position: relative;
   font-size: 16px;
   justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
@@ -30,7 +33,7 @@
   width: 330px;
   height: 75px;
   border-radius: 16px;
-  background-color: #FF6B6B;
+  background-color: rgba(245, 84, 84, 0.48);;
   position: relative;
   font-size: 16px;
   justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
@@ -49,10 +52,34 @@
   font-size: 16px;
   justify-content: space-between; /* 왼쪽과 오른쪽에 공간 배분 */
   margin-bottom: 20px;
+  
 }
-.margin-box {
-  margin-left: 20px; /* 왼쪽 마진 추가 */
-  margin-right: 20px; /* 오른쪽 마진 추가 */
+.missionname-box {
+  padding: 5px;
+  margin-left: 20px;
+  font-size: 20px;
+  font-weight: bold;
+
+
+}
+.missiondetail-box {
+  width: 18%;
+  margin-right: 20px;
+  padding: 5px;
+
+}
+.missiondetail-point,
+.missiondetail-status {
+  padding: 5px;
+}
+
+.missiondetail-point {
+  font-weight: bold;
+  font-size: 16px;
+}
+.missiondetail-status {
+  font-size: 15px;
+  color: #818181;
 }
 
 .missioncard-listcontainer {
