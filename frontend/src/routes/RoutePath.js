@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import TokenVerification from "components/auth/TokenVerificationToRoot";
 import Home from "pages/Home";
 import Register from "pages/Register";
 import Mypage from "pages/Mypage";
@@ -22,21 +21,21 @@ import MissionList from "pages/mission/MissionList";
 import MissionMake from "pages/mission/MissionMake";
 import MissionDetail from "components/common/MissionDetail";
 
+import TokenVerificationToRoot from "components/auth/TokenVerificationToRoot";
+import TokenVerificationToMyPage from "components/auth/TokenVerificationToMyPage";
+
+
 const RoutePath = () => {
 
 
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      {/* <Route path="/" element={<TokenVerificationToMyPage><Home /></TokenVerificationToMyPage>} /> */}
       <Route path="/register" element={<Register />} />
-      <Route
-        path="/mypage"
-        element={
-          // <TokenVerification>
-          <Mypage />
-          // </TokenVerification>
-        }
-      />
+      {/* <Route path="/register" element={<TokenVerificationToRoot><Register /></TokenVerificationToRoot>}/> */}
+      <Route path="/mypage" element={<Mypage />} />
+      {/* <Route path="/mypage" element={<TokenVerificationToRoot><Mypage /></TokenVerificationToRoot>} /> */}
       <Route path="/mission" element={<MissionMake />} />
       <Route path="/selectFinance" element={<SelectFinance />} />
       <Route path="/makeFinance" element={<MakeFinance />} />

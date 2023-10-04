@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Register.css";
 import char2 from "assets/char2x4.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,8 +14,11 @@ const Register = () => {
   const [nicknameError, setNicknameError] = useState(""); // State for nickname error message
   const user = useSelector((state) => state.auth.user);
 
-  console.log(user);
-  console.log(user.userId);
+  useEffect(()=>{
+    if(user.nickname != null){
+      navigate("/mypage");
+    }
+  },[])
 
   const handleCheckboxChange = (selectedRole) => {
     const updatedUser = { ...user, roles: selectedRole };
