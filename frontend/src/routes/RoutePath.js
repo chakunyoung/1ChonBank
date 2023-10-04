@@ -23,6 +23,8 @@ import MissionMake from "pages/mission/MissionMake";
 import MissionDetail from "components/common/MissionDetail";
 
 const RoutePath = () => {
+
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />

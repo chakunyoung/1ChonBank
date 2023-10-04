@@ -11,7 +11,6 @@ import Footer from 'components/common/Footer';
 
 const Quiz = () => {
 
-  // const [quizBack, setQuizBack] = useState(null); 
   const [selectedAnswer, setSelectedAnswer] = useState(null); 
   const [error, setError] = useState(null); 
   const dispatch = useDispatch();

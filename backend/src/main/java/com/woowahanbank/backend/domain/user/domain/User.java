@@ -94,4 +94,5 @@ public class User {
 	public void updatePoint(Long plusMoney) {
 		this.money +=plusMoney;
 	}
+
 }

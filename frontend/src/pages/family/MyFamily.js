@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setDeleteFamily } from "redux/Family";
@@ -36,6 +36,8 @@ function MyFamily() {
     const [searchNickname, setSearchNickname] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [selectedNickname, setSelectedNickname] = useState(''); // 선택한 닉네임 상태 추가
+    const [familyData, setFamilyData] = useState([]);
+    const [isChildrenExist, setIsChildrenExist] = useState(0);
 
     const handleSelectFamily = (nickname) => {
         console.log('선택한 닉네임:', nickname);
@@ -73,6 +75,39 @@ function MyFamily() {
             });
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await apis.get("/api/families");
+                const data = response.data.data;
+                setFamilyData(data); 
+            } catch (error) {
+                console.error('데이터를 가져오지 못했습니다:', error);
+              }
+            };
+            fetchData(); // 데이터 가져오기 함수 호출
+        }, []);
+
+      // 부모와 자식을 그룹화하기 위한 배열 선언
+    const parents = [];
+    const children = [];
+
+    // 부모와 자식을 그룹화
+    familyData.forEach((family) => {
+        if (family.role === "ROLE_PARENT") {
+        parents.push(family);
+        } else if (family.role === "ROLE_CHILD") {
+        children.push(family);
+        }
+    });
+
+    if (children === null){
+        setIsChildrenExist(1);
+    }
+
+
+
+
     return (
         <div className="myfamily-container">
             <div><Profile/></div>
@@ -80,7 +115,11 @@ function MyFamily() {
             <div className="familymenu">
             <Link to="/financial"><button className="family-productbutton">상품</button></Link>
             <Link to="/mission"><button className="family-missionbutton">미션</button></Link>
-            <button className="family-deletebutton" onClick={handleDeleteFamily}><MdGroupOff/>삭제</button>
+            {isChildrenExist === 0 ? (
+                <></>
+            ) : (
+                <button className="family-deletebutton" onClick={handleDeleteFamily}><MdGroupOff/>삭제</button>
+            )}
             <button className="family-invitation" onClick={handleAddFamilyMember}><MdGroupAdd/>초대</button>
             </div>
             {isModalOpen && (

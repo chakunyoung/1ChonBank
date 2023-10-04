@@ -6,11 +6,15 @@ import { TbTargetArrow } from "react-icons/tb";
 import { RiQuestionnaireFill } from "react-icons/ri";
 import Footer from "components/common/Footer";
 import Profile from "components/common/Profile";
-import "./Mypage.css";
-import { useDispatch, useSelector } from "react-redux";
-import Circle from "components/common/Circle";
-import HalfCircleRight from "components/common/HarfCircleRight";
-import apis from "services/api/apis";
+import './Mypage.css';
+import { useDispatch, useSelector } from 'react-redux';
+import Circle from 'components/common/Circle';
+import HalfCircleRight from 'components/common/HarfCircleRight';
+import apis from 'services/api/apis';
+import { getFirebaseToken } from 'services/api/FirebaseAPI';
+import { setFirebaseToken, setUser } from 'redux/Auth';
+import Wrapper from 'components/common/Wrapper';
+import { motion } from "framer-motion";
 import {
   getFirebaseToken,
   sendWebPushInfomation,
@@ -69,8 +73,26 @@ const Mypage = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div className="MypageContainer">
       <div className="mypage-profilecontainer">
+=======
+    // <motion.div
+    //   initial="initial"
+    //   animate="in"
+    //   exit="out"
+    //   variants={Wrapper}
+    // >
+    <motion.div
+      initial={Wrapper.initial}
+      animate={Wrapper.animate}
+      exit={Wrapper.exit}
+      // variants={Wrapper}
+    >
+    <div className='MypageContainer'>
+
+      <div className='mypage-profilecontainer'>
+>>>>>>> 8c7e331 (feat:front 화면전환, 가족)
         <Profile />
       </div>
       <div className="button-grid">
@@ -125,6 +147,7 @@ const Mypage = () => {
         <Footer />
       </div>
     </div>
+    </motion.div>
   );
 };
 
