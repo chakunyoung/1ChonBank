@@ -33,7 +33,7 @@
     border-radius: 16px; /* 원하는 값으로 조절합니다. */
     border: none;
     color: white;
-    width: 56px;
-    height: 21px;
+    width: 5.5rem;
+    height: 2rem;
     cursor: pointer;
 }

@@ -128,13 +128,6 @@ const Mypage = () => {
           <RiQuestionnaireFill className="logo" />
           <span>오늘의 퀴즈</span>
         </div>
-        <div
-          className="button button-quiz"
-          style={{ width: 340, height: "70px" }}
-          onClick={sendPinMoneyRequest}>
-          <RiQuestionnaireFill className="logo" />
-          <span>test</span>
-        </div>
       </div>
       <div className="mypage-footer">
         <Footer />
