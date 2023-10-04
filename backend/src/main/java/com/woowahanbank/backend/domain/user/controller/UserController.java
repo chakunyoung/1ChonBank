@@ -83,4 +83,5 @@ public class UserController {
 		User user = userService.findByNickname(nickname);
 		return BaseResponse.okWithData(HttpStatus.OK, "자식 선택 완료", user);
 	}
+
 }
