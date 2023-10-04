@@ -6,7 +6,7 @@ import './Account.css';
 import { useSelector } from 'react-redux';
 import { getDepositors, getLoaners, getSavings } from 'services/api/banking/bankingAPI';
 import { getFamilyMembers } from 'redux/Family';
-import Amchart from 'components/common/Amcharts'
+import Amchart from 'components/common/Amcharts';
 import ProductSet from 'components/finance/ProductSet';
 import ParentAccountPage from './ParentAccountPage';
 
@@ -66,75 +66,30 @@ const Account = () => {
       fetchData();
   }, []);
 
+  let componentToRender = null;
+
+  if (user.roles === 'ROLE_PARENT') {
+    if (childs.length !== 0) {
+      componentToRender = <ParentAccountPage child={childs[childIdx]} handlerLeftClick={handlerLeftClick} handlerRightClick={handlerRightClick} />;
+    }
+    // 'childs.length === 0' 경우에는 componentToRender가 null로 유지되므로 아무 것도 렌더링되지 않습니다.
+  } else {
+    componentToRender = <ProductSet depositors={depositors} loaners={loaners} savings={savings} />;
+  }
+
   return (
     <div className='account-container'>
       <div className='account-profilecontainer'>
         <Profile />
       </div>
       <Myaccount />
-      {user.roles === 'ROLE_PARENT' ? childs.length !== 0 ? <ParentAccountPage child={childs[childIdx]} handlerLeftClick={handlerLeftClick} handlerRightClick={handlerRightClick} /> : null : <ProductSet depositors={depositors} loaners={loaners} savings={savings} />}
-      <Amchart savings={user.money} depMoney={depMoney} loaMoney={loaMoney} savMoney={savMoney} />
-      <ul>
-        <li>보유 현금 : {user.money}</li>
-        <li>총 자산 : {(user.money + depMoney + savMoney - loaMoney)}</li>
-        <li>예금 자산 : {depMoney}</li>
-        <li>적금 자산 : {savMoney}</li>
-        <li>대출 자산 : {loaMoney}</li>
-      </ul>
-      <div>
-      </div>
-      {depositors.length ? (
-        depositors.map((depositor, index) => (
-          <div className='card-margin' onClick={goToDetail}>
-            <Card
-              key={index}
-              name={depositor.productName}
-              expiry={"2222"}
-              number={depositor.cardNumber}
-            />
-          </div>
-
-        ))
-      ) : (
-        <p>등록한 예금이 없습니다.</p>
-      )}
-
-      {loaners.length ? (
-        loaners.map((loaner, index) => (
-          <div className='card-margin' onClick={goToDetail}>
-            <Card
-              key={index}
-              name={loaner.productName}
-              expiry={"2222"}
-              number={loaner.cardNumber}
-            />
-          </div>
-        ))
-      ) : (
-        <p>등록한 대출이 없습니다.</p>
-      )}
-
-
-      {savings.length ? (
-        savings.map((saving, index) => (
-          <div className='card-margin' onClick={goToDetail}>
-            <Card
-              key={index}
-              name={saving.productName
-              }
-              expiry={"2222"}
-              number={saving.cardNumber}
-            />
-          </div>
-        ))
-      ) : (
-        <p>등록한 적금이 없습니다.</p>
-      )}
-
+      {user.roles === 'ROLE_PARENT' ? null : <Amchart savings={user.money} depMoney={depMoney} loaMoney={loaMoney} savMoney={savMoney} />}
+      {componentToRender}
       <div className='account-footer'>
         <Footer />
       </div>
-      </div>
+      <Amchart savings={user.money} depMoney={depMoney} loaMoney={loaMoney} savMoney={savMoney} />
+    </div>
   );
 };
 

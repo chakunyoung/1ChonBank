@@ -99,7 +99,7 @@ const AccountDeatil = () => {
         </div>
         <div className="accountdetail-card">
           <Card
-            name={data.regularMoney + "P"}
+            name={data.money + "P"}
             expiry={dateCalc(data.expiry)}
             number={data.cardNumber} // data.cardNumber
           />
