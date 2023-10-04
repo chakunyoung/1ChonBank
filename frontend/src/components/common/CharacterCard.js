@@ -30,8 +30,10 @@ function CharacterCard() {
   useEffect(() => {
     // 이미지 로드
     const image = new Image();
-    if (user.characterNum == null)
+    if (user.characterNum == null){
+      dispatch(setCharacterNum(0))
       image.src = characters[0];
+    }
     else
       image.src = characters[user.characterNum];
     // 이미지가 로드되면 실행할 함수
