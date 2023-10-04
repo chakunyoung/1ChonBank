@@ -3,16 +3,23 @@ package com.woowahanbank.backend.domain.banking.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.woowahanbank.backend.domain.banking.dto.PaymentResponseDto;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-
 import com.woowahanbank.backend.domain.banking.domain.PinMoney;
 import com.woowahanbank.backend.domain.banking.dto.ChildPinMoney;
+import com.woowahanbank.backend.domain.banking.dto.PaymentResponseDto;
 import com.woowahanbank.backend.domain.banking.repository.PinMoneyRepository;
 import com.woowahanbank.backend.domain.customer.dto.DepositorDto;
 import com.woowahanbank.backend.domain.customer.dto.LoanerDto;
@@ -23,15 +30,9 @@ import com.woowahanbank.backend.domain.customer.service.SavingserServiceImpl;
 import com.woowahanbank.backend.domain.user.domain.Role;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
-import com.woowahanbank.backend.global.exception.custom.ForbiddenException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
@@ -71,10 +72,10 @@ public class BankingService {
 
 		// Send POST request
 		ResponseEntity<String> response = rt.exchange(
-				"https://kapi.kakao.com/v1/payment/ready",
-				HttpMethod.POST,
-				request,
-				String.class
+			"https://kapi.kakao.com/v1/payment/ready",
+			HttpMethod.POST,
+			request,
+			String.class
 		);
 
 		// Handle response
@@ -116,11 +117,17 @@ public class BankingService {
 		pinMoneyRepository.findByUser(childUser)
 			.ifPresent(pinMoney -> pinMoneyRepository.deleteById(pinMoney.getId()));
 
+		// 당일 용돈 주기
+		childUser.moneyTransfer(childPinMoneyDto.getPinMoney());
+
+		// 다음 용돈일 지정
 		PinMoney newPinMoney = PinMoney.builder()
 			.user(childUser)
 			.pinMoney(childPinMoneyDto.getPinMoney())
-			.receiveTime(childPinMoneyDto.getReceiveTime())
+			.receiveTime(childPinMoneyDto.getReceiveTime().plusDays(7))
 			.build();
+
+		log.info("{}", newPinMoney);
 
 		pinMoneyRepository.save(newPinMoney);
 	}
