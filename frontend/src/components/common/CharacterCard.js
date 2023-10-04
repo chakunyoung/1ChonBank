@@ -19,18 +19,39 @@ import { setCharacterNum } from 'redux/Auth';
 
 
 function CharacterCard() {
-  const user = useSelector((state)=>state.auth.user);
+  const user = useSelector((state) => state.auth.user);
   console.log(user);
   const userNickname = useSelector((state) => state.auth.user.nickname);
-  const [characterImage, setCharacterImage] = useState(null);
+
   const characters = [Char1, Char2, Char3, Char4, Char5, Char6, Char7, Char8];
   const dispatch = useDispatch();
+  const firstChar = () => {
+    const image = new Image();
+    image.src = Char1;
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // 정사각형 크기 설정 (맨 위를 기준으로 자르기)
+    const size = Math.min(image.width, image.height);
+    canvas.width = 512; // 원하는 크기로 설정
+    canvas.height = 512; // 원하는 크기로 설정
+
+    // 이미지를 맨 위를 기준으로 정사각형 크기에 맞게 자르기
+    ctx.drawImage(image, 0, 0, size, size, 0, 0, 512, 512);
+
+    // 이미지 데이터 URL로 변환
+    const croppedImage = canvas.toDataURL('image/png');
+    return croppedImage;
+  }
+  const [characterImage, setCharacterImage] = useState(firstChar());
 
   useEffect(() => {
     // 이미지 로드
     const image = new Image();
-    image.src = characters[user.characterNum];
-
+    if (user.characterNum == null)
+      image.src = characters[0];
+    else
+      image.src = characters[user.characterNum];
     // 이미지가 로드되면 실행할 함수
     image.onload = () => {
       const canvas = document.createElement('canvas');
@@ -42,7 +63,7 @@ function CharacterCard() {
       canvas.height = 512; // 원하는 크기로 설정
 
       // 이미지를 맨 위를 기준으로 정사각형 크기에 맞게 자르기
-      ctx.drawImage(image, 0, 0, size, size, 0, 0, 512, 512); 
+      ctx.drawImage(image, 0, 0, size, size, 0, 0, 512, 512);
 
       // 이미지 데이터 URL로 변환
       const croppedImage = canvas.toDataURL('image/png');
@@ -62,15 +83,15 @@ function CharacterCard() {
     const newCharacterNum = (user.characterNum + 1) % characters.length;
     dispatch(setCharacterNum(newCharacterNum));
   };
-  
+
 
   return (
     <div className="charactercard-container">
-        <button className='left-button' onClick={handlePrevCharacter}><IoIosArrowDropleft/></button>
+      <button className='left-button' onClick={handlePrevCharacter}><IoIosArrowDropleft /></button>
       <div className="character-image">
         <img className='charctercard-imagearea' src={characterImage} alt={`Character ${user.characterNum + 1}`} />
       </div>
-      <button className='right-button'onClick={handleNextCharacter}><IoIosArrowDropright/></button>
+      <button className='right-button' onClick={handleNextCharacter}><IoIosArrowDropright /></button>
 
     </div>
   );
