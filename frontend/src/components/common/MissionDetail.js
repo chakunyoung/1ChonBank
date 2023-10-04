@@ -7,6 +7,8 @@ import apis from "services/api/apis"
 import { setMissionData } from 'redux/Mission';
 import MissionChildRequestButton from 'pages/mission/MissionChildRequestButton';
 import MissionParentResponseButton from 'pages/mission/MissionParentResponseButton';
+import Profile from 'components/common/Profile'
+import Footer from 'components/common/Footer'
 
 function MissionDetail() {
     const missionData = useSelector((state) => state.mission.missionData);
@@ -33,7 +35,8 @@ function MissionDetail() {
     }, [missionId]); // missionId가 변경될 때마다 실행
 
     return (
-        <div>
+        <div className='missiondetail-container'>
+            <Profile/>
             {/* missionData가 있을 때만 데이터를 렌더링 */}
             {missionData && (
                 <div>
@@ -41,6 +44,8 @@ function MissionDetail() {
                     <p>Mission Name: {missionData.missionName}</p>
                     <p>Mission Description: {missionData.missionDescription}</p>
                     <p>Mission Status: {missionData.missionStatus}</p>
+                    <p>Mission points: {missionData.missionStatus}</p>
+
                     {/* 기타 미션 데이터 필드를 추가하세요 */}
                 </div>
             )}
@@ -55,6 +60,9 @@ function MissionDetail() {
                     <MissionChildRequestButton />
                 </div>
             )}
+            <div className='missiondetail-footer'>
+            <Footer/>
+            </div>
         </div>
     );
 };

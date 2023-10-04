@@ -52,10 +52,10 @@ const MissionCard = () => {
                                             : ""
                             }
                             onClick={() => handleMissionDetail(mission.missionId)}>
-                            <h2 className='margin-box'>{mission.missionName}</h2>
-                            <div className='margin-box'>
-                                <p>{mission.missionPoint}P</p>
-                                <p>{mission.missionStatus}</p>
+                            <div className='missionname-box'>{mission.missionName}</div>
+                            <div className='missiondetail-box'>
+                                <div className='missiondetail-point'>{mission.missionPoint}P</div>
+                                <div className='missiondetail-status'>{mission.missionStatus}</div>
                             </div>
                         </div>
                     ))
