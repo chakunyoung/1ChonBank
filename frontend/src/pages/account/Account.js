@@ -88,7 +88,6 @@ const Account = () => {
       <div className='account-footer'>
         <Footer />
       </div>
-      <Amchart savings={user.money} depMoney={depMoney} loaMoney={loaMoney} savMoney={savMoney} />
     </div>
   );
 };
