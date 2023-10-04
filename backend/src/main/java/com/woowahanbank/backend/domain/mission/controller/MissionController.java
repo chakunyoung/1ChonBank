@@ -62,13 +62,13 @@ public class MissionController {
 	@PutMapping("/{missionId}")
 	public ResponseEntity<?> updateMission(@PathVariable Long missionId) {
 		MissionDetailDto missionDetailDto = missionService.updateMissionStatus(missionId);
-		return BaseResponse.okWithData(HttpStatus.OK,"상태 변경 완료", missionDetailDto);
+		return BaseResponse.okWithData(HttpStatus.OK, "상태 변경 완료", missionDetailDto);
 	}
 
 	@PutMapping("/refuse/{missionId}")
 	public ResponseEntity<?> refuseMission(@PathVariable Long missionId) {
 		MissionDetailDto missionDetailDto = missionService.refuseMission(missionId);
-		return BaseResponse.okWithData(HttpStatus.OK,"미션 거절 완료", missionDetailDto);
+		return BaseResponse.okWithData(HttpStatus.OK, "미션 거절 완료", missionDetailDto);
 	}
 
 	@DeleteMapping("/{missionId}")
@@ -77,7 +77,7 @@ public class MissionController {
 	}
 
 	@PutMapping("/give-money")
-	public ResponseEntity<?> giveMoneyTochild(@RequestBody MissionGiveMoneyDto missionGiveMoneyDto){
+	public ResponseEntity<?> giveMoneyTochild(@RequestBody MissionGiveMoneyDto missionGiveMoneyDto) {
 		missionService.missionClearMoney(missionGiveMoneyDto);
 		return BaseResponse.ok(HttpStatus.OK, "돈 지급 완료");
 	}

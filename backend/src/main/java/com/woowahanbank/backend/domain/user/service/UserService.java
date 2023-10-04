@@ -43,8 +43,6 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-
-
 	public SignupDto signup(String userId) {
 		User user = userRepository.findByUserId(userId).orElse(null);
 		Family family = user.getFamily();
@@ -57,6 +55,7 @@ public class UserService {
 			.quiz(user.getQuiz())
 			.score(user.getScore())
 			.familyName(familyName)
+			.characterNum(user.getCharacterNum())
 			.build();
 	}
 

@@ -25,25 +25,7 @@ function CharacterCard() {
 
   const characters = [Char1, Char2, Char3, Char4, Char5, Char6, Char7, Char8];
   const dispatch = useDispatch();
-  const firstChar = () => {
-    const image = new Image();
-    image.src = Char1;
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    // 정사각형 크기 설정 (맨 위를 기준으로 자르기)
-    const size = Math.min(image.width, image.height);
-    canvas.width = 512; // 원하는 크기로 설정
-    canvas.height = 512; // 원하는 크기로 설정
-
-    // 이미지를 맨 위를 기준으로 정사각형 크기에 맞게 자르기
-    ctx.drawImage(image, 0, 0, size, size, 0, 0, 512, 512);
-
-    // 이미지 데이터 URL로 변환
-    const croppedImage = canvas.toDataURL('image/png');
-    return croppedImage;
-  }
-  const [characterImage, setCharacterImage] = useState(firstChar());
+  const [characterImage, setCharacterImage] = useState(null);
 
   useEffect(() => {
     // 이미지 로드
