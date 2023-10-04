@@ -1,18 +1,27 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import apis from "services/api/apis";
 import './familylist.css';
 import { FaWonSign } from "react-icons/fa";
 import CreateFamily from './CreateFamily';
-
-
-
+import './myfamily.css';
+import PinMoneyModal from './PinMoneyModal';
 
 function FamilyList() {
   const [familyData, setFamilyData] = useState([]);
   const [loading, setLoading] = useState(true);
   const familyName = useSelector((state) => state.family.familyName);
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedChild, setSelectedChild] = useState(null);
+
+  const pinMoney = () => {
+    apis.post("api/banking/pinmoney", {
+      childNickname: "",
+      pinMoney: "",
+      receiveTime: "",
+    })
+  }
 
   useEffect(() => {
     // 데이터를 가져오는 비동기 함수를 정의합니다.
@@ -52,51 +61,57 @@ function FamilyList() {
 
   return (
     <div>
-    {familyName === null ? 
-    (<div>
-      <CreateFamily/>
-    </div>) : (
-    <div className='familylist-container'>
-      <ul>
-      <div className='parent-text'>부모님</div>
-      <div className='underline'></div>
-      <div className='familylist-parent'>
-        {parents.map((parent, index) => (
-          <li key={index}>
-            <div className="family-card">
-              <div className='memberinfo'>
-            <div style={{padding:'5px'}}>
-            이름 {parent.nickname}
-            </div>
-            <div style={{padding:'5px', display: 'flex', alignItems: 'center'}}>
-            보유자산 {parent.money}&nbsp;<FaWonSign className='wonicon'/>
-            </div>
-            </div>
-            </div>
-          </li>
-        ))}
-        </div>
-        <div className='children-text'>자녀</div>
-        <div className='underline'></div>
-        <div className='familylist-children'>
-        {children.map((child, index) => (
-          <li key={index}>
-            <div className="family-card">
-              <div className='memberinfo'>
-                <div style={{padding:'5px'}}>
-                  이름 {child.nickname}
-                </div>
-                <div style={{padding:'5px', display: 'flex', alignItems: 'center'}}>
-                  보유자산 {child.money}&nbsp;<FaWonSign className='wonicon'/>
-                </div>
+      {familyName === null ?
+        (<div>
+          <CreateFamily />
+        </div>) : (
+          <div className='familylist-container'>
+            <ul>
+              <div className='parent-text'>부모님</div>
+              <div className='underline'></div>
+              <div className='familylist-parent'>
+                {parents.map((parent, index) => (
+                  <li key={index}>
+                    <div className="family-card">
+                      <div className='memberinfo'>
+                        <div style={{ padding: '5px' }}>
+                          이름 {parent.nickname}
+                        </div>
+                        <div style={{ padding: '5px', display: 'flex', alignItems: 'center' }}>
+                          보유자산 {parent.money}&nbsp;<FaWonSign className='wonicon' />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                ))}
               </div>
-            </div>
+              <div className='children-text'>자녀</div>
+              <div className='underline'></div>
+              <div className='familylist-children'>
+                {children.map((child, index) => (
+                  <li key={index}>
+                    <div className="family-card">
+                      <div className='memberinfo'>
+                        <div style={{ padding: '5px' }}>
+                          이름 {child.nickname}
+                        </div>
+                        <div style={{ padding: '5px', display: 'flex', alignItems: 'center' }}>
+                          보유자산 {child.money}&nbsp;<FaWonSign className='wonicon' />
+                        </div>
+                      </div>
+                      <div style={{ marginLeft: '75px', padding: '5px', display: 'flex', alignItems: 'right' }}>
+                        <div className="familymenu"><button className="family-missionbutton" onClick={() => {setSelectedChild(child); setIsModalOpen(true);}}>용돈일 지정</button></div></div>
+                    </div>
+                  </li>
+                ))}
+              </div>
+            </ul>
+          </div>)}
 
-          </li>
-        ))}
-        </div>
-      </ul>
-    </div>)}
+      <PinMoneyModal show={isModalOpen} child={selectedChild} onClose={() => setIsModalOpen(false)}>
+        <h2>용돈주기</h2>
+      </PinMoneyModal>
+
     </div>
   );
 }
