@@ -54,7 +54,7 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 		depositorRepository.save(depositor);
 		eventPublisher.publishEvent(new NotificationEvent(
 			this, parent.getNickname(),
-			NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + financialProduct.getId()),
+			NotificationUtil.clickUrl("/financeDetail/" + financialProduct.getId()),
 			NotificationDto.builder()
 				.title("예금 상품 승인 신청")
 				.body(user.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
@@ -94,7 +94,7 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 		pointService.makePoint(child, admin, "예금 상품 가입", dMoney);
 		eventPublisher.publishEvent(new NotificationEvent(
 			this, child.getNickname(),
-			NotificationUtil.clickUrl("http://localhost:3000/account"),
+			NotificationUtil.clickUrl("/account"),
 			NotificationDto.builder()
 				.title("예금 상품 승인")
 				.body(parent.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
@@ -113,7 +113,7 @@ public class DepositorServiceImpl implements CustomerService<DepositorDto> {
 		User child = userRepository.findById(depositor.getUser().getId()).get();
 		eventPublisher.publishEvent(new NotificationEvent(
 			this, child.getNickname(),
-			NotificationUtil.clickUrl("http://localhost:3000/financeDetail/" + id),
+			NotificationUtil.clickUrl("/financeDetail/" + id),
 			NotificationDto.builder()
 				.title("예금 상품 거절")
 				.body(parent.getNickname() + "님이 예금 상품 [" + financialProduct.getName()
