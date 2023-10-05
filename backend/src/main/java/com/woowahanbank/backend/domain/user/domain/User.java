@@ -79,6 +79,11 @@ public class User {
 		this.characterNum = signupDto.getCharacterNum();
 	}
 
+	public void setParentMoney() {
+		if (this.roles == Role.ROLE_PARENT)
+			this.money = 10000000L;
+	}
+
 	public FamilyUserDto toFamilyUserDto() {
 		return FamilyUserDto.builder()
 			.nickname(this.nickname)
