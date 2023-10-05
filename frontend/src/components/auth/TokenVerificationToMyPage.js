@@ -16,10 +16,10 @@ const TokenVerificationToMyPage = ({ children }) => {
               Authorization: `Bearer ${accessToken}`,
             },
           });
-          console.log("토큰이 유효합니다. 접근할 수 없습니다.");
+          // console.log("토큰이 유효합니다. 접근할 수 없습니다.");
           navigate("/mypage");
         } catch (error) {
-          console.log("토큰이 유효하지 않습니다. 로그인으로 이동합니다.");
+          // console.log("토큰이 유효하지 않습니다. 로그인으로 이동합니다.");
         }
       }
     };

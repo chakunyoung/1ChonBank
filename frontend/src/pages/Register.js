@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Register.css";
 import char2 from "assets/char2x4.png";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import apis from "services/api/apis";
 import { setUser } from "redux/Auth";
@@ -14,11 +14,11 @@ const Register = () => {
   const [nicknameError, setNicknameError] = useState(""); // State for nickname error message
   const user = useSelector((state) => state.auth.user);
 
-  useEffect(()=>{
-    if(user.nickname != null){
+  useEffect(() => {
+    if (user.nickname != null) {
       navigate("/mypage");
     }
-  },[])
+  }, []);
 
   const handleCheckboxChange = (selectedRole) => {
     const updatedUser = { ...user, roles: selectedRole };
@@ -61,7 +61,7 @@ const Register = () => {
         // 닉네임이 중복되지 않는 경우
 
         // 회원가입 성공한 경우
-        console.log(user);
+        // console.log(user);
         apis.post("/api/user/saveUser", user);
         alert("회원가입 성공");
         navigate("/mypage");
@@ -78,7 +78,7 @@ const Register = () => {
   return (
     <div className="register-container">
       <div className="register-title">회원가입</div>
-      <CharacterCard/>
+      <CharacterCard />
       <div
         className="register-card"
         onClick={() => handleCardClick("ROLE_PARENT")}>
