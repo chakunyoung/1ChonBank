@@ -26,6 +26,21 @@ const Mypage = () => {
   const user = useSelector((state) => state.auth.user);
   const firebaseToken = useSelector((state) => state.auth.firebaseToken);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+          const response = await apis.get("api/user/info");
+          console.log(response.data.data);
+          dispatch(setUser(response.data.data));
+      } catch (error) {
+          console.error("Error fetching user data:", error);
+      }
+  }
+
+  fetchData();
+  }, [])
+
+
   const checkToken = async () => {
     if (firebaseToken === "" || firebaseToken === undefined) {
       const token = await getFirebaseToken();

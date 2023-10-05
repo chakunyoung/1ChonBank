@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.SignupDto;
+import com.woowahanbank.backend.domain.user.dto.UserInfoDto;
 import com.woowahanbank.backend.domain.user.service.UserService;
 import com.woowahanbank.backend.global.auth.security.CustomUserDetails;
 import com.woowahanbank.backend.global.response.BaseResponse;
@@ -25,7 +26,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/user")
@@ -82,6 +82,14 @@ public class UserController {
 	public ResponseEntity<?> selectFamily(@PathVariable String nickname) {
 		User user = userService.findByNickname(nickname);
 		return BaseResponse.okWithData(HttpStatus.OK, "자식 선택 완료", user);
+	}
+
+	@GetMapping("/info")
+	public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomUserDetails user) {
+		String nickname = user.getNickname();
+		UserInfoDto userInfo = userService.userInfo(nickname);
+
+		return BaseResponse.okWithData(HttpStatus.OK, "유저 정보 조회", userInfo);
 	}
 
 }
