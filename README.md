@@ -3,10 +3,34 @@
 ## 프로젝트 기간
 - 2023.08.21 ~ 2023.10.06
 
-## 일촌뱅크 
+## 서비스 영상
 
 ## 프로젝트 소개
+> 부모와 아이가 함께하는 금융 교육 플랫폼 <br/>
+> 금융 퀴즈를 통해 쉽게 금융 지식에 접근 <br/>
+> 자산 시각화로 금융 습관 및 성향 파악 및 교정 <br/>
 
+
+## 👪 팀원 소개
+
+<table>
+    <tr>
+        <td height="140px" align="center"> 
+           <br><br> 👑 김동준 <br>(Front-End/UX,UI) <br></td>
+        <td height="140px" align="center"> 
+          <br><br> 🙂 박종민 <br>(Back-End/Front-end) <br></td>
+        <td height="140px" align="center">
+          <br><br> 😆 이동현 <br>(Infra/Back-End) <br></td>
+        <td height="140px" align="center"> 
+            <br><br> 😁 이원희 <br>(Back-End/Front-End) <br></td>
+        <td height="140px" align="center"> 
+           <br><br> 🙄 전현태 <br>(Full-Stack) <br></td>
+        <td height="140px" align="center"> 
+          <br><br> 😶 차건영 <br>(Full-Stack)  <br></td>
+    </tr>
+</table>
+
+<br>
 ****
 
 주요 기능
@@ -23,6 +47,12 @@
 - 예금, 적금, 대출, 가족 요청, 승인 시 웹 푸시 알림 기능(오프라인에서도 가능)
 - AmCarts로 각 금융 비율 당 시각화
 - 스케쥴러를 사용하여 예금, 적금, 정기용돈, 문제 갱신, 이자율 동시 계산
+
+
+<br />
+
+## 🗂️ 시스템 아키텍처
+<img src="pic/System.png">
 
 
 ## 개발환경
