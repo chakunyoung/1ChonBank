@@ -22,7 +22,7 @@ before_script:
   - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
   # Give execution permission for Gradle wrapper
-  - chmod +x $BACKEND_DIR/gradlew
+  - sudo chmod +x $BACKEND_DIR/gradlew
 
   # Change to frontend directory and install npm if it doesn't exist
   - cd $FRONTEND_DIR
