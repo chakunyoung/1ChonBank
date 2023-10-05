@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import apis from "services/api/apis";
 import './familylist.css';
-import { FaWonSign } from "react-icons/fa";
 
 
 
@@ -62,7 +61,7 @@ function ShowMyFamily() {
             이름 {parent.nickname}
             </div>
             <div style={{padding:'5px', display: 'flex', alignItems: 'center'}}>
-            보유자산 {parent.money}&nbsp;<FaWonSign className='wonicon'/>
+            보유자산 {parent.money}P
             </div>
             </div>
             </div>

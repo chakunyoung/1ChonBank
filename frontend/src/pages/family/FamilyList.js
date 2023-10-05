@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import apis from "services/api/apis";
 import './familylist.css';
-import { FaWonSign } from "react-icons/fa";
 import CreateFamily from './CreateFamily';
 import './myfamily.css';
 import PinMoneyModal from './PinMoneyModal';
@@ -71,11 +70,12 @@ function FamilyList() {
                         </div>
                         {parent.nickname === me.nickname ?
                           <div style={{ padding: '5px', display: 'flex', alignItems: 'center' }}>
-                            보유자산 {me.money}&nbsp;<FaWonSign className='wonicon' />
+                            보유자산 {me.money}P
                           </div> :
                           <div style={{ padding: '5px', display: 'flex', alignItems: 'center' }}>
-                            보유자산 {parent.money}&nbsp;<FaWonSign className='wonicon' />
+                            보유자산 {parent.money}P
                           </div>}
+
                       </div>
                     </div>
                   </li>
@@ -92,11 +92,11 @@ function FamilyList() {
                           이름 {child.nickname}
                         </div>
                         <div style={{ padding: '5px', display: 'flex', alignItems: 'center' }}>
-                          보유자산 {child.money}&nbsp;<FaWonSign className='wonicon' />
+                          보유자산 {child.money}P
                         </div>
                       </div>
                       <div style={{ marginLeft: '75px', padding: '5px', display: 'flex', alignItems: 'right' }}>
-                        <div className="familymenu"><button className="family-missionbutton" onClick={() => { setSelectedChild(child); setIsModalOpen(true); }}>용돈일 지정</button></div></div>
+                        <div className="familymenu"><button className="pinmoney-button" onClick={() => { setSelectedChild(child); setIsModalOpen(true); }}>용돈 주기</button></div></div>
                     </div>
                   </li>
                 ))}
