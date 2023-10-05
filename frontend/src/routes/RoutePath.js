@@ -30,12 +30,12 @@ const RoutePath = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      {/* <Route path="/" element={<TokenVerificationToMyPage><Home /></TokenVerificationToMyPage>} /> */}
-      <Route path="/register" element={<Register />} />
-      {/* <Route path="/register" element={<TokenVerificationToRoot><Register /></TokenVerificationToRoot>}/> */}
-      <Route path="/mypage" element={<Mypage />} />
-      {/* <Route path="/mypage" element={<TokenVerificationToRoot><Mypage /></TokenVerificationToRoot>} /> */}
+      {/* <Route path="/" element={<Home />} /> */}
+      <Route path="/" element={<TokenVerificationToMyPage><Home /></TokenVerificationToMyPage>} />
+      {/* <Route path="/register" element={<Register />} /> */}
+      <Route path="/register" element={<TokenVerificationToRoot><Register /></TokenVerificationToRoot>}/>
+      {/* <Route path="/mypage" element={<Mypage />} /> */}
+      <Route path="/mypage" element={<TokenVerificationToRoot><Mypage /></TokenVerificationToRoot>} />
       <Route path="/mission" element={<MissionMake />} />
       <Route path="/selectFinance" element={<SelectFinance />} />
       <Route path="/makeFinance" element={<MakeFinance />} />

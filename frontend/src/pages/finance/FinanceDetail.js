@@ -13,7 +13,6 @@ import ApplyList from 'components/finance/ApplyList';
 import Deposit from 'assets/deposit.svg';
 import Savings from 'assets/savings.svg';
 import Loan from 'assets/loan.svg';
-import { FaWonSign } from "react-icons/fa";
 
 import Interest from 'assets/interest-rate.png'
 
@@ -326,8 +325,7 @@ const FinanceDetail = () => {
                       className='finance-inputfield custom-cursor'
                       value={money}
                       onChange={handleRateChange}
-                    />
-                    <FaWonSign />
+                    />P
                   </div>
                 )}
                 <div className='errorMessage'>{errorMessage}</div>
