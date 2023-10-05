@@ -3,7 +3,7 @@ import './PinMoneyModal.css';
 import './myfamily.css';
 import apis from 'services/api/apis';
 
-const PinMoneyModal = ({ show, onClose, child, children }) => {
+const PinMoneyModal = ({ show, onClose, child, children, onDataChange }) => {
     const [inputValue, setInputValue] = useState('');
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0];
@@ -15,7 +15,7 @@ const PinMoneyModal = ({ show, onClose, child, children }) => {
                 pinMoney: inputValue,
                 receiveTime: currentDateString,
             });
-    
+            onDataChange(inputValue);
             onClose();
         } catch (error) {
             console.error('용돈 지정에 실패했습니다:', error);
