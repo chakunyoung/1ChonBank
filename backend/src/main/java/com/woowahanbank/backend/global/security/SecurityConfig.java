@@ -64,6 +64,7 @@ public class SecurityConfig {
 			.antMatchers("/api/depositor").authenticated()
 			.antMatchers("/api/savingser").authenticated()
 			.antMatchers("/api/loaner").authenticated()
+			.antMatchers("/api/user/info").authenticated()
 			.antMatchers("/**").permitAll()
 			.and().oauth2Login().permitAll();
 		// 		.antMatchers("/api/users/login").permitAll() //로그인
