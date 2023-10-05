@@ -37,7 +37,8 @@ const Mypage = () => {
 
   const checkQuiz = async () => {
     await checkToken();
-    if (user.quiz) alert("오늘은 이미 푸셨습니다.");
+    console.log(user.quiz+"퀴즈");
+    if (user.quiz===1) alert("오늘은 이미 푸셨습니다.");
     else {
       navigate("/quiz");
     }
@@ -71,17 +72,10 @@ const Mypage = () => {
   };
 
   return (
-    // <motion.div
-    //   initial="initial"
-    //   animate="in"
-    //   exit="out"
-    //   variants={Wrapper}
-    // >
     <motion.div
       initial={Wrapper.initial}
       animate={Wrapper.animate}
       exit={Wrapper.exit}
-      // variants={Wrapper}
     >
     <div className='MypageContainer'>
 

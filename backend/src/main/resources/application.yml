@@ -33,4 +33,4 @@ springfox:
 
 util:
   domain:
-    prefix: localhost:3000/
+    prefix: "https://j9a609.p.ssafy.io/"

@@ -8,6 +8,8 @@ import { setUser } from 'redux/Auth';
 import { setQuizInfo } from 'redux/QuizInfo';
 import { useNavigate } from 'react-router-dom';
 import Footer from 'components/common/Footer';
+import Wrapper from 'components/common/Wrapper';
+import { motion } from "framer-motion";
 
 const Quiz = () => {
 
@@ -45,9 +47,20 @@ const Quiz = () => {
   };
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const updatedUser = { ...user, quiz: 1 };
     dispatch(setUser(updatedUser));
+    try {
+      const response = await apis.put('/api/quiz/solved');
+      if (response.status === 200) {
+        // 요청이 성공했을 때의 동작
+      } else {
+        // 요청이 실패했을 때의 동작
+      }
+    } catch (error) {
+      // 요청 중에 예외가 발생했을 때의 동작
+    }
+    
 
 
     if (selectedAnswer !== null) {
@@ -78,6 +91,11 @@ const Quiz = () => {
   };
 
   return (
+    <motion.div
+    initial={Wrapper.initial}
+    animate={Wrapper.animate}
+    exit={Wrapper.exit}
+    >
     <div className='QuizContainer'>
       <h1>오늘의 퀴즈</h1>
       <div>
@@ -108,6 +126,7 @@ const Quiz = () => {
       <Footer/>
       </div>
     </div>
+    </motion.div>
   );
 };
 
