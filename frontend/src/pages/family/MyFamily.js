@@ -20,7 +20,7 @@ function MyFamily() {
     const familyMember = useSelector((state)=>state.family.familyMember);
     console.log(familyMember)
     // const familyMemberLen = familyMember.length;
-    const dispatch = useDispatch();
+        const dispatch = useDispatch();
     const navigate = useNavigate();
     console.log("familyName:", familyName);
 
@@ -104,7 +104,7 @@ function MyFamily() {
             try {
                 const response = await apis.get("/api/families");
                 const data = response.data.data;
-                dispatch(setFamilyMember(data));
+                setFamilyData(data);
             } catch (error) {
                 console.error('데이터를 가져오지 못했습니다:', error);
             }
@@ -137,34 +137,37 @@ function MyFamily() {
                 <div className="familymenu">
                     <Link to="/financial"><button className="family-productbutton">상품</button></Link>
                     <Link to="/mission"><button className="family-missionbutton">미션</button></Link>
-                    {role === "ROLE_PARENT" && familyMember !== null && familyMember.length === 1 ? (<button className="family-deletebutton" onClick={handleDeleteFamily}><MdGroupOff />삭제</button>) : null}
+                    {role === "ROLE_PARENT" && familyMember.length !==1 ? (<button className="family-deletebutton" onClick={handleDeleteFamily}><MdGroupOff />삭제</button>) : <div>{''}</div>}
                     <button className="family-invitation" onClick={handleAddFamilyMember}><MdGroupAdd />초대</button>
                 </div>
                 {isModalOpen && (
                     <div className="modal">
                         <div className="modal-content">
                             <h2>닉네임 입력</h2>
-                            <form>
+                            <form className="myfamily-form-arrange">
                                 <input
+                                    className="myfamily-input"
                                     type="text"
                                     placeholder="닉네임"
                                     value={searchNickname}
                                     onChange={(e) => setSearchNickname(e.target.value)}
                                 />
-                                <button type="button" onClick={searchFamily}>검색</button>
+                                <button className="myfamily-invite-button" type="button" onClick={searchFamily}>검색</button>
                             </form>
                             <ul>
                                 {searchResults.map((result) => (
                                     <li key={result}>
                                         {result}
-                                        <button onClick={() => handleSelectFamily(result)}>선택</button>
+                                        <button className="myfamily-invite-button-choose" onClick={() => handleSelectFamily(result)}>선택</button>
                                     </li>
                                 ))}
                             </ul>
-                            {selectedNickname && (
-                                <button onClick={handleRequest}>요청보내기</button>
-                            )}
-                            <button onClick={() => setModalOpen(false)}>닫기</button>
+                            <div className="myfamily-close-arrange-left">
+                                {selectedNickname && (
+                                    <button className="myfamily-invite-button-send" onClick={handleRequest}>요청보내기</button>
+                                )}
+                                <button className="myfamily-invite-button-close" onClick={() => setModalOpen(false)}>닫기</button>
+                            </div>
                         </div>
                     </div>
                 )}
