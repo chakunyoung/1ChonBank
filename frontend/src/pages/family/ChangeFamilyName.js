@@ -12,7 +12,7 @@ import "./familynamesetting.css"
 
 function ChangeFamilyName() {
 
-
+    const role = useSelector((state)=>state.auth.user.roles);
     const familyName = useSelector((state) => state.family.familyName);
     console.log(familyName);
 
@@ -59,8 +59,9 @@ function ChangeFamilyName() {
             ) : (
                 <div className='family-name-setting-container'>
                     <span>{familyName}&nbsp;</span>
-                    <button onClick={handleModifyFamilyName} className='family-setting-button'><MdModeEdit/></button>
-                    <button onClick={handleModifyFamilyName} className='family-setting-button'><IoTrash/></button>
+                    {role === "ROLE_PARENT" ?  (<button onClick={handleModifyFamilyName} className='family-setting-button'><MdModeEdit/></button>) : <div>{''}</div>}
+
+                    
                 </div>
             )}
         </div>
