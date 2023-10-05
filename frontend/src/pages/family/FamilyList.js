@@ -14,7 +14,7 @@ function FamilyList() {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChild, setSelectedChild] = useState(null);
-
+  const me = useSelector((state) => state.auth.user);
   useEffect(() => {
     // 데이터를 가져오는 비동기 함수를 정의합니다.
     const fetchData = async () => {
@@ -69,9 +69,13 @@ function FamilyList() {
                         <div style={{ padding: '5px' }}>
                           이름 {parent.nickname}
                         </div>
-                        <div style={{ padding: '5px', display: 'flex', alignItems: 'center' }}>
-                          보유자산 {parent.money}&nbsp;<FaWonSign className='wonicon' />
-                        </div>
+                        {parent.nickname === me.nickname ?
+                          <div style={{ padding: '5px', display: 'flex', alignItems: 'center' }}>
+                            보유자산 {me.money}&nbsp;<FaWonSign className='wonicon' />
+                          </div> :
+                          <div style={{ padding: '5px', display: 'flex', alignItems: 'center' }}>
+                            보유자산 {parent.money}&nbsp;<FaWonSign className='wonicon' />
+                          </div>}
                       </div>
                     </div>
                   </li>
@@ -107,7 +111,6 @@ function FamilyList() {
         onDataChange={(childPinMoney) => {
           const updatedMoney = Number(selectedChild.money) + Number(childPinMoney);
           selectedChild.money = updatedMoney;
-          console.log("Updated data:", childPinMoney);
         }}>
         <h2>정기 용돈 주기</h2>
       </PinMoneyModal>

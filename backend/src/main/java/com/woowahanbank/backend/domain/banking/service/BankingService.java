@@ -109,7 +109,7 @@ public class BankingService {
 	}
 
 	@Transactional
-	public int assignNewPinMoney(ChildPinMoney childPinMoneyDto) {
+	public int assignNewPinMoney(ChildPinMoney childPinMoneyDto, User parent) {
 		log.info("{}", childPinMoneyDto.getChildNickname());
 		User childUser = userRepository.findByNickname(childPinMoneyDto.getChildNickname())
 			.orElseThrow(() -> new IllegalArgumentException("어린이에 해당되는 유저가 없습니다."));
@@ -119,17 +119,24 @@ public class BankingService {
 
 		// 당일 용돈 주기
 		childUser.moneyTransfer(childPinMoneyDto.getPinMoney());
-
+		parent.moneyTransfer(-childPinMoneyDto.getPinMoney());
 		// 다음 용돈일 지정
 		PinMoney newPinMoney = PinMoney.builder()
 			.user(childUser)
 			.pinMoney(childPinMoneyDto.getPinMoney())
 			.receiveTime(childPinMoneyDto.getReceiveTime().plusDays(7))
 			.build();
-
+		PinMoney newPinMoneyP = PinMoney.builder()
+			.user(parent)
+			.pinMoney(-childPinMoneyDto.getPinMoney())
+			.receiveTime(childPinMoneyDto.getReceiveTime().plusDays(7))
+			.build();
 		log.info("{}", newPinMoney);
 
 		pinMoneyRepository.save(newPinMoney);
+		pinMoneyRepository.save(newPinMoneyP);
+		userRepository.save(childUser);
+		userRepository.save(parent);
 		return childPinMoneyDto.getPinMoney();
 	}
 
