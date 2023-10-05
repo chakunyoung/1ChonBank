@@ -15,6 +15,8 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
     Optional<Invitation> findByToUser(User toUser);
 
+    Optional<Invitation> findByFromUserAndToUser(User fromUser, User toUser);
+
     void deleteByToUserAndFamily(User user, Family family);
 
 }
