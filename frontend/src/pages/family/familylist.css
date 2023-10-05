@@ -52,3 +52,12 @@ ul {
 
 
 }
+.pinmoney-button {
+  background: linear-gradient(45deg, rgba(19, 63, 219, 0.5), rgba(183, 0, 77, 0.4));
+  border-radius: 16px;
+  border-style: none;
+  color: white;
+  margin: 5px;
+  height: 25px;
+  cursor: pointer;
+}

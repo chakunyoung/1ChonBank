@@ -6,6 +6,7 @@ import { TbTargetArrow } from "react-icons/tb";
 import { RiQuestionnaireFill } from "react-icons/ri";
 import Footer from "components/common/Footer";
 import Profile from "components/common/Profile";
+import Myaccount from 'components/common/Myaccount'
 import './Mypage.css';
 import { useDispatch, useSelector } from 'react-redux';
 import Circle from 'components/common/Circle';
@@ -80,9 +81,9 @@ const Mypage = () => {
       exit={Wrapper.exit}
     >
       <div className='MypageContainer'>
-
         <div className='mypage-profilecontainer'>
           <Profile />
+
         </div>
         <div className="button-grid">
           <div className="row">

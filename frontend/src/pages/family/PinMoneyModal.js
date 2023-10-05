@@ -39,10 +39,10 @@ const PinMoneyModal = ({ show, onClose, child, children, onDataChange }) => {
                         id="pin-money"
                         value={inputValue}
                         onChange={e => setInputValue(e.target.value)}
-                        placeholder="매주 용돈 액수를 지정해주세요."
+                        placeholder="용돈 액수를 입력하세요."
                     />
                 </div>
-                <div className="familymenu"><button className="family-missionbutton" onClick={pinmoneyAssign}>지정</button><button className="family-missionbutton" onClick={onClose}>닫기</button></div>
+                <div className="familymenu"><button className="pinmoney-button" onClick={pinmoneyAssign}>보내기</button><button className="pinmoney-button" onClick={onClose}>닫기</button></div>
             </div >
         </>
     );
