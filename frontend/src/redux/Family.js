@@ -4,7 +4,7 @@ import apis from "services/api/apis";
 const initialState = {
     familyName : '',
     familyId : '',
-    familyMember:null,
+    familyMember:[],
     
 };
 export const getFamilyMembers = async () => {
