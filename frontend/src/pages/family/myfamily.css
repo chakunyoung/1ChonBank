@@ -6,7 +6,6 @@
     flex-direction: column;
     align-items: center;
     background-color: #FAFAFA; /* 배경색 추가 */
-
 }
 .myfamily-footer {
     position: absolute;
@@ -37,3 +36,79 @@
     height: 2rem;
     cursor: pointer;
 }
+
+.myfamily-input {
+    border: none; /* 기본 테두리를 제거합니다. */
+    border-bottom: 2px solid #ccc; /* 밑줄 스타일을 정의합니다. */
+    padding: 5px; /* 내부 여백을 추가합니다. */
+    width: 100%; /* 가로 폭을 100%로 설정합니다. */
+    height: 50%;
+    outline: none; /* 포커스 시 기본 아웃라인을 제거합니다. */
+    border-top-left-radius: 5px; /* 위쪽 왼쪽 모서리에 border-radius 적용 */
+    border-top-right-radius: 5px; 
+    background-color: #FAFAFA; /* 배경색 추가 */
+    transition: background-color 0.3s ease-in-out; /* 배경색 전환에 대한 트랜지션 효과 추가 */
+  }
+
+  .myfamily-input:focus {
+    background-color: #EEECEC; /* 포커스 시 배경색을 짙은 색상으로 변경 */
+  }
+
+  .myfamily-invite-button {
+    width: 56px;
+    height: 21px;
+    margin: 5px;
+    color: white;
+    background-color: #756EF3;
+    border-style: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+  }
+  .myfamily-invite-button-choose {
+    width: 56px;
+    height: 21px;
+    margin: 5px;
+    color: white;
+    background-color: #7af0b1;
+    border-style: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+  }
+
+  .myfamily-invite-button-close {
+    width: 56px;
+    height: 21px;
+    margin: 5px;
+    margin-left: auto;
+    color: white;
+    background-color: #FFB4AB;
+    border-style: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+  }
+
+  .myfamily-invite-button-send {
+    width: 100px;
+    height: 21px;
+    margin: 5px;
+    color: white;
+    background-color: #84baf8;
+    border-style: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+  }
+
+  .myfamily-form-arrange {
+    display: flex;
+    align-items: center;
+  }
+  .myfamily-close-arrange-left {
+    display: flex;
+    justify-content: flex-end; 
+    width: 100%;
+  }
+  
