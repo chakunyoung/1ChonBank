@@ -51,11 +51,12 @@ const Quiz = () => {
     const updatedUser = { ...user, quiz: 1 };
     dispatch(setUser(updatedUser));
     try {
-      const response = await apis.put('/api/quiz/solved');
+      const response = await apis.post('/api/quiz/solved');
       if (response.status === 200) {
         // 요청이 성공했을 때의 동작
       } else {
         // 요청이 실패했을 때의 동작
+        console.log("터짐");
       }
     } catch (error) {
       // 요청 중에 예외가 발생했을 때의 동작

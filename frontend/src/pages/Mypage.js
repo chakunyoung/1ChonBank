@@ -37,8 +37,10 @@ const Mypage = () => {
 
   const checkQuiz = async () => {
     await checkToken();
-    console.log(user.quiz+"퀴즈");
-    if (user.quiz===1) alert("오늘은 이미 푸셨습니다.");
+    console.log(user.quiz + "퀴즈");
+    if (user.quiz === 1) {
+      alert("오늘은 이미 푸셨습니다.");
+    }
     else {
       navigate("/quiz");
     }
@@ -77,56 +79,56 @@ const Mypage = () => {
       animate={Wrapper.animate}
       exit={Wrapper.exit}
     >
-    <div className='MypageContainer'>
+      <div className='MypageContainer'>
 
-      <div className='mypage-profilecontainer'>
-        <Profile />
-      </div>
-      <div className="button-grid">
-        <div className="row">
-          <Link
-            to="/account"
-            onClick={checkToken}
-            className="button button-account">
-            <AiFillDollarCircle className="logo" />
-            <span>계좌정보</span>
-          </Link>
-          <Link
-            to="/myFamily"
-            onClick={handleCheckHaveFamily}
-            className="button button-family">
-            <BsFillHousesFill className="logo" />
-            <span>가족</span>
-          </Link>
+        <div className='mypage-profilecontainer'>
+          <Profile />
         </div>
-        <div className="row">
-          <Link
-            to="/financial"
-            onClick={checkToken}
-            className="button button-financial">
-            <BsBank className="logo" />
-            <span>금융상품</span>
-          </Link>
-          <Link
-            to="/missionList"
-            onClick={checkToken}
-            className="button button-mission">
-            <TbTargetArrow className="logo" />
-            <span>미션</span>
-          </Link>
+        <div className="button-grid">
+          <div className="row">
+            <Link
+              to="/account"
+              onClick={checkToken}
+              className="button button-account">
+              <AiFillDollarCircle className="logo" />
+              <span>계좌정보</span>
+            </Link>
+            <Link
+              to="/myFamily"
+              onClick={handleCheckHaveFamily}
+              className="button button-family">
+              <BsFillHousesFill className="logo" />
+              <span>가족</span>
+            </Link>
+          </div>
+          <div className="row">
+            <Link
+              to="/financial"
+              onClick={checkToken}
+              className="button button-financial">
+              <BsBank className="logo" />
+              <span>금융상품</span>
+            </Link>
+            <Link
+              to="/missionList"
+              onClick={checkToken}
+              className="button button-mission">
+              <TbTargetArrow className="logo" />
+              <span>미션</span>
+            </Link>
+          </div>
+          <div
+            className="button button-quiz"
+            style={{ width: 340, height: "70px" }}
+            onClick={checkQuiz}>
+            <RiQuestionnaireFill className="logo" />
+            <span>오늘의 퀴즈</span>
+          </div>
         </div>
-        <div
-          className="button button-quiz"
-          style={{ width: 340, height: "70px" }}
-          onClick={checkQuiz}>
-          <RiQuestionnaireFill className="logo" />
-          <span>오늘의 퀴즈</span>
+        <div className="mypage-footer">
+          <Footer />
         </div>
       </div>
-      <div className="mypage-footer">
-        <Footer />
-      </div>
-    </div>
     </motion.div>
   );
 };
