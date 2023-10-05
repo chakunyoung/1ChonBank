@@ -15,14 +15,6 @@ function FamilyList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChild, setSelectedChild] = useState(null);
 
-  const pinMoney = () => {
-    apis.post("api/banking/pinmoney", {
-      childNickname: "",
-      pinMoney: "",
-      receiveTime: "",
-    })
-  }
-
   useEffect(() => {
     // 데이터를 가져오는 비동기 함수를 정의합니다.
     const fetchData = async () => {
@@ -100,7 +92,7 @@ function FamilyList() {
                         </div>
                       </div>
                       <div style={{ marginLeft: '75px', padding: '5px', display: 'flex', alignItems: 'right' }}>
-                        <div className="familymenu"><button className="family-missionbutton" onClick={() => {setSelectedChild(child); setIsModalOpen(true);}}>용돈일 지정</button></div></div>
+                        <div className="familymenu"><button className="family-missionbutton" onClick={() => { setSelectedChild(child); setIsModalOpen(true); }}>용돈일 지정</button></div></div>
                     </div>
                   </li>
                 ))}
@@ -108,10 +100,17 @@ function FamilyList() {
             </ul>
           </div>)}
 
-      <PinMoneyModal show={isModalOpen} child={selectedChild} onClose={() => setIsModalOpen(false)}>
-        <h2>용돈주기</h2>
+      <PinMoneyModal
+        show={isModalOpen}
+        child={selectedChild}
+        onClose={() => setIsModalOpen(false)}
+        onDataChange={(childPinMoney) => {
+          const updatedMoney = Number(selectedChild.money) + Number(childPinMoney);
+          selectedChild.money = updatedMoney;
+          console.log("Updated data:", childPinMoney);
+        }}>
+        <h2>정기 용돈 주기</h2>
       </PinMoneyModal>
-
     </div>
   );
 }

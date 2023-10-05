@@ -109,7 +109,7 @@ public class BankingService {
 	}
 
 	@Transactional
-	public void assignNewPinMoney(ChildPinMoney childPinMoneyDto) {
+	public int assignNewPinMoney(ChildPinMoney childPinMoneyDto) {
 		log.info("{}", childPinMoneyDto.getChildNickname());
 		User childUser = userRepository.findByNickname(childPinMoneyDto.getChildNickname())
 			.orElseThrow(() -> new IllegalArgumentException("어린이에 해당되는 유저가 없습니다."));
@@ -130,6 +130,7 @@ public class BankingService {
 		log.info("{}", newPinMoney);
 
 		pinMoneyRepository.save(newPinMoney);
+		return childPinMoneyDto.getPinMoney();
 	}
 
 	public List<DepositorDto> getDepositorList(User user) {
