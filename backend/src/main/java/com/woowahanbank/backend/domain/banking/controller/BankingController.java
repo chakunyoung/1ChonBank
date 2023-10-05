@@ -69,7 +69,7 @@ public class BankingController {
 	public ResponseEntity<?> pinMoney(@AuthenticationPrincipal CustomUserDetails customUserDetails,
 		@RequestBody ChildPinMoney childPinMoney) {
 		log.info("{}", childPinMoney);
-		bankingService.assignNewPinMoney(childPinMoney);
+		bankingService.assignNewPinMoney(childPinMoney, customUserDetails.getUser());
 		return BaseResponse.ok(HttpStatus.OK, "어린이에게 새로운 용돈 지급날을 결정했습니다.");
 	}
 }

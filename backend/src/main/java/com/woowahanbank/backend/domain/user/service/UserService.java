@@ -1,7 +1,6 @@
 package com.woowahanbank.backend.domain.user.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -62,6 +61,7 @@ public class UserService {
 	public void saveUser(SignupDto signupDto) {
 		User user = userRepository.findByUserId(signupDto.getUserId()).orElse(null);
 		user.setUser(signupDto);
+		user.setParentMoney();
 		userRepository.save(user);
 	}
 

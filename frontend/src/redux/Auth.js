@@ -58,6 +58,9 @@ const authSlice = createSlice({
     setUser(state, action) {
       state.user = action.payload;
     },
+    DepositMoney(state, action){
+      state.user.money -= action.payload;
+    },
     setFirebaseToken: (state, action) => {
       state.firebaseToken = action.payload;
     },
@@ -94,6 +97,6 @@ const authSlice = createSlice({
 });
 
 // export const { setAccessToken, setMoney,setScore, setRoles, setType, setUserId, setIsLogin,setRefreshToken,setNickname,setServerNickname, logout,setQuiz} = authSlice.actions;
-export const { setUser, setFirebaseToken, setCharacterNum } = authSlice.actions;
+export const { setUser, setFirebaseToken, setCharacterNum, DepositMoney } = authSlice.actions;
 
 export default authSlice.reducer;
