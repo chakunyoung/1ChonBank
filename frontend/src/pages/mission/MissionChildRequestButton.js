@@ -1,8 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { setMissionData, setMissionDataClear } from "redux/Mission";
-import apis from "services/api/apis";
-import { fetchMissions, useFetchMissions } from "./MissionFetchMission";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { setMissionData, setMissionDataClear } from 'redux/Mission';
+import apis from 'services/api/apis';
+import { fetchMissions, useFetchMissions } from './MissionFetchMission';
+import './MissionChildRequestButton.css'
 
 function MissionChildRequestButton() {
   const { missionId } = useParams();
@@ -45,20 +46,18 @@ function MissionChildRequestButton() {
     }
   };
 
-  return (
-    <div>
-      <button
-        onClick={handleChildRequest}
-        disabled={missionData && missionData.missionStatus === "완료"}>
-        요청
-      </button>
-      <button
-        onClick={handleGiveup}
-        disabled={missionData && missionData.missionStatus === "완료"}>
-        포기
-      </button>
-    </div>
-  );
+
+    return (
+        <div>
+            <button className='missiondetail-child-accept' onClick={handleChildRequest} disabled={missionData && missionData.missionStatus === "완료"}>
+                요청
+            </button>
+            <button className='missiondetail-child-reject' onClick={handleGiveup} disabled={missionData && missionData.missionStatus === "완료"}>
+                포기
+            </button>
+
+        </div>
+    )
 }
 
 export default MissionChildRequestButton;

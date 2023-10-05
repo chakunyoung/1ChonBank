@@ -24,6 +24,7 @@ function MissionDetail() {
                 const response = await apis.get(`/api/missions/detail/${missionId}`);
                 // 데이터를 가져와 상태 업데이트
                 dispatch(setMissionData(response.data.data));
+                console.log(response.data.data);
                 
             } catch (error) {
                 console.error(error);
@@ -40,11 +41,15 @@ function MissionDetail() {
             {/* missionData가 있을 때만 데이터를 렌더링 */}
             {missionData && (
                 <div>
-                    <p>내 이름 : {missionData.childName}</p>
-                    <p>Mission Name: {missionData.missionName}</p>
-                    <p>Mission Description: {missionData.missionDescription}</p>
-                    <p>Mission Status: {missionData.missionStatus}</p>
-                    <p>Mission points: {missionData.missionStatus}</p>
+<div className="mission-details">
+    <p><span className="label">이름:</span> {missionData.childName}</p>
+    <p><span className="label">미션:</span> {missionData.missionName}</p>
+    <p><span className="label">내용:</span> {missionData.missionDescription}</p>
+    <p><span className="label">상태:</span> {missionData.missionStatus}</p>
+    <p><span className="label">보상:</span> {missionData.missionPoint}</p>
+    {/* 기타 미션 데이터 필드를 추가하세요 */}
+</div>
+
 
                     {/* 기타 미션 데이터 필드를 추가하세요 */}
                 </div>
