@@ -80,6 +80,13 @@
     transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
   }
 
+  
+  .myfamily-invite-button-choose.selected {
+    background-color: gray; /* 회색 배경색 */
+    color: white; /* 흰색 글자색 (선택 사항) */
+    /* 기타 선택된 버튼 스타일 */
+  }
+
   .myfamily-invite-button-close {
     width: 56px;
     height: 21px;

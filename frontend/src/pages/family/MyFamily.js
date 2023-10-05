@@ -12,6 +12,7 @@ import "./myfamily.css";
 import Wrapper from "components/common/Wrapper";
 import { motion } from "framer-motion";
 
+
 function MyFamily() {
   const role = useSelector((state) => state.auth.user.roles);
   const familyName = useSelector((state) => state.family.familyName);
@@ -73,15 +74,14 @@ function MyFamily() {
   const handleRequest = () => {
     apis
       .post(`/api/families/invitation/${selectedNickname}`)
-      .then((response) => {});
+      .then((response) => { });
     // 선택한 닉네임을 이용하여 요청을 보내는 로직을 추가하세요.
     // console.log('선택한 닉네임을 이용하여 요청을 보냅니다:', selectedNickname);
     setModalOpen(false); // "요청보내기" 버튼을 눌렀을 때 모달을 닫습니다.
   };
 
   const searchFamily = () => {
-    apis
-      .get(`/api/user/findFamily/${searchNickname}`)
+    apis.get(`/api/user/findFamily/${searchNickname}`)
 
       .then((response) => {
         if (Array.isArray(response.data.data)) {
@@ -124,27 +124,16 @@ function MyFamily() {
     <motion.div
       initial={Wrapper.initial}
       animate={Wrapper.animate}
-      exit={Wrapper.exit}>
+      exit={Wrapper.exit}
+    >
       <div className="myfamily-container">
-        <div>
-          <Profile />
-        </div>
+        <div><Profile /></div>
         <ChangeFamilyName />
         <div className="familymenu">
-          <Link to="/financial">
-            <button className="family-productbutton">상품</button>
-          </Link>
-          <Link to="/mission">
-            <button className="family-missionbutton">미션</button>
-          </Link>
-          <button className="family-invitation" onClick={handleAddFamilyMember}>
-            <MdGroupAdd />
-            초대
-          </button>
-          <button className="family-deletebutton" onClick={handleDeleteFamily}>
-            <MdGroupOff />
-            삭제
-          </button>
+          <Link to="/financial"><button className="family-productbutton">상품</button></Link>
+          <Link to="/mission"><button className="family-missionbutton">미션</button></Link>
+          <button className="family-invitation" onClick={handleAddFamilyMember}><MdGroupAdd />초대</button>
+          <button className="family-deletebutton" onClick={handleDeleteFamily}><MdGroupOff />삭제</button>
         </div>
         {isModalOpen && (
           <div className="modal">
@@ -158,53 +147,36 @@ function MyFamily() {
                   value={searchNickname}
                   onChange={(e) => setSearchNickname(e.target.value)}
                 />
-                <button
-                  className="myfamily-invite-button"
-                  type="button"
-                  onClick={searchFamily}>
-                  검색
-                </button>
+                <button className="myfamily-invite-button" type="button" onClick={searchFamily}>검색</button>
               </form>
               <ul>
                 {searchResults.map((result) => (
                   <li key={result}>
                     {result}
                     <button
-                      className="myfamily-invite-button-choose"
-                      onClick={() => handleSelectFamily(result)}>
-                      선택
+                      className={`myfamily-invite-button-choose ${selectedNickname === result ? 'selected' : ''}`}
+                      onClick={() => handleSelectFamily(result)}
+                    >        선택
                     </button>
                   </li>
                 ))}
               </ul>
               <div className="myfamily-close-arrange-left">
                 {selectedNickname && (
-                  <button
-                    className="myfamily-invite-button-send"
-                    onClick={handleRequest}>
-                    요청보내기
-                  </button>
+                  <button className="myfamily-invite-button-send" onClick={handleRequest}>요청보내기</button>
                 )}
-                <button
-                  className="myfamily-invite-button-close"
-                  onClick={() => {
-                    setModalOpen(false);
-                    setSearchResults([]);
-                    setSearchNickname("");
-                  }}>
-                  닫기
-                </button>
+                <button className="myfamily-invite-button-close" onClick={() => { setModalOpen(false); setSearchResults([]); setSearchNickname(''); }}>닫기</button>
               </div>
             </div>
           </div>
         )}
         <FamilyList />
-        <div className="myfamily-footer">
+        <div className='myfamily-footer'>
           <Footer />
         </div>
       </div>
     </motion.div>
-  );
+  )
 }
 
 export default MyFamily;
