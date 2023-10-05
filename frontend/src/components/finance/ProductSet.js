@@ -57,7 +57,7 @@ const ProductSet = (props) => {
 
     return (
         <div className='list-set-container' style={user.roles === 'ROLE_PARENT'?{"height":"20vh"}:{"height":"30vh"}}>
-            <div className='tab-productlist'>
+            <div className='tab-account-productlist'>
                 {rendering()}
             </div>
         </div>
