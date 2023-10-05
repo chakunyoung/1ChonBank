@@ -58,13 +58,13 @@ const authSlice = createSlice({
     setUser(state, action) {
       state.user = action.payload;
     },
-    DepositMoney(state, action){
+    DepositMoney(state, action) {
       state.user.money -= action.payload;
     },
     setFirebaseToken: (state, action) => {
       state.firebaseToken = action.payload;
     },
-    setCharacterNum(state,action){
+    setCharacterNum(state, action) {
       state.user.characterNum = action.payload;
     },
 
@@ -89,7 +89,6 @@ const authSlice = createSlice({
         state.user = payload.data;
       })
       .addCase(kakaoLogin.fulfilled, (state, { payload }) => {
-        console.log(payload);
         state.accessToken = payload[`access-token`];
         state.refreshToken = payload[`refresh-token`];
       });
@@ -97,6 +96,7 @@ const authSlice = createSlice({
 });
 
 // export const { setAccessToken, setMoney,setScore, setRoles, setType, setUserId, setIsLogin,setRefreshToken,setNickname,setServerNickname, logout,setQuiz} = authSlice.actions;
-export const { setUser, setFirebaseToken, setCharacterNum, DepositMoney } = authSlice.actions;
+export const { setUser, setFirebaseToken, setCharacterNum, DepositMoney } =
+  authSlice.actions;
 
 export default authSlice.reducer;

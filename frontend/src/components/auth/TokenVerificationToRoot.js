@@ -11,7 +11,7 @@ const TokenVerificationToRoot = ({ children }) => {
   useEffect(() => {
     const verifyToken = async () => {
       if (!accessToken) {
-        console.log("토큰이 없습니다. 루트로 리다이렉트합니다.");
+        // console.log("토큰이 없습니다. 루트로 리다이렉트합니다.");
         navigate("/");
         return;
       }
@@ -25,7 +25,7 @@ const TokenVerificationToRoot = ({ children }) => {
         });
         setIsVerified(true);
       } catch (error) {
-        console.log("서버에 유저 정보가 없거나, 토큰이 유효하지 않습니다.");
+        // console.log("서버에 유저 정보가 없거나, 토큰이 유효하지 않습니다.");
         setIsVerified(false);
         navigate("/");
       }

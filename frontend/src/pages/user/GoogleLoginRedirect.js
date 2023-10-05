@@ -32,7 +32,6 @@ function GoogleLoginRedirect() {
         `${process.env.REACT_APP_API_BASE_URL}/api/auth/google`,
         { code }
       );
-      console.log("유저가 인증되었습니다.", response.data);
 
       const accessToken = response.data.data["access-token"];
       const payloadBase64 = accessToken.split(".")[1];
@@ -67,9 +66,7 @@ function GoogleLoginRedirect() {
   const fetchUserData = async (userId, navigate, dispatch, nickname, token) => {
     try {
       const response = await axios.get(`/api/user/${userId}`);
-      console.log(response);
       const userData = response.data.data;
-      console.log(userData);
       dispatch(setUser(userData));
       dispatch(setFamilyName(userData.familyName));
       if (userData.roles === null) {

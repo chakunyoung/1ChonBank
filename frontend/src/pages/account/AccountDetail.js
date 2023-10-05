@@ -22,22 +22,24 @@ const AccountDeatil = () => {
   const [loading, setLoading] = useState(true);
 
   const info = {
-    'DEPOSIT': '예금은 금융 기관에 돈을 보관하는 금융 제품으로, 안전하게 자금을 보호하고 미래에 사용할 수 있도록 합니다. 예금은 이자를 얻을 수 있고, 금융 기관은 이러한 예금을 활용하여 대출을 제공하며 경제에 기여합니다. 예금은 금융 계획과 금전 관리에서 중요한 역할을 합니다.',
-    'SAVINGS': '적금은 정기적으로 일정 금액을 저축하는 금융 상품으로, 목표 금액을 달성하거나 일정 기간 후에 원금과 이자를 받을 수 있습니다. 이는 금전 관리와 재무 목표 달성을 위한 효과적인 방법으로 사용되며, 안정적인 이자 수입을 제공하여 금융 안전성을 높입니다. 적금은 금융 계획과 금전 관리에서 중요한 역할을 합니다.',
-    'LOAN': '대출은 금융 기관으로부터 일정 금액을 빌려오는 금융 거래로, 개인 또는 기업의 자금 필요를 충족하거나 투자를 지원하기 위해 사용됩니다. 대출은 이자를 포함하여 원금 상환을 통해 상환되며, 상환 기간과 이자율은 대출 종류와 조건에 따라 다양합니다.'
-  }
+    DEPOSIT:
+      "예금은 금융 기관에 돈을 보관하는 금융 제품으로, 안전하게 자금을 보호하고 미래에 사용할 수 있도록 합니다. 예금은 이자를 얻을 수 있고, 금융 기관은 이러한 예금을 활용하여 대출을 제공하며 경제에 기여합니다. 예금은 금융 계획과 금전 관리에서 중요한 역할을 합니다.",
+    SAVINGS:
+      "적금은 정기적으로 일정 금액을 저축하는 금융 상품으로, 목표 금액을 달성하거나 일정 기간 후에 원금과 이자를 받을 수 있습니다. 이는 금전 관리와 재무 목표 달성을 위한 효과적인 방법으로 사용되며, 안정적인 이자 수입을 제공하여 금융 안전성을 높입니다. 적금은 금융 계획과 금전 관리에서 중요한 역할을 합니다.",
+    LOAN: "대출은 금융 기관으로부터 일정 금액을 빌려오는 금융 거래로, 개인 또는 기업의 자금 필요를 충족하거나 투자를 지원하기 위해 사용됩니다. 대출은 이자를 포함하여 원금 상환을 통해 상환되며, 상환 기간과 이자율은 대출 종류와 조건에 따라 다양합니다.",
+  };
 
   const productName = {
-    'DEPOSIT': '예금',
-    'SAVINGS': '적금',
-    'LOAN': '대출'
-  }
+    DEPOSIT: "예금",
+    SAVINGS: "적금",
+    LOAN: "대출",
+  };
 
   const location = useLocation();
   const data = location.state?.data;
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
 
     const fetchProduct = async () => {
       if (data && data.financialProductId) {
@@ -45,7 +47,7 @@ const AccountDeatil = () => {
           const response = await apis.get(
             `/api/financial/${data.financialProductId}`
           );
-          console.log(response);
+          // console.log(response);
           setProduct(response.data.data);
         } catch (error) {
           console.error("상품정보 가져오기 실패:", error);
@@ -81,8 +83,8 @@ const AccountDeatil = () => {
               product.productType === "DEPOSIT"
                 ? Deposit
                 : product.productType === "SAVINGS"
-                  ? Savings
-                  : Loan
+                ? Savings
+                : Loan
             }
             alt="상품"
           />
@@ -129,8 +131,8 @@ const AccountDeatil = () => {
                   {product.productType === "DEPOSIT"
                     ? "예금"
                     : product.productType === "SAVINGS"
-                      ? "적금"
-                      : "대출"}{" "}
+                    ? "적금"
+                    : "대출"}{" "}
                 </div>
               </div>
             </div>
@@ -146,7 +148,7 @@ const AccountDeatil = () => {
             <div className="flex-row">
               <MdLabelOutline className="finance-detail-icon" />
               <div className="text-label" style={{ width: "40%" }}>
-                상품 { } :{"    "}
+                상품 {} :{"    "}
               </div>
               <div className="text-label" style={{ width: "46%" }}>
                 {data ? data.productName : "로딩 중..."}
@@ -155,16 +157,20 @@ const AccountDeatil = () => {
           </div>
         )}
 
-        <div className='product-space-between'>
-          <span className='option-title'>{productName[product.productType]} 설명서 확인</span>
-          <div className='option-buttons'>
-            <span className='show-info-button' onClick={() => setShowDiv2(!showDiv2)}>
+        <div className="product-space-between">
+          <span className="option-title">
+            {productName[product.productType]} 설명서 확인
+          </span>
+          <div className="option-buttons">
+            <span
+              className="show-info-button"
+              onClick={() => setShowDiv2(!showDiv2)}>
               <AiOutlineDown />
             </span>
           </div>
         </div>
         {showDiv2 && (
-          <div className='text-label product-common-info'>
+          <div className="text-label product-common-info">
             {info[product.productType]}
           </div>
         )}

@@ -20,7 +20,6 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log("accessToken이 없습니다.");
     return Promise.reject(error);
   }
 );
@@ -39,7 +38,7 @@ axiosInstance.interceptors.response.use(
 
     if (
       error.response.data.status === 401 ||
-      error.response.data.status === 419 
+      error.response.data.status === 419
     ) {
       originalRequest._retry = true;
       const refreshToken = getRefreshTokenAxios();
