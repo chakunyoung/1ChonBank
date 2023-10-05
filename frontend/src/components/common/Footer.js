@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import './Footer.css';
-// import { useHistory } from 'react-router-dom';
 import { IoArrowBackOutline, IoHome, IoPeopleSharp, IoEllipsisHorizontal, IoCardOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
-
-
 function Footer() {
   const navigate = useNavigate();
-  //const history = useHistory();
 
   const handleGoBack = () => {
-    window.history.back(); // 브라우저 뒤로가기 기능 호출
+    navigate(-1);
   };
 
   const handleMyPage = () => {
@@ -25,7 +21,6 @@ function Footer() {
   const handleFamily = () => {
     navigate("/myFamily")
   }
-
 
   return (
     <div className="footer-container">
