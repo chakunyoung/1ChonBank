@@ -18,8 +18,8 @@ function MyFamily() {
     const role = useSelector((state) => state.auth.user.roles);
     const familyName = useSelector((state) => state.family.familyName);
     const familyMember = useSelector((state)=>state.family.familyMember);
+    console.log(familyMember)
     // const familyMemberLen = familyMember.length;
-    console.log(familyMember.length);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     console.log("familyName:", familyName);
@@ -104,7 +104,7 @@ function MyFamily() {
             try {
                 const response = await apis.get("/api/families");
                 const data = response.data.data;
-                dispatch(setFamilyData(data));
+                dispatch(setFamilyMember(data));
             } catch (error) {
                 console.error('데이터를 가져오지 못했습니다:', error);
             }
@@ -137,8 +137,7 @@ function MyFamily() {
                 <div className="familymenu">
                     <Link to="/financial"><button className="family-productbutton">상품</button></Link>
                     <Link to="/mission"><button className="family-missionbutton">미션</button></Link>
-                    {role === "ROLE_PARENT" && familyMember.length !==1 ? (<button className="family-deletebutton" onClick={handleDeleteFamily}><MdGroupOff />삭제</button>) : <div>{''}</div>}
-
+                    {role === "ROLE_PARENT" && familyMember !== null && familyMember.length === 1 ? (<button className="family-deletebutton" onClick={handleDeleteFamily}><MdGroupOff />삭제</button>) : null}
                     <button className="family-invitation" onClick={handleAddFamilyMember}><MdGroupAdd />초대</button>
                 </div>
                 {isModalOpen && (
