@@ -9,6 +9,8 @@ import Profile from "components/common/Profile";
 import Footer from "components/common/Footer";
 import { MdGroupAdd, MdGroupOff } from "react-icons/md";
 import './myfamily.css';
+import Wrapper from 'components/common/Wrapper';
+import { motion } from "framer-motion";
 
 
 function MyFamily() {
@@ -86,41 +88,35 @@ function MyFamily() {
               }
             };
             fetchData(); // 데이터 가져오기 함수 호출
+
         }, []);
 
-      // 부모와 자식을 그룹화하기 위한 배열 선언
-    const parents = [];
-    const children = [];
-
-    // 부모와 자식을 그룹화
-    familyData.forEach((family) => {
-        if (family.role === "ROLE_PARENT") {
-        parents.push(family);
-        } else if (family.role === "ROLE_CHILD") {
-        children.push(family);
-        }
-    });
-
-    if (children === null){
-        setIsChildrenExist(1);
-    }
-
-
-
+        const parents = [];
+        const children = [];
+    
+        // 부모와 자식을 그룹화
+        familyData.forEach((family) => {
+            if (family.role === "ROLE_PARENT") {
+            parents.push(family);
+            } else if (family.role === "ROLE_CHILD") {
+            children.push(family);
+            }
+        });
 
     return (
+        <motion.div
+        initial={Wrapper.initial}
+        animate={Wrapper.animate}
+        exit={Wrapper.exit}
+        >
         <div className="myfamily-container">
             <div><Profile/></div>
             <ChangeFamilyName />
             <div className="familymenu">
             <Link to="/financial"><button className="family-productbutton">상품</button></Link>
             <Link to="/mission"><button className="family-missionbutton">미션</button></Link>
-            {isChildrenExist === 0 ? (
-                <></>
-            ) : (
                 <button className="family-deletebutton" onClick={handleDeleteFamily}><MdGroupOff/>삭제</button>
-            )}
-            <button className="family-invitation" onClick={handleAddFamilyMember}><MdGroupAdd/>초대</button>
+                <button className="family-invitation" onClick={handleAddFamilyMember}><MdGroupAdd/>초대</button>
             </div>
             {isModalOpen && (
                 <div className="modal">
@@ -137,7 +133,6 @@ function MyFamily() {
                         </form>
                         <ul>
                             {searchResults.map((result) => (
-                               
                                 <li key={result}>
                                     {result}
                                     <button onClick={() => handleSelectFamily(result)}>선택</button>
@@ -156,6 +151,7 @@ function MyFamily() {
         <Footer/>
       </div>
         </div>
+        </motion.div>
     )
 }
 

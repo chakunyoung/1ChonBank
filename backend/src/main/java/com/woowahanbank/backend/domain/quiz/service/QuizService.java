@@ -92,13 +92,6 @@ public class QuizService {
                             + ", content=" + choice.getMessage().getContent();
                 }
 
-                // String logMessage = "GptResponseDto(id=" + gptResponseDto.getId()
-                // 	+ ", object=" + gptResponseDto.getObject()
-                // 	+ ", created=" + gptResponseDto.getCreated()
-                // 	+ ", model=" + gptResponseDto.getModel()
-                // 	+ ", choices=[" + choicesDetails + "])";
-                //
-                // log.info(logMessage);
                 log.info("{}", generatedQuestion);
 
                 String choice1 = "";
@@ -205,7 +198,7 @@ public class QuizService {
         }
     }
 
-    @Scheduled(cron = "0 0/10 * * * ?") // 매일 정오 12시에 실행
+    @Scheduled(cron = "0 0/10 * * * ?")
     public void scheduleCreateQuestionsBasedOnIntro() {
         deleteQuiz();
         chatGpt(gptKey);
@@ -256,4 +249,17 @@ public class QuizService {
         chatGpt(gptKey);
         createQuestionsBasedOnIntro(null);
     }
+
+    @Scheduled(cron = "0 0/10 * * * ?")
+    public void scheduleQuizUpdate() {
+        List<User> users = userRepository.findAll();
+
+        for (User user : users) {
+            user.solvedQuiz(1L); // 혹은 다른 값을 전달할 수 있습니다.
+        }
+
+        userRepository.saveAll(users);
+    }
+
+
 }
