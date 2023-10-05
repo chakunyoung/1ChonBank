@@ -4,24 +4,15 @@
     align-items: flex-start;
     align-items: center;
     margin: 20px auto;
-    height: 64vh;
+    height: 62vh;
 }
 
 .tab-productlist {
     width: 390px;
-    overflow-y: auto;
-    height: auto;
-    margin-bottom: 55px;
 }
 .tab-productlist::before {
 
 }
-.tab-productlist::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-    display: none;
-}
-
 
 .tab-container{
     display: flex;
