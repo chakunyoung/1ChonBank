@@ -1,0 +1,7 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+  <!-- 빨간 원 -->
+  <circle cx="10" cy="10" r="10" fill="red" />
+
+  <!-- 흰 가로줄 -->
+  <line x1="2" y1="10" x2="18" y2="10" stroke="white" stroke-width="2" />
+</svg>
