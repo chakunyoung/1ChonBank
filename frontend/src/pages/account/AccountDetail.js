@@ -126,9 +126,9 @@ const AccountDeatil = () => {
               </div>
               <div className="text-label" style={{ width: "46%" }}>
                 <div>
-                  {data.productType === "DEPOSIT"
+                  {product.productType === "DEPOSIT"
                     ? "예금"
-                    : data.productType === "SAVINGS"
+                    : product.productType === "SAVINGS"
                       ? "적금"
                       : "대출"}{" "}
                 </div>
