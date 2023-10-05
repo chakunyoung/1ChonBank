@@ -26,17 +26,17 @@ const ParentAccountPage = (props) => {
             setSavings(fetchedSavings.data);
             let dep = 0;
             for (let index = 0; index < fetchedDepositors.data.length; index++) {
-              dep += fetchedDepositors.data[index].money;
+                dep += fetchedDepositors.data[index].money;
             }
             setdepMoney(dep);
             let loa = 0;
             for (let index = 0; index < fetchedLoaners.data.length; index++) {
-              loa += fetchedLoaners.data[index].money;
+                loa += fetchedLoaners.data[index].money;
             }
             setLoaMoney(loa);
             let sav = 0;
             for (let index = 0; index < fetchedSavings.data.length; index++) {
-              sav += fetchedSavings.data[index].money;
+                sav += fetchedSavings.data[index].money;
             }
             setSavMoney(sav);
         };
@@ -49,14 +49,16 @@ const ParentAccountPage = (props) => {
         props.handlerRightClick();
     }
     return (
-        <div>
+        <div className='account-main-container'>
             <div className='accountChildSelect'>
                 <div className='leftchildSelectButton' onClick={leftClick}><IoIosArrowDropleft /></div>
                 <div>{props.child.nickname}</div>
                 <div className='rightchildSelectButton' onClick={rightClick}><IoIosArrowDropright /></div>
             </div>
-            <Amchart savings={props.child.money} depMoney={depMoney} loaMoney={loaMoney} savMoney={savMoney} />
-            <ProductSet depositors={depositors} loaners={loaners} savings={savings} />
+            <div className='parent-account-chart-container'>
+                <Amchart savings={props.child.money} depMoney={depMoney} loaMoney={loaMoney} savMoney={savMoney} />
+                <ProductSet depositors={depositors} loaners={loaners} savings={savings} />
+            </div>
         </div>
     );
 };

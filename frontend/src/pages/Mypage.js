@@ -83,7 +83,7 @@ const Mypage = () => {
       <div className='MypageContainer'>
         <div className='mypage-profilecontainer'>
           <Profile />
-
+          <Myaccount />
         </div>
         <div className="button-grid">
           <div className="row">

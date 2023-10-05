@@ -14,3 +14,13 @@
 .card-margin {
     margin-top: 20px;
   }
+
+.child-account-chart-container{
+    height: 70vh;
+    overflow-y: scroll;
+}
+.child-account-chart-container::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
