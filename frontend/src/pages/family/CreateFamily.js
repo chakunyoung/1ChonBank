@@ -47,6 +47,31 @@ function CreateFamily() {
       });
   };
 
+  const handleAccept = async () => {
+    try {
+      const familyInvitationDto = {
+        familyNickname: isInvitationExist.familyNickname,
+      };
+      ///console.log(familyInvitationDto); /
+
+      const response = await apis.put(
+        "/api/families/acceptInvitation",
+        familyInvitationDto
+      );
+
+      if (response) {
+        dispatch(setFamilyName(isInvitationExist.familyNickname));
+        alert("가족 초대를 수락했습니다!");
+
+        navigate("/");
+      } else {
+        console.error("요청 실패:", response.statusText);
+      }
+    } catch (error) {
+      console.error("오류 발생:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,34 +86,11 @@ function CreateFamily() {
     };
 
     fetchData();
-  }, []);
+  }, [isInvitationExist]);
 
   const handleSetFamilyName = (e) => {
     setInputFamilyName(e.target.value);
     // console.log(inputFamilyName);
-  };
-
-  const handleAccept = async () => {
-    try {
-      const familyInvitationDto = {
-        familyNickname: isInvitationExist.familyNickname,
-      };
-      ///console.log(familyInvitationDto); /
-
-      const response = await apis.put(
-        "/api/families/acceptInvitation",
-        familyInvitationDto
-      );
-
-      if (response) {
-        alert("가족 초대를 수락했습니다!");
-        navigate("/");
-      } else {
-        console.error("요청 실패:", response.statusText);
-      }
-    } catch (error) {
-      console.error("오류 발생:", error);
-    }
   };
 
   const handleReject = async () => {
@@ -135,10 +137,12 @@ function CreateFamily() {
           </h1>
         ) : (
           <div className="familymenu">
-            <span style={{ fontSize: "17px", fontWeight: "bold" }}>
-              {isInvitationExist.familyNickname} 가족으로 부터 초대 메시지가
-              왔습니다.
-            </span>
+            {isInvitationExist && isInvitationExist.familyNickname ? (
+              <span style={{ fontSize: "17px", fontWeight: "bold" }}>
+                {isInvitationExist.familyNickname} 가족으로 부터 초대 메시지가
+                왔습니다.
+              </span>
+            ) : null}
             <br></br>
             <button className="pinmoney-button" onClick={() => handleAccept()}>
               수락
