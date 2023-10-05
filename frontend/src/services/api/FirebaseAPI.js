@@ -24,7 +24,6 @@ export const getFirebaseToken = async () => {
     if (permission === "granted") {
       console.log("Notification permission granted.");
       const token = await getToken(messaging);
-      console.log("FIREBASE - Token: ", token);
       return token;
     }
   } catch (err) {

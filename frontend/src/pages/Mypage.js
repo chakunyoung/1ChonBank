@@ -6,13 +6,13 @@ import { TbTargetArrow } from "react-icons/tb";
 import { RiQuestionnaireFill } from "react-icons/ri";
 import Footer from "components/common/Footer";
 import Profile from "components/common/Profile";
-import Myaccount from 'components/common/Myaccount'
-import './Mypage.css';
-import { useDispatch, useSelector } from 'react-redux';
-import Circle from 'components/common/Circle';
-import HalfCircleRight from 'components/common/HarfCircleRight';
-import apis from 'services/api/apis';
-import Wrapper from 'components/common/Wrapper';
+import Myaccount from "components/common/Myaccount";
+import "./Mypage.css";
+import { useDispatch, useSelector } from "react-redux";
+import Circle from "components/common/Circle";
+import HalfCircleRight from "components/common/HarfCircleRight";
+import apis from "services/api/apis";
+import Wrapper from "components/common/Wrapper";
 import { motion } from "framer-motion";
 import {
   getFirebaseToken,
@@ -29,17 +29,16 @@ const Mypage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-          const response = await apis.get("api/user/info");
-          console.log(response.data.data);
-          dispatch(setUser(response.data.data));
+        const response = await apis.get("api/user/info");
+        // console.log(response.data.data);
+        dispatch(setUser(response.data.data));
       } catch (error) {
-          console.error("Error fetching user data:", error);
+        console.error("Error fetching user data:", error);
       }
-  }
+    };
 
-  fetchData();
-  }, [])
-
+    fetchData();
+  }, []);
 
   const checkToken = async () => {
     if (firebaseToken === "" || firebaseToken === undefined) {
@@ -53,11 +52,10 @@ const Mypage = () => {
 
   const checkQuiz = async () => {
     await checkToken();
-    console.log(user.quiz + "퀴즈");
+    // console.log(user.quiz + "퀴즈");
     if (user.quiz === 1) {
       alert("오늘은 이미 푸셨습니다.");
-    }
-    else {
+    } else {
       navigate("/quiz");
     }
   };
@@ -77,7 +75,7 @@ const Mypage = () => {
       });
 
       if (response.status === 200) {
-        console.log("요청 성공:", response.data);
+        // console.log("요청 성공:", response.data);
         return response.data;
       } else {
         console.error("요청 실패:", response);
@@ -93,10 +91,9 @@ const Mypage = () => {
     <motion.div
       initial={Wrapper.initial}
       animate={Wrapper.animate}
-      exit={Wrapper.exit}
-    >
-      <div className='MypageContainer'>
-        <div className='mypage-profilecontainer'>
+      exit={Wrapper.exit}>
+      <div className="MypageContainer">
+        <div className="mypage-profilecontainer">
           <Profile />
           <Myaccount />
         </div>
