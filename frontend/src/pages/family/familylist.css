@@ -21,6 +21,7 @@
     border-radius: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 10px auto;
+    justify-content: space-between;
   }
 .memberinfo {
     font-weight: bold;
