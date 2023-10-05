@@ -24,11 +24,11 @@ function Footer() {
 
   return (
     <div className="footer-container">
-      <button className='footer-left footer-button'>
-        <IoArrowBackOutline className='footer-icon' onClick={handleGoBack} />
+      <button className='footer-left footer-button' onClick={handleGoBack}>
+        <IoArrowBackOutline className='footer-icon' />
       </button>
-      <button className='footer-menu footer-button'>
-        <IoCardOutline className='footer-icon' onClick={handleAccount}
+      <button className='footer-menu footer-button' onClick={handleAccount}>
+        <IoCardOutline className='footer-icon'
           style={{
             background: 'linear-gradient(93.46deg, #133FDB 0%, rgba(183, 0, 77, 0.3) 103.75%)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent'
           }} />
@@ -36,14 +36,14 @@ function Footer() {
 
       <button className='footer-home footer-button'>
         <div className='icon-container'>
-          <div className='home-circle'>
-            <IoHome className='footer-icon' onClick={handleMyPage} />
+          <div className='home-circle' onClick={handleMyPage}>
+            <IoHome className='footer-icon' />
           </div>
         </div>
       </button>
 
-      <button className='footer-account footer-button'>
-        <IoPeopleSharp className='footer-icon' onClick={handleFamily} />
+      <button className='footer-account footer-button' onClick={handleFamily}>
+        <IoPeopleSharp className='footer-icon' />
       </button>
       <button className='footer-etc footer-button'>
         <IoEllipsisHorizontal className='footer-icon' />
