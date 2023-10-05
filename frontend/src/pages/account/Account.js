@@ -9,6 +9,8 @@ import { getFamilyMembers } from 'redux/Family';
 import Amchart from 'components/common/Amcharts';
 import ProductSet from 'components/finance/ProductSet';
 import ParentAccountPage from './ParentAccountPage';
+import Wrapper from 'components/common/Wrapper';
+import { motion } from "framer-motion";
 
 const Account = () => {
   const [depositors, setDepositors] = useState([]);
@@ -78,6 +80,11 @@ const Account = () => {
   }
 
   return (
+    <motion.div
+    initial={Wrapper.initial}
+    animate={Wrapper.animate}
+    exit={Wrapper.exit}
+    >
     <div className='account-container'>
       <div className='account-profilecontainer'>
         <Profile />
@@ -89,6 +96,7 @@ const Account = () => {
         <Footer />
       </div>
     </div>
+    </motion.div>
   );
 };
 
