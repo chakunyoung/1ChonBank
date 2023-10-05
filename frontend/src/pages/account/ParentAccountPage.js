@@ -5,6 +5,7 @@ import ProductSet from 'components/finance/ProductSet';
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import './ParentAccountPage.css';
 import Amchart from 'components/common/Amcharts'
+import Myaccount from 'components/common/Myaccount';
 
 const ParentAccountPage = (props) => {
     const [depositors, setDepositors] = useState([]);
