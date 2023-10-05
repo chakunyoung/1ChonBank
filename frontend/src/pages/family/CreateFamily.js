@@ -124,11 +124,11 @@ function CreateFamily() {
           }}>
             아직 가족이 없습니다
             <br /><br />
-            <img
+            {/* <img
               src={CryIcon}
               alt="Cry Icon"
               className="Cry-icon"
-            />
+            /> */}
           </h1>         
         ) : (
           <div>
