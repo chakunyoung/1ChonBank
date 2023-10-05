@@ -76,7 +76,10 @@ const Account = () => {
     }
     // 'childs.length === 0' 경우에는 componentToRender가 null로 유지되므로 아무 것도 렌더링되지 않습니다.
   } else {
-    componentToRender = <ProductSet depositors={depositors} loaners={loaners} savings={savings} />;
+    componentToRender = <div className='child-account-chart-container'>
+      <Amchart savings={user.money} depMoney={depMoney} loaMoney={loaMoney} savMoney={savMoney} />
+      <ProductSet depositors={depositors} loaners={loaners} savings={savings} />
+      </div>;
   }
 
   return (
@@ -90,7 +93,6 @@ const Account = () => {
         <Profile />
       </div>
       <Myaccount />
-      {user.roles === 'ROLE_PARENT' ? null : <Amchart savings={user.money} depMoney={depMoney} loaMoney={loaMoney} savMoney={savMoney} />}
       {componentToRender}
       <div className='account-footer'>
         <Footer />

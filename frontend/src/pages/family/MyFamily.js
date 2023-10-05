@@ -18,13 +18,20 @@ function MyFamily() {
     const role = useSelector((state) => state.auth.user.roles);
     const familyName = useSelector((state) => state.family.familyName);
     const familyMember = useSelector((state)=>state.family.familyMember);
-    console.log(familyMember)
     // const familyMemberLen = familyMember.length;
-        const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     console.log("familyName:", familyName);
 
     const handleDeleteFamily = () => {
+        if (role === 'ROLE_CHILD'){
+            alert('넌 안돼!임마!');
+            return;
+        }
+        if (familyMember.length !== 1){
+            alert('자식이 남아있어 삭제가 불가 합니다.');
+            return;
+        }
         const confirmed = window.confirm("정말 삭제하시겠습니까?");
         if (confirmed) {
             dispatch(setDeleteFamily());
@@ -104,7 +111,7 @@ function MyFamily() {
             try {
                 const response = await apis.get("/api/families");
                 const data = response.data.data;
-                setFamilyData(data);
+                dispatch(setFamilyMember(data));
             } catch (error) {
                 console.error('데이터를 가져오지 못했습니다:', error);
             }
@@ -137,8 +144,8 @@ function MyFamily() {
                 <div className="familymenu">
                     <Link to="/financial"><button className="family-productbutton">상품</button></Link>
                     <Link to="/mission"><button className="family-missionbutton">미션</button></Link>
-                    {role === "ROLE_PARENT" && familyMember.length !==1 ? (<button className="family-deletebutton" onClick={handleDeleteFamily}><MdGroupOff />삭제</button>) : <div>{''}</div>}
                     <button className="family-invitation" onClick={handleAddFamilyMember}><MdGroupAdd />초대</button>
+                    <button className="family-deletebutton" onClick={handleDeleteFamily}><MdGroupOff />삭제</button>
                 </div>
                 {isModalOpen && (
                     <div className="modal">
@@ -166,7 +173,7 @@ function MyFamily() {
                                 {selectedNickname && (
                                     <button className="myfamily-invite-button-send" onClick={handleRequest}>요청보내기</button>
                                 )}
-                                <button className="myfamily-invite-button-close" onClick={() => setModalOpen(false)}>닫기</button>
+                                <button className="myfamily-invite-button-close" onClick={() => {setModalOpen(false); setSearchResults([]); setSearchNickname('');}}>닫기</button>
                             </div>
                         </div>
                     </div>

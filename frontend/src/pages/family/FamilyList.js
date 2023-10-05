@@ -49,7 +49,6 @@ function FamilyList() {
       children.push(family);
     }
   });
-
   return (
     <div>
       {familyName === null ?
@@ -95,8 +94,9 @@ function FamilyList() {
                           보유자산 {child.money}P
                         </div>
                       </div>
-                      <div style={{ marginLeft: '75px', padding: '5px', display: 'flex', alignItems: 'right' }}>
-                        <div className="familymenu"><button className="pinmoney-button" onClick={() => { setSelectedChild(child); setIsModalOpen(true); }}>용돈 주기</button></div></div>
+                      {me.roles==='ROLE_PARENT' &&
+                      <div style={{ padding: '5px', display: 'flex', alignItems: 'right' }}>
+                        <div className="familymenu"><button className="pinmoney-button" onClick={() => { setSelectedChild(child); setIsModalOpen(true); }}>용돈 주기</button></div></div>}
                     </div>
                   </li>
                 ))}

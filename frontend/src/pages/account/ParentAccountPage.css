@@ -29,3 +29,12 @@
     overflow:visible; 
     cursor:pointer;
 }
+.parent-account-chart-container{
+    height: 60vh;
+    overflow-y: scroll;
+}
+.parent-account-chart-container::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
