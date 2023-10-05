@@ -78,12 +78,15 @@ public class FamilyService {
     public void inviteToFamily(String fromUserNickname, String toUserNickname) {
         User fromUser = findUserOrElseThrow(fromUserNickname);
         User toUser = findUserOrElseThrow(toUserNickname);
-        Invitation invitation = Invitation.builder()
-                .fromUser(fromUser)
-                .toUser(toUser)
-                .family(fromUser.getFamily())
-                .build();
-        invitationRepository.save(invitation);
+
+        if(invitationRepository.findByFromUserAndToUser(fromUser, toUser).isEmpty()){
+            Invitation invitation = Invitation.builder()
+                    .fromUser(fromUser)
+                    .toUser(toUser)
+                    .family(fromUser.getFamily())
+                    .build();
+            invitationRepository.save(invitation);
+        }
     }
 
     public void rejectInvitation(String toNickname) {
@@ -134,7 +137,6 @@ public class FamilyService {
     }
 
     public void acceptInv (String familyName, String userNickName) {
-
         Family byFamilyName = familyRepository.findByFamilyName(familyName).orElseThrow(() -> new IllegalArgumentException("가족을 찾을 수 없습니다."));
         User byNickname = userRepository.findByNickname(userNickName).orElseThrow(() -> new IllegalArgumentException("유저가 없습니다."));
         byNickname.setFamily(byFamilyName);
