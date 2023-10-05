@@ -8,6 +8,8 @@ import './Amcharts.css';
 const Amcharts = ({ savings, depMoney, loaMoney, savMoney }) => {
 
   useEffect(() => {
+    if (savings === 0 && depMoney === 0 && loaMoney === 0 && savMoney === 0)
+      return;
     // AmCharts 테마 설정
     // am4core.useTheme(am4themes_dark);
     am4core.useTheme(am4themes_animated);
