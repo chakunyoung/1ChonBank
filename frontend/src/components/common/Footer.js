@@ -11,7 +11,7 @@ function Footer() {
   };
 
   const handleMyPage = () => {
-    navigate("/");
+    navigate("/myPage");
   }
 
   const handleAccount = () => {
