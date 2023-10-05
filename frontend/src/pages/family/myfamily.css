@@ -13,7 +13,14 @@
 }
 .family-productbutton,
 .family-missionbutton,
-.family-deletebutton{
+.family-deletebutton,
+.family-invitation{
+    border-radius: 16px; /* 원하는 값으로 조절합니다. */
+    border: none;
+    color: white;
+    width: 56px;
+    height: 20px;
+    cursor: pointer;
     margin: 5px;
 }
 .family-productbutton {
@@ -27,15 +34,11 @@
 .family-deletebutton {
     background-color: #FFB4AB;
 }
-
-.familymenu button {
-    border-radius: 16px; /* 원하는 값으로 조절합니다. */
-    border: none;
-    color: white;
-    width: 5.5rem;
-    height: 2rem;
-    cursor: pointer;
+.family-invitation {
+    background: rgba(255, 210, 51, 0.48);
 }
+
+
 
 .myfamily-input {
     border: none; /* 기본 테두리를 제거합니다. */
@@ -112,3 +115,5 @@
     width: 100%;
   }
   
+
+
