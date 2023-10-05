@@ -2,6 +2,7 @@ package com.woowahanbank.backend.domain.user.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,7 @@ import com.woowahanbank.backend.domain.family.domain.Family;
 import com.woowahanbank.backend.domain.user.domain.User;
 import com.woowahanbank.backend.domain.user.dto.JoinDto;
 import com.woowahanbank.backend.domain.user.dto.SignupDto;
+import com.woowahanbank.backend.domain.user.dto.UserInfoDto;
 import com.woowahanbank.backend.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -84,4 +86,21 @@ public class UserService {
 		return userNicknames;
 	}
 
+	public UserInfoDto userInfo(String nickname) {
+		Optional<User> byNickname = userRepository.findByNickname(nickname);
+		if (byNickname.isPresent()) {
+			User user = byNickname.get();
+			return UserInfoDto.builder()
+				.userId(user.getUserId())
+				.nickname(user.getNickname())
+				.roles(String.valueOf(user.getRoles()))
+				.money(user.getMoney())
+				.quiz(user.getQuiz())
+				.score(user.getScore())
+				.familyName(user.getFamily() == null ? null : user.getFamily().getFamilyName())
+				.characterNum(user.getCharacterNum())
+				.build();
+		}
+		return null;
+	}
 }
