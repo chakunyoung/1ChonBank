@@ -7,12 +7,19 @@ import MissionCard from "components/common/MissionCard";
 import { IoIosAdd } from "react-icons/io";
 import MissionIcon from "assets/missionicon.png";
 import { useSelector } from 'react-redux';
+import Wrapper from 'components/common/Wrapper';
+import { motion } from "framer-motion";
 
 const MissionList = () => {
 
   const role = useSelector((state) => state.auth.user.roles);
 
   return (
+    <motion.div
+    initial={Wrapper.initial}
+    animate={Wrapper.animate}
+    exit={Wrapper.exit}
+    >
     <div className='missionlist-container'>
       <Profile />
       <div className='mission-title'>
@@ -33,6 +40,7 @@ const MissionList = () => {
         <Footer />
       </div>
     </div>
+    </motion.div>
   );
 };
 

@@ -10,6 +10,8 @@ import { getLoaner } from "redux/Loaner";
 import { IoIosAdd } from "react-icons/io";
 import Footer from "components/common/Footer"
 import Profile from "components/common/Profile"
+import Wrapper from 'components/common/Wrapper';
+import { motion } from "framer-motion";
 
 
 const FinanceList = () => {
@@ -89,6 +91,11 @@ const FinanceList = () => {
             setViewType(data);
     };
     return (
+        <motion.div
+        initial={Wrapper.initial}
+        animate={Wrapper.animate}
+        exit={Wrapper.exit}
+        >
         <div className='finance-list-container'>
             <div><Profile /></div>
             <div>
@@ -104,6 +111,7 @@ const FinanceList = () => {
             </div>
             <div className='finance-list-footer'><Footer /></div>
         </div>
+        </motion.div>
     );
 };
 
