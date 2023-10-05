@@ -33,7 +33,7 @@ public class AuthController {
 	@PostMapping("/api/users/verify-token")
 	public ResponseEntity<?> verifyToken(@AuthenticationPrincipal CustomUserDetails userDetails) {
 		if (userDetails == null) {
-			return BaseResponse.fail("DB에 해당되는 유작 없습니다.", 401);
+			return BaseResponse.fail("DB에 해당되는 유저가 없습니다.", 401);
 		}
 		return ResponseEntity.ok("JWT DB 검증 완료");
 	}
