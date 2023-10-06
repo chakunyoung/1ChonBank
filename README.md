@@ -3,7 +3,7 @@
 ## 프로젝트 기간
 - 2023.08.21 ~ 2023.10.06
 
-## 서비스 영상
+## 서비스
 
 ## 프로젝트 소개
 > 부모와 아이가 함께하는 금융 교육 플랫폼 <br/>
@@ -55,7 +55,34 @@
 <img src="pic/System.png">
 
 
-## 개발환경
+## 개발환경 및 라이브러리
+
+### DB
+- MySQL
+
+### Front-end
+- React : 18.2.0
+- React-redux : 8.1.2
+- firebase : 18.2.0
+- sass : 1.68.0
+- axios : 1.5.0
+
+### Back-end
+- Spring Boot : 2.7.16
+- Spring JPA : 
+- Java : 
+
+### Infra
+- AWS EC2 : 
+- Docker : 
+
+### External program
+- firebase 
+- chatGPT API
+- Oauth2
+
+### ETC
+- Rabbit MQ : 
 
 
 ---
