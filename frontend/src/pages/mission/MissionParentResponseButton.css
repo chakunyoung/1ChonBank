@@ -1,0 +1,23 @@
+.missiondetail-parent-accept {
+    width: 75px;
+    height: 21px;
+    margin: 5px;
+    color: white;
+    background-color: #84baf8;
+    border-style: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+  }
+
+  .missiondetail-parent-reject {
+    width: 75px;
+    height: 21px;
+    margin: 5px;
+    color: white;
+    background-color: #FFB4AB;
+    border-style: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+  }

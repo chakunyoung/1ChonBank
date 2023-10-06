@@ -53,7 +53,7 @@ const MissionMake = () => {
     missionDescription : missionDescription,
     missionPoint:points,
     missionTerminateDate:date,
-    missionStatus: "진행중",
+    missionStatus: '진행중',
     userId: user.userId,
   }
 
