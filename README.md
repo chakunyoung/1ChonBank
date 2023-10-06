@@ -3,13 +3,6 @@
 ## 프로젝트 기간
 - 2023.08.21 ~ 2023.10.06
 
-## 서비스
-
-### 로그인 화면
-<img src="pic/login.png">
-
-### 
-
 ## 프로젝트 소개
 > 부모와 아이가 함께하는 금융 교육 플랫폼 <br/>
 > 금융 퀴즈를 통해 쉽게 금융 지식에 접근 <br/>
@@ -36,9 +29,9 @@
 </table>
 
 <br>
-****
 
-주요 기능
+
+## 주요 기능
 - 금융상품 구현 (예금, 적금, 대출)
 - AmCharts를 사용한 계좌 정보 시각화
 - 백엔드 스케쥴러를 사용하여 이자, 이율 자동 및 즉시 계산
@@ -61,6 +54,14 @@
 
 
 ## 개발환경 및 라이브러리
+
+## 🛠️ 기술 스택
+
+| JavaScript | Redux | React | Node | Spring Boot | Spring Security | GitLab CI/CD | Docker | Redis | Spring Data Jpa | NginX | MySQL | EC2 | RabbitMQ | FCM  |
+|:----------:|:-----:|:-----:|:----:|:-----------:|:---------------:|:-------:|:------:|:-----:|:---------------:|:-----:|:-----:|:---:|:-------:|:-------:|
+| ![JavaScript](pic/js.png) | ![Redux](pic/redux.png) | ![React](pic/react.png) | ![Node](pic/node.png) | ![Spring Boot](pic/springboot.png) | ![Spring Security](pic/security.png) | ![GitLabCI/CD](pic/GitlabCICD.png) | ![Docker](pic/docker.png) | ![Redis](pic/redis.png) | ![Spring Data Jpa](pic/jpa.png) | ![NginX](pic/nginx.png) | ![MySQL](pic/mysql.png) | ![EC2](pic/ec2.png) | ![RabbitMQ](pic/RabbitMQ.png) | ![FCM](pic/FCM.png) |
+
+
 
 ### DB
 - MySQL
@@ -105,5 +106,40 @@
 11. 부모의 자녀 별 `금액 비율 및 상태 보기`
 12. 부모는 자녀가 가입한 `상품 보기`
 13. 자녀의 `금액 비율 및 상태 보기`
+
+
+## 서비스 화면
+
+### 로그인 화면
+<img src="pic/login.png">
+
+### 계좌 정보
+<img src="pic/amcharts.png">
+
+### 자녀 금융 상품 신청
+<img src="pic/childloan.png">
+
+### GPT 정답
+<img src="pic/gptanswer.png">
+
+### GPT 퀴즈
+<img src="pic/gptquiz.png">
+
+### 정보
+<img src="pic/info.png">
+
+### 부모 금융 상품 수락
+<img src="pic/parentaccep.png">
+
+### 웹 푸시
+<img src="pic/rabbitmq.png">
+
+### 메인화면
+<img src="pic/servicepage.png">
+
+### 로그인
+<img src="pic/signup.png">
+
+
 
 
