@@ -113,6 +113,9 @@
 ### 로그인 화면
 <img src="pic/login.png">
 
+### 메인 화면
+<img src="pic/mainpage.png">
+
 ### 계좌 정보
 <img src="pic/amcharts.png">
 
