@@ -140,6 +140,9 @@
 ### 로그인
 <img src="pic/signup.png">
 
+### 서비스 영상
+![서비스 영상](pic/MyVideo_2.gif)
+
 
 
 
