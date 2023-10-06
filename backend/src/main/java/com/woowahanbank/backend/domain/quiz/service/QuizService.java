@@ -248,6 +248,11 @@ public class QuizService {
         deleteQuiz();
         chatGpt(gptKey);
         createQuestionsBasedOnIntro(null);
+        List<User> users = userRepository.findAll();
+
+        for (User user : users) {
+            user.solvedQuiz(null); // 혹은 다른 값을 전달할 수 있습니다.
+        }
     }
 
     @Scheduled(cron = "0 0/10 * * * ?")
@@ -255,7 +260,7 @@ public class QuizService {
         List<User> users = userRepository.findAll();
 
         for (User user : users) {
-            user.solvedQuiz(1L); // 혹은 다른 값을 전달할 수 있습니다.
+            user.solvedQuiz(null); // 혹은 다른 값을 전달할 수 있습니다.
         }
 
         userRepository.saveAll(users);

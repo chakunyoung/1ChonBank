@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { setMissionData, setMissionDataClear } from 'redux/Mission';
 import apis from 'services/api/apis';
 import { useFetchMissions } from './MissionFetchMission';
+import './MissionParentResponseButton.css';
 
 function MissionParentResponseButton() {
 
@@ -58,10 +59,10 @@ function MissionParentResponseButton() {
 
     return (
         <div>
-            <button onClick={handleAcceptMission} >
+            <button className='missiondetail-parent-accept' onClick={handleAcceptMission} >
                 수락
             </button>
-            <button onClick={handleRefuseMission} >
+            <button className='missiondetail-parent-reject' onClick={handleRefuseMission} >
                 거절
             </button>
 
