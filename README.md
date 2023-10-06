@@ -8,6 +8,8 @@
 ### 로그인 화면
 <img src="pic/login.png">
 
+### 
+
 ## 프로젝트 소개
 > 부모와 아이가 함께하는 금융 교육 플랫폼 <br/>
 > 금융 퀴즈를 통해 쉽게 금융 지식에 접근 <br/>
@@ -62,6 +64,7 @@
 
 ### DB
 - MySQL
+- Redis
 
 ### Front-end
 - React : 18.2.0
@@ -72,20 +75,18 @@
 
 ### Back-end
 - Spring Boot : 2.7.16
-- Spring JPA : 
-- Java : 
+- Java : 11
+- RabbitMQ
+- QueryDSL
 
 ### Infra
-- AWS EC2 : 
-- Docker : 
+- AWS EC2 
+- Docker 
 
 ### External program
-- firebase 
-- chatGPT API
+- Firebase Cloud Messaging 
+- ChatGPT API
 - Oauth2
-
-### ETC
-- Rabbit MQ : 
 
 
 ---
